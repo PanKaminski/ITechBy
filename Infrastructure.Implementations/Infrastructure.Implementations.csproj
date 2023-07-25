@@ -10,7 +10,6 @@
     <Folder Include="Entities\Authentication\" />
     <Folder Include="Entities\Communication\" />
     <Folder Include="Entities\Blogging\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
