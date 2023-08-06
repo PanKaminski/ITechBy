@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Authentication\" />
     <Folder Include="Entities\Communication\" />
     <Folder Include="Entities\Blogging\" />
   </ItemGroup>
