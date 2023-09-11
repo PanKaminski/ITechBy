@@ -81,5 +81,41 @@ namespace Infrastructure.Implementations.Repositories
 
             DbContext.Set<T>().Update(entity);
         }
+
+        public IQueryable<T> GetAll(bool trackEntities) => !trackEntities ? DbContext.Set<T>().AsNoTracking() : DbContext.Set<T>();
+
+        public async Task<T> FirstOrDefaultAsync(bool trackEntity)
+        {
+            IQueryable<T> model = DbContext.Set<T>();
+
+            if (!trackEntity) model = model.AsNoTracking();
+
+            return await model.FirstOrDefaultAsync();
+        }
+
+        public async Task<T> FirstOrDefaultAsync(Predicate<T> condition, bool trackEntity)
+        {
+            IQueryable<T> model = DbContext.Set<T>();
+
+            if (!trackEntity) model = model.AsNoTracking();
+
+            return await model.FirstOrDefaultAsync(item => condition(item));
+        }
+
+        public async Task<IEnumerable<T>> GetAllInChunkAsync(bool trackEntities)
+        {
+            var tokens = trackEntities ? DbContext.Set<T>() : DbContext.Set<T>().AsNoTracking();
+
+            return await tokens.ToListAsync();
+        }
+
+        public T FirstOrDefault(Predicate<T> condition, bool trackEntity)
+        {
+            IQueryable<T> model = DbContext.Set<T>();
+
+            if (!trackEntity) model = model.AsNoTracking();
+
+            return model.FirstOrDefault(item => condition(item));
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Domain.Common.Enums;
 using ITechBy.Domain.Common;
 
-namespace Infrastructure.Implementations.Entities.Account
+namespace Services.Abstractions.Data.Account
 {
     public class ConnectionEntity : AuditableEntity
     {
