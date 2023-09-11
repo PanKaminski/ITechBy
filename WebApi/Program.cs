@@ -1,6 +1,11 @@
+using System.Reflection;
+using WebApi.Platform;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.ConfigureAuth();
+builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -18,6 +23,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
