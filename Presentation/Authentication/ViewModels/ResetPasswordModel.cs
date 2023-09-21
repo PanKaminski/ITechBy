@@ -2,13 +2,16 @@
 
 namespace Presentation.Authentication.ViewModels
 {
-    public class LoginModel
+    public class ResetPasswordModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string Token { get; set; }
 
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
     }
 }

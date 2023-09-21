@@ -22,7 +22,6 @@ namespace Services.Abstractions.Extensions
             LastName = user.LastName,
             Gender = user.Gender,
             RefreshToken = user.RefreshToken.ToEntity(),
-            RefreshTokenId = user.RefreshToken?.Id ?? 0,
             PasswordHash = user.PasswordHash,
             PasswordSalt = user.PasswordSalt,
             PasswordResetTime = user.PasswordResetTime,
@@ -31,7 +30,7 @@ namespace Services.Abstractions.Extensions
             VerificationToken = user.VerificationToken,
             ResetToken = user.ResetToken,
             ResetTokenExpires = user.ResetTokenExpires,
-            Roles = user.Roles?.Select(r => r.ToEntity()),
+            Roles = user.Roles?.Select(r => r.ToEntity()).ToList(),
         };
 
         public static RoleEntity ToEntity(this RoleType role) => new RoleEntity(role);

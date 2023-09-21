@@ -18,19 +18,18 @@ namespace Presentation.Authentication.Commands
             this.accountsService = accountsService;
         }
 
-        public Task<ServerOperationResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<ServerOperationResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             var viewModel = new RegisterRequestModel(
                 request.model.FirstName, 
                 request.model.LastName,
                 request.model.Email,
-                request.model.Login,
                 request.model.Password,
                 (GenderType)request.model.Gender,
                 request.origin
             );
 
-            return accountsService.RegisterAsync(viewModel);
+            return await accountsService.RegisterAsync(viewModel);
         }
     }
 }

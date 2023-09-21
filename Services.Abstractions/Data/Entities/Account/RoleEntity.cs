@@ -11,6 +11,6 @@ namespace Services.Abstractions.Data.Account
 
         public RoleType Type { get; set; }
 
-        public IEnumerable<AccountEntity> Accounts { get; set; }
+        public ICollection<UserEntity> Accounts { get; set; }
     }
 }

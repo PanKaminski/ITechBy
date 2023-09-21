@@ -5,8 +5,6 @@ namespace Domain.Models.Account
 {
     public class Account : ManagedEntity
     {
-        public string Login { get; set; }
-
         public string Email { get; set; }
 
         public string PasswordHash { get; set; }
@@ -25,7 +23,7 @@ namespace Domain.Models.Account
 
         public DateTime? PasswordResetTime { get; set; }
 
-        public IEnumerable<RoleType> Roles { get; set; }
+        public ICollection<RoleType> Roles { get; set; }
 
         public RefreshToken RefreshToken { get; set; }
     }

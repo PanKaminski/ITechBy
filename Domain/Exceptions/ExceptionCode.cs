@@ -8,7 +8,6 @@
         IncorrectPassword = 4,
         InvalidRefreshToken = 5,
         UserDoesntExist = 6,
-        VerificationFailed = 7,
-        InvalidResetToken = 8,
+        InvalidResetToken = 7,
     }
 }

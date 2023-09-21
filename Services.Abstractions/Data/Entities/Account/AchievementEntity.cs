@@ -8,6 +8,6 @@ namespace Services.Abstractions.Data.Account
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public IEnumerable<UserEntity> Users { get; set; }
+        public ICollection<UserEntity> Users { get; set; }
     }
 }
