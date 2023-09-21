@@ -13,8 +13,7 @@ namespace Infrastructure.Implementations.Repositories
         {
         }
 
-        public bool Exists(string email, string login) =>
-            Get(acc => acc.Login == login || acc.Email == email, false).Any();
+        public bool Exists(string email) => Get(acc => acc.Email == email, false).Any();
 
         public UserEntity Find(string email, bool trackEntity, List<AccountLoadOptions> loadOptions)
         {

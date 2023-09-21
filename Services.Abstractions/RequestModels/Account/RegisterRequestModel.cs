@@ -3,5 +3,5 @@
 namespace Services.Abstractions.RequestModels.Account
 {
     public record RegisterRequestModel(string firstName, string lastName, string email,
-        string login, string password, GenderType gender, string origin = null);
+         string password, GenderType gender, string origin = null);
 }

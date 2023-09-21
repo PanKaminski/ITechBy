@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Services.Implementations.Account
 {
-    public class AccountService : IAccountsService
+    public class AccountsService : IAccountsService
     {
         private const int PswHashIterationsCount = 100;
         private const int ResetTokenExpireDays = 1;
@@ -26,7 +26,7 @@ namespace Services.Implementations.Account
         private readonly ITokenService tokenService;
         private readonly IEmailService emailService;
 
-        public AccountService(IUnitOfWork unitOfWork, ITokenService tokenService, IEmailService emailService)
+        public AccountsService(IUnitOfWork unitOfWork, ITokenService tokenService, IEmailService emailService)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             this.tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
@@ -36,7 +36,7 @@ namespace Services.Implementations.Account
         public AuthenticateResponseModel Login(string email, string password)
         {
             var loadOptions = new List<AccountLoadOptions> { AccountLoadOptions.WithRoles, AccountLoadOptions.WithRefreshTokens };
-            var userDto = unitOfWork.UsersRepository.Find(email, true, loadOptions);
+            var userDto = unitOfWork.UsersRepository.Find(email, false, loadOptions);
 
             if (userDto is { VerificationTime: null })
             {
@@ -49,7 +49,7 @@ namespace Services.Implementations.Account
             }
 
             var jwt = GenerateGwt(userDto);
-            tokenService.ResetRefreshToken(userDto.Id);
+            userDto.RefreshToken = tokenService.ResetRefreshToken(userDto.Id).ToEntity();
 
             unitOfWork.Commit();
 
@@ -60,16 +60,16 @@ namespace Services.Implementations.Account
         {
             ArgumentNullException.ThrowIfNull(nameof(requestModel));
 
-            if (unitOfWork.UsersRepository.Exists(requestModel.email, requestModel.login))
+            if (unitOfWork.UsersRepository.Exists(requestModel.email))
             {
                 throw new ITechCoreException(ExceptionCode.SuchUserAlreadyExists, "User with such code already exists");
             }
 
-            var user = await CreateUserAsync(requestModel.firstName, requestModel.lastName, requestModel.email, 
-                requestModel.login, requestModel.password, requestModel.gender);
+            var user = await CreateUserAsync(requestModel.firstName, requestModel.lastName, requestModel.email,
+                 requestModel.password, requestModel.gender);
             var userEntity = user.ToEntity();
-            userEntity.Roles = unitOfWork.RolesRepository.Get(r => user.Roles.Any(type => type == r.Type), true);
-            
+            userEntity.Roles = unitOfWork.RolesRepository.Get(r => user.Roles.Any(type => type == r.Type), true)?.ToList();
+
             unitOfWork.UsersRepository.Create(userEntity);
             await emailService.SendAsync(CreateEmailVerificationMessage(userEntity, requestModel.origin));
             await unitOfWork.CommitAsync();
@@ -77,27 +77,29 @@ namespace Services.Implementations.Account
             return new ServerOperationResult(ResultCode.Success, ServerMessageCode.RegistrationSuccess);
         }
 
-        public void VerifyEmail(string token)
+        public ServerOperationResult VerifyEmail(string token)
         {
             ArgumentException.ThrowIfNullOrEmpty(token);
             var account = unitOfWork.UsersRepository.FirstOrDefault(u => u.VerificationToken == token, true);
 
             if (account is null)
             {
-                throw new ITechCoreException(ExceptionCode.VerificationFailed, "Verification failed");
+                return new ServerOperationResult(ResultCode.Failed, ServerMessageCode.VerificationFailed, "Verification failed");
             }
 
             account.Status = AccountStatus.Approved;
             account.VerificationToken = null;
 
             unitOfWork.Commit();
+
+            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.EmailVerificationSuccess);
         }
 
-        public async Task ForgotPasswordAsync(string email, string origin)
+        public async Task<ServerOperationResult> ForgotPasswordAsync(string email, string origin)
         {
-            var accountDto = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.Email == email,true);
+            var accountDto = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.Email == email, true);
 
-            if (accountDto is null) return;
+            if (accountDto is null) return new ServerOperationResult(ResultCode.Failed, ServerMessageCode.InvalidUser);
 
             accountDto.ResetToken = await GenerateSpecificUserTokenAsync(u => u.ResetToken);
             accountDto.ResetTokenExpires = DateTime.UtcNow.AddDays(ResetTokenExpireDays);
@@ -105,10 +107,12 @@ namespace Services.Implementations.Account
 
             await emailService.SendAsync(CreatePasswordResetMessage(accountDto, origin));
 
-            unitOfWork.Commit();
+            await unitOfWork.CommitAsync();
+
+            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.CheckEmailForPswResetInstructions);
         }
 
-        public void ResetPassword(string token, string password)
+        public ServerOperationResult ResetPassword(string token, string password)
         {
             var account = GetUserByResetToken(token);
 
@@ -118,6 +122,8 @@ namespace Services.Implementations.Account
             account.Status = AccountStatus.Approved;
 
             unitOfWork.Commit();
+
+            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.ResetPasswordSuccess);
         }
 
         public void ValidateResetToken(string token)
@@ -128,11 +134,11 @@ namespace Services.Implementations.Account
             }
         }
 
-        private UserEntity GetUserByResetToken(string token) => 
+        private UserEntity GetUserByResetToken(string token) =>
             unitOfWork.UsersRepository.FirstOrDefault(u => u.ResetToken == token
             && u.ResetTokenExpires < DateTime.UtcNow, false);
 
-        public async Task <AuthenticateResponseModel> RefreshTokenAsync(string refreshTokenSource)
+        public async Task<AuthenticateResponseModel> RefreshTokenAsync(string refreshTokenSource)
         {
             var loadOptions = new List<AccountLoadOptions> { AccountLoadOptions.WithRoles, AccountLoadOptions.WithRefreshTokens };
             var userDto = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.RefreshToken?.Source == refreshTokenSource, false, loadOptions);
@@ -147,7 +153,7 @@ namespace Services.Implementations.Account
                 throw new ITechCoreException(ExceptionCode.InvalidRefreshToken, "Invalid refresh token");
             }
 
-            tokenService.ResetRefreshToken(userDto.Id);
+            userDto.RefreshToken = tokenService.ResetRefreshToken(userDto.Id).ToEntity();
             unitOfWork.Commit();
 
             var jwtToken = GenerateGwt(userDto);
@@ -155,14 +161,13 @@ namespace Services.Implementations.Account
             return CreateAccountResponse(userDto, jwtToken);
         }
 
-        private async Task<User> CreateUserAsync(string firstName, string lastName, string email, string login, string password, GenderType gender)
+        private async Task<User> CreateUserAsync(string firstName, string lastName, string email, string password, GenderType gender)
         {
             var pswHashResult = HashPassword(password);
             var role = unitOfWork.UsersRepository.HasAdminUser() ? RoleType.User : RoleType.Admin;
             var user = new User
             {
                 Email = email,
-                Login = login,
                 FirstName = firstName,
                 LastName = lastName,
                 Gender = gender,
@@ -176,7 +181,7 @@ namespace Services.Implementations.Account
             return user;
         }
 
-        private (string hash, string salt) HashPassword(string password) 
+        private (string hash, string salt) HashPassword(string password)
         {
             var salt = Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
 
@@ -207,9 +212,10 @@ namespace Services.Implementations.Account
                 Id = account.Id,
                 FirstName = account.FirstName,
                 LastName = account.LastName,
-                Email = account.Login,
+                Email = account.Email,
                 Roles = account.Roles.Select(r => r.Type),
                 JwtToken = jwt,
+                RefreshToken = account.RefreshToken?.Source,
             };
 
             return viewModel;
@@ -247,7 +253,7 @@ namespace Services.Implementations.Account
 
             var targetName = $"{user.FirstName} {user.LastName}" ?? string.Empty;
 
-            return new EmailMessage("ItechBy - Verify Email", message, new EmailAddress(user.Login, targetName));
+            return new EmailMessage("ItechBy - Verify Email", message, new EmailAddress(user.Email, targetName));
         }
 
         private EmailMessage CreatePasswordResetMessage(UserEntity user, string origin)
@@ -267,7 +273,7 @@ namespace Services.Implementations.Account
 
             var targetName = $"{user.FirstName} {user.LastName}" ?? string.Empty;
 
-            return new EmailMessage("ItechBy - Reset Password", message, new EmailAddress (user.Login, targetName));
+            return new EmailMessage("ItechBy - Reset Password", message, new EmailAddress(user.Email, targetName));
         }
     }
 }

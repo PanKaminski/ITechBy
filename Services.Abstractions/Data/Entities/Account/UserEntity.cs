@@ -1,5 +1,6 @@
 ﻿using Domain.Common.Enums;
 using Services.Abstractions.Data.Entities.Account;
+using Services.Abstractions.Data.Entities.Communication;
 
 namespace Services.Abstractions.Data.Account
 {
@@ -9,9 +10,7 @@ namespace Services.Abstractions.Data.Account
         public string LastName { get; set; }
         public GenderType Gender { get; set; }
 
-        public IEnumerable<SocialLinkEntity> SocialLinks { get; set; }
-        public IEnumerable<AchievementEntity> Achievements { get; set; }
-        public IEnumerable<ConnectionEntity> PendingConnections { get; set; }
-        public IEnumerable<ConnectionEntity> IncomingConnections { get; set; }
+        public ICollection<SocialLinkEntity> SocialLinks { get; set; }
+        public ICollection<AchievementEntity> Achievements { get; set; }
     }
 }

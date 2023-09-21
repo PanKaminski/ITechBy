@@ -15,11 +15,6 @@ namespace Presentation.Authentication.ViewModels
         public string LastName { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(30)]
-        public string Login { get; set; }
-
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -32,5 +27,7 @@ namespace Presentation.Authentication.ViewModels
 
         [Required]
         public byte Gender { get; set; }
+
+        public string Origin { get; set; }
     }
 }
