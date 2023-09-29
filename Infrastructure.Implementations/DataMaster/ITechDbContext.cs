@@ -12,7 +12,7 @@ namespace Infrastructure.Implementations.DataMaster
         public DbSet<RefreshTokenEntity> RefreshTokens { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<RoleEntity> Roles { get; set; }
-        public DbSet<AchievementEntity> UserAchievements { get; set; }
+        public DbSet<AchievementEntity> Achievements { get; set; }
         public DbSet<ConnectionEntity> Connections { get; set; }
         public DbSet<SocialLinkEntity> SocialLinks { get; set; }
         public DbSet<ConversationEntity> Conversations { get; set; }
@@ -67,7 +67,7 @@ namespace Infrastructure.Implementations.DataMaster
             modelBuilder.Entity<RoleEntity>().ToTable("roles", schema: "auth");
             modelBuilder.Entity<SocialLinkEntity>().ToTable("social_links", schema: "db");
             modelBuilder.Entity<ConnectionEntity>().ToTable("connections", schema: "db");
-            modelBuilder.Entity<AchievementEntity>().ToTable("user_achievements", schema: "db");
+            modelBuilder.Entity<AchievementEntity>().ToTable("achievements", schema: "db");
             modelBuilder.Entity<ConversationEntity>().ToTable("conversations", schema: "msg");
             modelBuilder.Entity<MessageEntity>().ToTable("messages", schema: "msg");
             modelBuilder.Entity<UserConversationRoleEntity>().ToTable("conversation_roles", schema: "msg");
@@ -80,23 +80,20 @@ namespace Infrastructure.Implementations.DataMaster
             // User realtions
             modelBuilder.Entity<UserEntity>()
                 .HasMany(u => u.Roles)
-                .WithMany(r => r.Accounts)
-                .UsingEntity(
+                .WithMany(r => r.Users)
+                .UsingEntity<UserRoleEntity>(
                     "user_roles",
-                    l => l.HasOne(typeof(UserEntity)).WithMany().HasForeignKey("UserId").HasPrincipalKey(nameof(UserEntity.Id)),
-                    r => r.HasOne(typeof(RoleEntity)).WithMany().HasForeignKey("RoleId").HasPrincipalKey(nameof(RoleEntity.Id)),
-                    j => j.HasKey("UserId", "RoleId")
-                 );
+                    l => l.HasOne<RoleEntity>().WithMany().HasForeignKey(e => e.RolesId),
+                    r => r.HasOne<UserEntity>().WithMany().HasForeignKey(e => e.UsersId)
+                );
             modelBuilder.Entity<UserEntity>()
                 .HasMany(u => u.Achievements)
                 .WithMany(ac => ac.Users)
-                .UsingEntity(
+                .UsingEntity<UserAchievementEntity>(
                     "user_achievements",
-                    l => l.HasOne(typeof(UserEntity)).WithMany().HasForeignKey("UserId").HasPrincipalKey(nameof(UserEntity.Id)),
-                    r => r.HasOne(typeof(AchievementEntity)).WithMany().HasForeignKey("AchievementId").HasPrincipalKey(nameof(AchievementEntity.Id)),
-                    j => j.HasKey("UserId", "AchievementId")
+                    l => l.HasOne<AchievementEntity>().WithMany().HasForeignKey(e => e.AchievementsId),
+                    r => r.HasOne<UserEntity>().WithMany().HasForeignKey(e => e.UsersId)
                  );
-
         }
 
         private void ConfigureOneToOneRelations(ModelBuilder modelBuilder)
@@ -121,12 +118,12 @@ namespace Infrastructure.Implementations.DataMaster
                 .HasOne(c => c.UserTo)
                 .WithMany(u => u.Followers)
                 .HasForeignKey(c => c.UserToId)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ConnectionEntity>()
                 .HasOne(c => c.UserFrom)
                 .WithMany(u => u.Following)
                 .HasForeignKey(c => c.UserFromId)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.NoAction);
             // Message relations
             modelBuilder.Entity<MessageEntity>()
                 .HasOne(m => m.Conversation)
