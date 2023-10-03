@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Presentation.Authentication.ViewModels;
-using Services.Abstractions.Account;
 using Services.Abstractions.RequestModels.Account;
 
 namespace Presentation.Authentication.Commands
@@ -9,16 +8,16 @@ namespace Presentation.Authentication.Commands
 
     public class LoginHandler : IRequestHandler<LoginCommand, AuthenticateResponseModel>
     {
-        private readonly IAccountsService accountsService;
+        private readonly AccountToolService accountToolService;
 
-        public LoginHandler(IAccountsService accountsService)
+        public LoginHandler(AccountToolService accountToolService)
         {
-            this.accountsService = accountsService;
+            this.accountToolService = accountToolService;
         }
 
         public async Task<AuthenticateResponseModel> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            return await Task.FromResult(accountsService.Login(request.model.Email, request.model.Password));
+            return await Task.FromResult(accountToolService.Login(request.model.Email, request.model.Password));
         }
     }
 }

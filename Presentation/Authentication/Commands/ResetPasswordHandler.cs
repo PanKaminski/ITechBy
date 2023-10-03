@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Presentation.Authentication.ViewModels;
-using Services.Abstractions.Account;
 using Services.Abstractions.Common.OperationResult;
 
 namespace Presentation.Authentication.Commands
@@ -9,16 +8,16 @@ namespace Presentation.Authentication.Commands
 
     public class ResetPasswordHandler : IRequestHandler<ResetPasswordCommand, ServerOperationResult>
     {
-        private readonly IAccountsService accountsService;
+        private readonly AccountToolService accountToolService;
 
-        public ResetPasswordHandler(IAccountsService accountsService)
+        public ResetPasswordHandler(AccountToolService accountToolService)
         {
-            this.accountsService = accountsService;
+            this.accountToolService = accountToolService;
         }
 
         public Task<ServerOperationResult> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(accountsService.ResetPassword(request.model.Token, request.model.Password));
+            return Task.FromResult(accountToolService.ResetPassword(request.model.Token, request.model.Password));
         }
     }
 }

@@ -18,12 +18,7 @@ namespace Services.Implementations.Common
             this.settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public Task SendAsync(EmailMessage message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task SendEmailAsync(EmailMessage message)
+        public async Task SendAsync(EmailMessage message)
         {
             var email = CreateEmailMessage(message);
 

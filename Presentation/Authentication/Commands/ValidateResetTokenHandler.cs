@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Services.Abstractions.Account;
 
 namespace Presentation.Authentication.Commands
 {
@@ -7,16 +6,16 @@ namespace Presentation.Authentication.Commands
 
     public class ValidateResetTokenHandler : IRequestHandler<ValidateResetTokenCommand>
     {
-        private readonly IAccountsService accountsService;
+        private readonly AccountToolService accountToolService;
 
-        public ValidateResetTokenHandler(IAccountsService accountsService)
+        public ValidateResetTokenHandler(AccountToolService accountToolService)
         {
-            this.accountsService = accountsService ?? throw new ArgumentNullException(nameof(accountsService));
+            this.accountToolService = accountToolService ?? throw new ArgumentNullException(nameof(accountToolService));
         }
 
         public Task Handle(ValidateResetTokenCommand request, CancellationToken cancellationToken)
         {
-            accountsService.ValidateResetToken(request.token);
+            accountToolService.ValidateResetToken(request.token);
 
             return Task.CompletedTask;
         }

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Services.Abstractions.Account;
 using Services.Abstractions.RequestModels.Account;
 
 namespace Presentation.Authentication.Commands
@@ -8,16 +7,16 @@ namespace Presentation.Authentication.Commands
 
     public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, AuthenticateResponseModel>
     {
-        private readonly IAccountsService accountsService;
+        private readonly AccountToolService accountToolService;
 
-        public RefreshTokenHandler(IAccountsService accountsService)
+        public RefreshTokenHandler(AccountToolService accountToolService)
         {
-            this.accountsService = accountsService;
+            this.accountToolService = accountToolService;
         }
 
         public async Task<AuthenticateResponseModel> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
-            return await accountsService.RefreshTokenAsync(request.refreshToken);
+            return await accountToolService.RefreshTokenAsync(request.refreshToken);
         }
     }
 }

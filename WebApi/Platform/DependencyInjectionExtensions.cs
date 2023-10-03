@@ -3,6 +3,8 @@ using Infrastructure.Implementations.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Presentation.Authentication;
+using Presentation.Authentication.Commands;
 using Services.Abstractions.Account;
 using Services.Abstractions.Common;
 using Services.Abstractions.Data;
@@ -11,6 +13,7 @@ using Services.Implementations.Account;
 using Services.Implementations.Account.Utils;
 using Services.Implementations.Common;
 using Services.Implementations.Utils;
+using System.Reflection;
 using System.Text;
 using WebApi.Platform.Settings;
 
@@ -44,12 +47,14 @@ namespace WebApi.Platform
             });
         }
 
+        public static Assembly GetPresentationAssembly() => typeof(RegisterHandler).Assembly;
+
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
-            services.AddScoped<IEmailService, IEmailService>();
-            services.AddScoped<ITokenService, ITokenService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountsService, AccountsService>();
             services.AddSingleton<IEmailService, EmailService>();
+            services.AddScoped<AccountToolService>();
 
             return services;
         }
