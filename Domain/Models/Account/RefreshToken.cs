@@ -11,6 +11,14 @@ namespace Domain.Models.Account
             CreatedTime = DateTime.UtcNow;
         }
 
+        public RefreshToken(int id, string source, DateTime expireTime, DateTime createdTime)
+        {
+            Id = id;
+            Source = source;
+            ExpireTime = expireTime;
+            CreatedTime = createdTime;
+        }
+
         public string Source { get; set; }
         public DateTime ExpireTime { get; set; }
     }

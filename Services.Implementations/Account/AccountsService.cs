@@ -4,7 +4,6 @@ using Domain.Models.Account;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Services.Abstractions.Account;
 using Services.Abstractions.Common;
-using Services.Abstractions.Common.OperationResult;
 using Services.Abstractions.Data;
 using Services.Abstractions.Data.Account;
 using Services.Abstractions.Data.Repositories.LoadOptions;
@@ -24,13 +23,11 @@ namespace Services.Implementations.Account
 
         private readonly IUnitOfWork unitOfWork;
         private readonly ITokenService tokenService;
-        private readonly IEmailService emailService;
 
-        public AccountsService(IUnitOfWork unitOfWork, ITokenService tokenService, IEmailService emailService)
+        public AccountsService(IUnitOfWork unitOfWork, ITokenService tokenService)
         {
             this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             this.tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
-            this.emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
         public AuthenticateResponseModel Login(string email, string password)
@@ -56,7 +53,7 @@ namespace Services.Implementations.Account
             return CreateAccountResponse(userDto, jwt);
         }
 
-        public async Task<ServerOperationResult> RegisterAsync(RegisterRequestModel requestModel)
+        public async Task<User> RegisterAsync(RegisterRequestModel requestModel)
         {
             ArgumentNullException.ThrowIfNull(nameof(requestModel));
 
@@ -71,20 +68,18 @@ namespace Services.Implementations.Account
             userEntity.Roles = unitOfWork.RolesRepository.Get(r => user.Roles.Any(type => type == r.Type), true)?.ToList();
 
             unitOfWork.UsersRepository.Create(userEntity);
-            await emailService.SendAsync(CreateEmailVerificationMessage(userEntity, requestModel.origin));
-            await unitOfWork.CommitAsync();
 
-            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.RegistrationSuccess);
+            return user;
         }
 
-        public ServerOperationResult VerifyEmail(string token)
+        public bool VerifyEmail(string token)
         {
             ArgumentException.ThrowIfNullOrEmpty(token);
             var account = unitOfWork.UsersRepository.FirstOrDefault(u => u.VerificationToken == token, true);
 
             if (account is null)
             {
-                return new ServerOperationResult(ResultCode.Failed, ServerMessageCode.VerificationFailed, "Verification failed");
+                return false;
             }
 
             account.Status = AccountStatus.Approved;
@@ -92,38 +87,38 @@ namespace Services.Implementations.Account
 
             unitOfWork.Commit();
 
-            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.EmailVerificationSuccess);
+            return true;
         }
 
-        public async Task<ServerOperationResult> ForgotPasswordAsync(string email, string origin)
+        public async Task<User> ForgotPasswordAsync(string email, string origin)
         {
             var accountDto = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.Email == email, true);
 
-            if (accountDto is null) return new ServerOperationResult(ResultCode.Failed, ServerMessageCode.InvalidUser);
+            if (accountDto is null)
+            {
+                throw new ITechCoreException(ExceptionCode.UserDoesntExist);
+            }
 
             accountDto.ResetToken = await GenerateSpecificUserTokenAsync(u => u.ResetToken);
             accountDto.ResetTokenExpires = DateTime.UtcNow.AddDays(ResetTokenExpireDays);
             accountDto.Status = AccountStatus.Draft;
 
-            await emailService.SendAsync(CreatePasswordResetMessage(accountDto, origin));
-
-            await unitOfWork.CommitAsync();
-
-            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.CheckEmailForPswResetInstructions);
+            return accountDto.ToModel();
         }
 
-        public ServerOperationResult ResetPassword(string token, string password)
+        public void ResetPassword(string token, string password)
         {
             var account = GetUserByResetToken(token);
+
+            if (account is null) 
+            {
+                throw new ITechCoreException(ExceptionCode.UserDoesntExist);
+            }
 
             (account.PasswordHash, account.PasswordSalt) = HashPassword(password);
             account.ResetToken = null;
             account.ResetTokenExpires = null;
             account.Status = AccountStatus.Approved;
-
-            unitOfWork.Commit();
-
-            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.ResetPasswordSuccess);
         }
 
         public void ValidateResetToken(string token)
@@ -232,48 +227,6 @@ namespace Services.Implementations.Account
             } while (users.Any(u => tokenFieldMapper(u) == token));
 
             return token;
-        }
-
-        private EmailMessage CreateEmailVerificationMessage(UserEntity user, string origin)
-        {
-            var message = "<h1>Thank you for registering!</h1>\n";
-
-            if (!string.IsNullOrEmpty(origin))
-            {
-                var verifyUrl = $"{origin}/verify-email?token={user.VerificationToken}";
-
-                message += $@"<p>Please follow the link to verify your email address:</p>
-                            <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
-            }
-            else
-            {
-                message += $@"<p>Please insert this token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
-                            <p><code>{user.VerificationToken}</code></p>";
-            }
-
-            var targetName = $"{user.FirstName} {user.LastName}" ?? string.Empty;
-
-            return new EmailMessage("ItechBy - Verify Email", message, new EmailAddress(user.Email, targetName));
-        }
-
-        private EmailMessage CreatePasswordResetMessage(UserEntity user, string origin)
-        {
-            var message = "<h4>Reset Password Email</h4>\n";
-            if (!string.IsNullOrEmpty(origin))
-            {
-                var resetUrl = $"{origin}/reset-password?token={user.ResetToken}";
-                message += $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
-                            <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
-            }
-            else
-            {
-                message += $@"<p>Please use the below token to reset your password with the <code>/accounts/reset-password</code> api route:</p>
-                            <p><code>{user.ResetToken}</code></p>";
-            }
-
-            var targetName = $"{user.FirstName} {user.LastName}" ?? string.Empty;
-
-            return new EmailMessage("ItechBy - Reset Password", message, new EmailAddress(user.Email, targetName));
         }
     }
 }

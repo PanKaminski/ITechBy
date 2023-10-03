@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Presentation.Authentication.ViewModels;
-using Services.Abstractions.Account;
 using Services.Abstractions.Common.OperationResult;
 
 namespace Presentation.Authentication.Commands
@@ -9,16 +8,16 @@ namespace Presentation.Authentication.Commands
 
     public class VerifyEmailHandler : IRequestHandler<VerifyEmailCommand, ServerOperationResult>
     {
-        private readonly IAccountsService accountsService;
+        private readonly AccountToolService accountToolService;
 
-        public VerifyEmailHandler(IAccountsService accountsService)
+        public VerifyEmailHandler(AccountToolService accountToolService)
         {
-            this.accountsService = accountsService ?? throw new ArgumentNullException(nameof(accountsService));
+            this.accountToolService = accountToolService ?? throw new ArgumentNullException(nameof(accountToolService));
         }
 
         public Task<ServerOperationResult> Handle(VerifyEmailCommand request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(accountsService.VerifyEmail(request.model.Token));
+            return Task.FromResult(accountToolService.VerifyEmail(request.model.Token));
         }
     }
 }

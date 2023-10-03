@@ -9,5 +9,6 @@
         InvalidUser = 4,
         CheckEmailForPswResetInstructions = 5,
         ResetPasswordSuccess = 9,
+        ResetPasswordFailed = 10,
     }
 }

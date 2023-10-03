@@ -6,9 +6,10 @@ using WebApi.Platform.Settings;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.ConfigureAuth();
 builder.ConfigureAppsettings();
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.ConfigureAuth();
+builder.Services.AddMediatR(config => 
+    config.RegisterServicesFromAssembly(DependencyInjectionExtensions.GetPresentationAssembly()));
 builder.Services.AddEFCoreContext(builder.Configuration);
 builder.Services.AddInfrastructure();
 builder.Services.AddCoreServices();

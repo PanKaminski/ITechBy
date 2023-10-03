@@ -1,7 +1,6 @@
 ﻿using Domain.Common.Enums;
 using MediatR;
 using Presentation.Authentication.ViewModels;
-using Services.Abstractions.Account;
 using Services.Abstractions.Common.OperationResult;
 using Services.Abstractions.RequestModels.Account;
 
@@ -11,11 +10,11 @@ namespace Presentation.Authentication.Commands
 
     public class RegisterHandler : IRequestHandler<RegisterCommand, ServerOperationResult>
     {
-        private readonly IAccountsService accountsService;
+        private readonly AccountToolService accountToolService;
 
-        public RegisterHandler(IAccountsService accountsService)
+        public RegisterHandler(AccountToolService accounToolService)
         {
-            this.accountsService = accountsService;
+            this.accountToolService = accounToolService;
         }
 
         public async Task<ServerOperationResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -29,7 +28,7 @@ namespace Presentation.Authentication.Commands
                 request.origin
             );
 
-            return await accountsService.RegisterAsync(viewModel);
+            return await accountToolService.RegisterAsync(viewModel);
         }
     }
 }

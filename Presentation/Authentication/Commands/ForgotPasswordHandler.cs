@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Presentation.Authentication.ViewModels;
-using Services.Abstractions.Account;
 using Services.Abstractions.Common.OperationResult;
 
 namespace Presentation.Authentication.Commands
@@ -9,16 +8,16 @@ namespace Presentation.Authentication.Commands
 
     public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, ServerOperationResult>
     {
-        private readonly IAccountsService accountsService;
+        private readonly AccountToolService accountToolService;
 
-        public ForgotPasswordHandler(IAccountsService accountsService)
+        public ForgotPasswordHandler(AccountToolService accountToolService)
         {
-            this.accountsService = accountsService;
+            this.accountToolService = accountToolService;
         }
 
         public async Task<ServerOperationResult> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
-            return await accountsService.ForgotPasswordAsync(request.model.Email, request.origin);
+            return await accountToolService.ForgotPasswordAsync(request.model.Email, request.origin);
         }
     }
 }
