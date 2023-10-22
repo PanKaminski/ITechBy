@@ -1,4 +1,5 @@
-﻿using Domain.Models.Account;
+﻿using Domain.Exceptions;
+using Domain.Models.Account;
 using Services.Abstractions.Account;
 using Services.Abstractions.Common;
 using Services.Abstractions.Common.OperationResult;
@@ -31,7 +32,21 @@ namespace Presentation.Authentication
             return new ServerOperationResult(ResultCode.Success, ServerMessageCode.RegistrationSuccess);
         }
 
-        public AuthenticateResponseModel Login(string email, string password) => accountsService.Login(email, password);
+        public AuthenticateResponseModel Login(string email, string password)
+        {
+            try
+            {
+                return accountsService.Login(email, password);
+            }
+            catch (ITechCoreException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw new ITechCoreException("Failed to login");
+            }
+        }
         
         public Task<AuthenticateResponseModel> RefreshTokenAsync(string refreshTokenSource) => accountsService.RefreshTokenAsync(refreshTokenSource);
 

@@ -65,7 +65,7 @@ namespace Services.Implementations.Account
             var user = await CreateUserAsync(requestModel.firstName, requestModel.lastName, requestModel.email,
                  requestModel.password, requestModel.gender);
             var userEntity = user.ToEntity();
-            userEntity.Roles = unitOfWork.RolesRepository.Get(r => user.Roles.Any(type => type == r.Type), true)?.ToList();
+            userEntity.Roles = unitOfWork.RolesRepository.Get( r => user.Roles.Contains(r.Type), true).ToList();
 
             unitOfWork.UsersRepository.Create(userEntity);
 
@@ -83,6 +83,7 @@ namespace Services.Implementations.Account
             }
 
             account.Status = AccountStatus.Approved;
+            account.VerificationTime = DateTime.UtcNow;
             account.VerificationToken = null;
 
             unitOfWork.Commit();

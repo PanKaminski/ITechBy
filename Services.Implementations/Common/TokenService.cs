@@ -32,7 +32,7 @@ namespace Services.Implementations.Common
             {
                 Subject = new ClaimsIdentity(identityInfos),
                 Expires = DateTime.UtcNow.AddMinutes(jwtSettings.JwtExpireTimeMinutes),
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256),
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
                 Issuer = jwtSettings.ValidIssuer,
                 Audience = jwtSettings.ValidIssuer,
             };

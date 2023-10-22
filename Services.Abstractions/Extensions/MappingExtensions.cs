@@ -21,6 +21,7 @@ namespace Services.Abstractions.Extensions
         public static UserEntity ToEntity(this User user) => new UserEntity
         {
             Id = user.Id,
+            Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Gender = user.Gender,
@@ -39,6 +40,7 @@ namespace Services.Abstractions.Extensions
         public static User ToModel(this UserEntity user) => new User
         {
             Id = user.Id,
+            Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Gender = user.Gender,
