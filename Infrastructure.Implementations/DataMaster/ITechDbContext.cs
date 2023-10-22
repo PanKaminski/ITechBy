@@ -28,6 +28,7 @@ namespace Infrastructure.Implementations.DataMaster
             ConfigureOneToManyRelations(modelBuilder);
             ConfigureOneToOneRelations(modelBuilder);
             ConfigureManyToManyRelations(modelBuilder);
+            SeedData(modelBuilder);
         }
 
         private static void ConfigureDataTypes(ModelBuilder modelBuilder)
@@ -38,10 +39,10 @@ namespace Infrastructure.Implementations.DataMaster
                     eb.Property(u => u.FirstName).HasColumnType("varchar(36)");
                     eb.Property(u => u.LastName).HasColumnType("varchar(36)");
                     eb.Property(u => u.Email).HasColumnType("varchar(36)");
-                    eb.Property(u => u.PasswordHash).HasColumnType("varchar(64)");
-                    eb.Property(u => u.PasswordSalt).HasColumnType("varchar(64)");
-                    eb.Property(u => u.VerificationToken).HasColumnType("varchar(64)");
-                    eb.Property(u => u.ResetToken).HasColumnType("varchar(64)");
+                    eb.Property(u => u.PasswordHash).HasColumnType("varchar(256)");
+                    eb.Property(u => u.PasswordSalt).HasColumnType("varchar(256)");
+                    eb.Property(u => u.VerificationToken).HasColumnType("varchar(256)");
+                    eb.Property(u => u.ResetToken).HasColumnType("varchar(256)");
                 });
             modelBuilder.Entity<ConversationEntity>(
                 eb =>
@@ -51,7 +52,7 @@ namespace Infrastructure.Implementations.DataMaster
             modelBuilder.Entity<RefreshTokenEntity>(
                 eb =>
                 {
-                    eb.Property(u => u.Source).HasColumnType("varchar(64)");
+                    eb.Property(u => u.Source).HasColumnType("varchar(256)");
                 });
             modelBuilder.Entity<SocialLinkEntity>(
                 eb =>
@@ -157,6 +158,15 @@ namespace Infrastructure.Implementations.DataMaster
                 .WithMany(c => c.UserConversations)
                 .HasForeignKey(uc => uc.ConversationId)
                 .IsRequired();
+        }
+
+        private static void SeedData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RoleEntity>().HasData(
+                new RoleEntity { Id = 1, Type = Domain.Common.Enums.RoleType.Developer, CreatedTime = DateTime.UtcNow },
+                new RoleEntity { Id = 2, Type = Domain.Common.Enums.RoleType.Admin, CreatedTime = DateTime.UtcNow },
+                new RoleEntity { Id = 3, Type = Domain.Common.Enums.RoleType.User, CreatedTime = DateTime.UtcNow }
+                );
         }
     }
 }

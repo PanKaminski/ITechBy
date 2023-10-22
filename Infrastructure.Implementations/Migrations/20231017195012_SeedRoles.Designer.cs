@@ -4,6 +4,7 @@ using Infrastructure.Implementations.DataMaster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Implementations.Migrations
 {
     [DbContext(typeof(ITechDbContext))]
-    partial class ITechDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231017195012_SeedRoles")]
+    partial class SeedRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,19 +113,19 @@ namespace Infrastructure.Implementations.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2023, 10, 22, 10, 13, 6, 316, DateTimeKind.Utc).AddTicks(2324),
+                            CreatedTime = new DateTime(2023, 10, 17, 19, 50, 11, 956, DateTimeKind.Utc).AddTicks(4798),
                             Type = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2023, 10, 22, 10, 13, 6, 316, DateTimeKind.Utc).AddTicks(2329),
+                            CreatedTime = new DateTime(2023, 10, 17, 19, 50, 11, 956, DateTimeKind.Utc).AddTicks(4803),
                             Type = 2
                         },
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTime(2023, 10, 22, 10, 13, 6, 316, DateTimeKind.Utc).AddTicks(2331),
+                            CreatedTime = new DateTime(2023, 10, 17, 19, 50, 11, 956, DateTimeKind.Utc).AddTicks(4804),
                             Type = 3
                         });
                 });
@@ -184,16 +187,16 @@ namespace Infrastructure.Implementations.Migrations
                         .HasColumnType("varchar(36)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<DateTime?>("PasswordResetTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordSalt")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("ResetToken")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<DateTime?>("ResetTokenExpires")
                         .HasColumnType("datetime2");
@@ -208,7 +211,7 @@ namespace Infrastructure.Implementations.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VerificationToken")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("varchar(64)");
 
                     b.HasKey("Id");
 
@@ -230,7 +233,7 @@ namespace Infrastructure.Implementations.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Source")
-                        .HasColumnType("varchar(256)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");

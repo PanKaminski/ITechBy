@@ -4,6 +4,7 @@ using Infrastructure.Implementations.Extensions;
 using ITechBy.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 using Services.Abstractions.Data.Repositories;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Implementations.Repositories
 {
@@ -34,9 +35,9 @@ namespace Infrastructure.Implementations.Repositories
             DbContext.Set<T>().Remove(entity);
         }
 
-        public IQueryable<T> Get(Predicate<T> condition, bool trackEntities)
+        public IQueryable<T> Get(Expression<Func<T, bool>> condition, bool trackEntities)
         {
-            IQueryable<T> model = DbContext.Set<T>().Where(item => condition(item));
+            IQueryable<T> model = DbContext.Set<T>().Where(condition);
 
             if (!trackEntities)
             {
@@ -46,7 +47,7 @@ namespace Infrastructure.Implementations.Repositories
             return model;
         }
 
-        public IQueryable<T> Get(Predicate<T> condition, int skipCount, int count, bool trackEntities)
+        public IQueryable<T> Get(Expression<Func<T, bool>> condition, int skipCount, int count, bool trackEntities)
         {
             if (skipCount < 0)
             {
@@ -63,16 +64,16 @@ namespace Infrastructure.Implementations.Repositories
 
         public IAsyncEnumerable<T> GetAllAsync() => DbContext.Set<T>().AsNoTracking().AsAsyncEnumerable();
 
-        public IAsyncEnumerable<T> GetAsync(Predicate<T> condition, int skipCount, int count, bool trackEntities) =>
+        public IAsyncEnumerable<T> GetAsync(Expression<Func<T, bool>> condition, int skipCount, int count, bool trackEntities) =>
             Get(condition, skipCount, count, trackEntities).AsAsyncEnumerable();
 
-        public IAsyncEnumerable<T> GetAsync(Predicate<T> condition, bool trackEntities) =>
+        public IAsyncEnumerable<T> GetAsync(Expression<Func<T, bool>> condition, bool trackEntities) =>
             Get(condition, trackEntities).AsAsyncEnumerable();
 
 
-        public async Task<PagedModel<T>> GetPaginatedAsync(Predicate<T> condition, int page, int pageSize, bool trackEntities)
+        public async Task<PagedModel<T>> GetPaginatedAsync(Expression<Func<T, bool>> condition, int page, int pageSize, bool trackEntities)
         {
-            return await (Get(condition, trackEntities)).PaginateAsync(page, pageSize);
+            return await Get(condition, trackEntities).PaginateAsync(page, pageSize);
         }
 
         public void Update(T entity)
@@ -93,13 +94,13 @@ namespace Infrastructure.Implementations.Repositories
             return await model.FirstOrDefaultAsync();
         }
 
-        public async Task<T> FirstOrDefaultAsync(Predicate<T> condition, bool trackEntity)
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> condition, bool trackEntity)
         {
             IQueryable<T> model = DbContext.Set<T>();
 
             if (!trackEntity) model = model.AsNoTracking();
 
-            return await model.FirstOrDefaultAsync(item => condition(item));
+            return await model.FirstOrDefaultAsync(condition);
         }
 
         public async Task<IEnumerable<T>> GetAllInChunkAsync(bool trackEntities)
@@ -109,13 +110,13 @@ namespace Infrastructure.Implementations.Repositories
             return await tokens.ToListAsync();
         }
 
-        public T FirstOrDefault(Predicate<T> condition, bool trackEntity)
+        public T FirstOrDefault(Expression<Func<T, bool>> condition, bool trackEntity)
         {
             IQueryable<T> model = DbContext.Set<T>();
 
             if (!trackEntity) model = model.AsNoTracking();
 
-            return model.FirstOrDefault(item => condition(item));
+            return model.FirstOrDefault(condition);
         }
     }
 }
