@@ -1,4 +1,5 @@
 ﻿using Domain.Common.Enums;
+using Domain.Models.Learning;
 
 namespace Domain.Models.Account
 {
@@ -8,5 +9,6 @@ namespace Domain.Models.Account
         public string LastName { get; set; }
 
         public GenderType Gender { get; set; }
+        public ICollection<UserLanguage> Languages { get; set; } = new List<UserLanguage>();
     }
 }

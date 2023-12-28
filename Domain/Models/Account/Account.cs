@@ -26,5 +26,6 @@ namespace Domain.Models.Account
         public ICollection<RoleType> Roles { get; set; }
 
         public RefreshToken RefreshToken { get; set; }
+        public Country Country { get; set; }
     }
 }

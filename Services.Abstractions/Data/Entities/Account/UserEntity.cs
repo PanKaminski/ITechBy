@@ -1,5 +1,6 @@
 ﻿using Domain.Common.Enums;
 using Services.Abstractions.Data.Entities.Account;
+using Services.Abstractions.Data.Entities.Learning;
 
 namespace Services.Abstractions.Data.Account
 {
@@ -11,5 +12,6 @@ namespace Services.Abstractions.Data.Account
 
         public ICollection<SocialLinkEntity> SocialLinks { get; set; }
         public ICollection<AchievementEntity> Achievements { get; set; } = new List<AchievementEntity>();
+        public ICollection<UserLanguageEntity> Languages { get; set; } = new List<UserLanguageEntity>();
     }
 }
