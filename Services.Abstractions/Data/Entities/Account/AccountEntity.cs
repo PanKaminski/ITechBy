@@ -17,6 +17,9 @@ namespace Services.Abstractions.Data.Entities.Account
         public DateTime? ResetTokenExpires { get; set; }
         public DateTime? PasswordResetTime { get; set; }
 
+        public int CountryId { get; set; }
+        public CountryEntity Country { get; set; }
+
         public RefreshTokenEntity RefreshToken { get; set; }
         public ICollection<RoleEntity> Roles { get; set; } = new List<RoleEntity>();
         public ICollection<ConnectionEntity> Followers { get; set; }

@@ -1,0 +1,34 @@
+@import "../../../shared/styles/common.scss";
+
+.dialog-container {
+    padding: 40px 160px;
+    background: linear-gradient(45deg, $background-grey, $project-accent);
+}
+
+.authentication {
+    height: calc(100vh - 40px * 2);
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.authentication-right {
+    position: relative;
+    background-color: $project-white;
+    overflow-y: auto;
+}
+
+.authentication-left {
+    position: relative;
+    overflow: hidden;
+    background-color: $project-white;
+    margin: 0;
+    padding: 0;
+  
+    img {     
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+    }
+}
