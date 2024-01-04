@@ -22,8 +22,13 @@ namespace Presentation.Authentication.ViewModels
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password")]
-        public string ConfirmPassword { get; set; }
+        public string CountryCode { get; set; }
+
+        [Required]
+        public ICollection<string> LanguageCodes { get; set; }
+
+        [Required]
+        public ICollection<string> TargetLanguageCodes { get;}
 
         [Required]
         public byte Gender { get; set; }
