@@ -25,6 +25,9 @@ namespace Presentation.Authentication.Commands
                 request.model.Email,
                 request.model.Password,
                 (GenderType)request.model.Gender,
+                request.model.CountryCode,
+                request.model.LanguageCodes,
+                request.model.TargetLanguageCodes,
                 request.origin
             );
 
