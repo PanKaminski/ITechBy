@@ -33,6 +33,7 @@
               "src/assets/fonts.scss",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@textabledev/langs-flags-list/lang-flags.css",
               "src/styles.scss"
             ],
             "scripts": []

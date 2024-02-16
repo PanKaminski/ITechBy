@@ -1,0 +1,11 @@
+.user-contacts {
+    display: flex;
+    flex-direction: row; // fxLayout
+    flex-wrap: wrap; //fxLayout
+    box-sizing: border-box;
+    align-content: stretch; // fxLayoutAlign
+    align-items: stretch; // fxLayoutAlign
+    justify-content: center; // fxLayoutAlign
+    row-gap: 10px;
+    column-gap: 20px;
+}

@@ -7,6 +7,9 @@ namespace Services.Abstractions.Data
         IRefreshTokensRepository RefreshTokensRepository { get; }
         IUsersRepository UsersRepository { get; }
         IRolesRepository RolesRepository { get; }
+        ILanguagesRepository LanguagesRepository { get; }
+        ILanguageLevelsRepository LanguageLevelsRepository { get; }
+        ICountriesRepository CountriesRepository { get; }
 
         void Commit();
         Task CommitAsync();

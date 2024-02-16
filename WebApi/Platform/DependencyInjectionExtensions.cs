@@ -9,9 +9,11 @@ using Services.Abstractions.Account;
 using Services.Abstractions.Common;
 using Services.Abstractions.Data;
 using Services.Abstractions.Data.Repositories;
+using Services.Abstractions.Learning;
 using Services.Implementations.Account;
 using Services.Implementations.Account.Utils;
 using Services.Implementations.Common;
+using Services.Implementations.Learning;
 using Services.Implementations.Utils;
 using System.Reflection;
 using System.Text;
@@ -54,7 +56,9 @@ namespace WebApi.Platform
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountsService, AccountsService>();
             services.AddSingleton<IEmailService, EmailService>();
+            services.AddScoped<ISelectItemsService, SelectItemsService>();
             services.AddScoped<AccountToolService>();
+            services.AddScoped<ILanguagePartnersService, LanguagePartnersService>();
 
             return services;
         }
@@ -71,12 +75,16 @@ namespace WebApi.Platform
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IRefreshTokensRepository, RefreshTokensRepository>();
             services.AddScoped<IRolesRepository, RolesRepository>();
+            services.AddScoped<ILanguagesRepository, LanguagesRepository>();
+            services.AddScoped<ICountriesRepository, CountriesRepository>();
+            services.AddScoped<ILanguageLevelsRepository, LanguageLevelsRepository>();
 
             return services;
         }
 
         public static void ConfigureAppsettings(this WebApplicationBuilder app)
         {
+            app.Services.Configure<CorsSettings>(app.Configuration.GetSection("CorsSettings"));
             app.Services.Configure<JwtSettings>(app.Configuration.GetSection("JwtSettings"));
             app.Services.Configure<EmailSettings>(app.Configuration.GetSection("EmailSettings"));
             app.Services.Configure<SwaggerSettings>(app.Configuration.GetSection("SwaggerSettings"));

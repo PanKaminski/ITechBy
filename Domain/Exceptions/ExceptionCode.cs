@@ -9,5 +9,6 @@
         InvalidRefreshToken = 5,
         UserDoesntExist = 6,
         InvalidResetToken = 7,
+        UserWithSuchRefreshTokenDoesntExist = 8,
     }
 }

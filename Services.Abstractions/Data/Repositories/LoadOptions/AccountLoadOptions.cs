@@ -4,5 +4,7 @@
     {
         WithRoles,
         WithRefreshTokens,
+        WithLanguages,
+        WithCountries,
     }
 }

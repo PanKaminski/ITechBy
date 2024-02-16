@@ -1,3 +1,5 @@
+@import "../../../shared/styles/common.scss";
+
 .login-text {
     padding-top: 2em;
     text-align: center;
@@ -6,4 +8,16 @@
 
 .after-success {
     text-align: center;
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: row;
+    //align-content: space-between;
+    justify-content: flex-end;
+    min-width: $auth-container-width;
+    gap: 10px;
+    .auth-button {
+        max-width: 50%;
+    }
 }

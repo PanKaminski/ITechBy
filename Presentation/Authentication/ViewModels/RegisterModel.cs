@@ -28,7 +28,7 @@ namespace Presentation.Authentication.ViewModels
         public ICollection<string> LanguageCodes { get; set; }
 
         [Required]
-        public ICollection<string> TargetLanguageCodes { get;}
+        public ICollection<string> TargetLanguageCodes { get; set; }
 
         [Required]
         public byte Gender { get; set; }

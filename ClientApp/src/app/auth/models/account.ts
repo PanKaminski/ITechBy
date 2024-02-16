@@ -9,4 +9,5 @@ export interface Account {
     roles: Role[];
     isVerified: boolean;
     jwtToken: string;
+    refreshToken: string;
 }

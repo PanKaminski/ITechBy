@@ -41,13 +41,27 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AuthenticateResponseModel>> RefreshTokenAsync()
+        public async Task<ActionResult<AuthenticateResponseModel>> RefreshTokenAsync(RevokeTokenModel model)
         {
-            var authResult = await mediator.Send(new RefreshTokenCommand(Request?.Cookies["refreshToken"]));
+            var token = model.RefreshToken ?? Request.Cookies["refreshToken"];
+            var authResult = await mediator.Send(new RefreshTokenCommand(token));
 
             SetTokenCookie(authResult.RefreshToken);
 
             return Ok(authResult);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ServerOperationResult>> RevokeTokenAsync(RevokeTokenModel model)
+        {
+            var token = model.RefreshToken ?? Request.Cookies["refreshToken"];
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest(new { message = "Token is required" });
+            }
+
+            return await mediator.Send(new RevokeTokenCommand(token));
         }
 
         [HttpPost]
@@ -82,6 +96,8 @@ namespace WebApi.Controllers
             {
                 Expires = DateTime.UtcNow.AddDays(jwtSettings.RefreshTokenExpireTimeDays),
                 HttpOnly = true,
+                //Secure = false,
+                SameSite = SameSiteMode.Strict
             };
 
             Response.Cookies.Append("refreshToken", token, cookieOptions);

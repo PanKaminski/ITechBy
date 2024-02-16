@@ -42,12 +42,17 @@ namespace Services.Implementations.Common
             return tokenHandler.WriteToken(token);
         }
 
+        public void RemoveRefreshToken(int accountId)
+        {
+            refreshTokensRepository.DeleteByAccount(accountId);
+        }
+
         public RefreshToken ResetRefreshToken(int accountId)
         {
             var newToken = GenerateRefreshToken();
             var rtEntity = newToken.ToEntity();
             rtEntity.UserId = accountId;
-            refreshTokensRepository.DeleteByAccount(accountId);
+            RemoveRefreshToken(accountId);
             refreshTokensRepository.Create(rtEntity);
 
             return newToken;

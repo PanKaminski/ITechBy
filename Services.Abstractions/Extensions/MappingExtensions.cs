@@ -1,7 +1,9 @@
 ﻿using Domain.Common.Enums;
 using Domain.Models.Account;
+using Domain.Models.Learning;
 using Services.Abstractions.Data.Account;
 using Services.Abstractions.Data.Entities.Account;
+using Services.Abstractions.Data.Entities.Learning;
 
 namespace Services.Abstractions.Extensions
 {
@@ -57,5 +59,29 @@ namespace Services.Abstractions.Extensions
         };
 
         public static RoleEntity ToEntity(this RoleType role) => new RoleEntity(role);
+
+        public static Language ToModel(this LanguageEntity language) => new Language
+        {
+            Code = language.Code,
+            Name = language.Name,
+            NativeName = language.NativeName,
+            UserLanguages = language.UserLanguages.Select(ul => ul.ToModel()).ToList(),
+        };
+
+        public static UserLanguage ToModel(this UserLanguageEntity userLanguage) => new UserLanguage
+        {
+            Id = userLanguage.Id,
+            User = userLanguage.User?.ToModel(),
+            Language = userLanguage.Language?.ToModel(),
+            Level = userLanguage.Level?.Level ?? LanguageLevel.None,
+            IsInLearning = userLanguage.IsInLearning,
+        };
+
+        public static Country ToModel(this CountryEntity country) => new Country 
+        {
+            Code = country.Code,
+            Name = country.Name,
+            Users = country.Users.Select(u => u.ToModel()).ToList(),
+        };
     }
 }

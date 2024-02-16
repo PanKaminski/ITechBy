@@ -5,3 +5,7 @@ export interface PagedModel<T> {
     totalCount: number;
     items: T[];
 }
+
+export interface RandomPagedModel<T> extends PagedModel<T> {
+    attendedPages: number[];
+}

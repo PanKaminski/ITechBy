@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Options;
-using System.Reflection;
 using WebApi.Platform;
 using WebApi.Platform.Settings;
 
@@ -31,6 +30,17 @@ if (app.Environment.IsDevelopment() && swaggerSettings.CurrentValue.SwaggerOn)
 
 app.UseRouting();
 app.UseHttpsRedirection();
+app.UseCookiePolicy();
+
+var corsSettings = app.Services.GetRequiredService<IOptionsMonitor<CorsSettings>>();
+
+app.UseCors(options =>
+{
+    options.WithOrigins(corsSettings.CurrentValue.AllowedCorsOrigins)
+        .AllowCredentials()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

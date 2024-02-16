@@ -1,0 +1,15 @@
+<div class="user-contacts" *ngIf="paginator$ | async as paginator"
+                           infiniteScroll
+                           [infiniteScrollDistance]="2"
+                           [infiniteScrollThrottle]="50"
+                           [immediateCheck]="true"
+                           (scrolled)="loadMorePartners(paginator)">
+    <div class="connection-card" *ngFor="let partnerCard of paginator.items">
+      <app-user-card-item [partner]="partnerCard">
+      </app-user-card-item>
+    </div>
+</div>
+
+<ng-container *ngIf="loading$ | async">
+  <app-loading-panel></app-loading-panel>
+</ng-container>    

@@ -1,12 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { Account } from "../models/account";
 import { AuthenticateRequest } from '../models/authenticate-request'
 import { RegisterRequest } from "../models/register-request";
 import { ResetPasswordRequest } from "../models/reset-password-request";
 import { environment } from "@environments/environment";
-import { ServerTextResponse } from "@shared/models/server-text-response";
 import { ServerResponse } from "@shared/models/server-response";
 
 @Injectable({providedIn: 'root'})
@@ -28,16 +27,16 @@ import { ServerResponse } from "@shared/models/server-response";
         return this.http.post<Account>(this.apiUrl + this.LOGIN, loginModel);
     }
 
-    logout(): Observable<ServerResponse> {
-        return this.revokeToken();
+    logout(refreshToken: string): Observable<ServerResponse> {
+        return this.revokeToken(refreshToken);
     }
 
-    revokeToken(refreshToken?: string): Observable<ServerResponse> {
-        return this.http.post<ServerResponse>(this.apiUrl + this.REVOKE_TOKEN, { refreshToken });
+    revokeToken(refreshToken: string): Observable<ServerResponse> {
+        return this.http.post<ServerResponse>(this.apiUrl + this.REVOKE_TOKEN, { refreshToken }, { withCredentials: true });
     }
 
-    refreshToken(): Observable<Account> {
-        return this.http.post<Account>(this.apiUrl + this.REFRESH_TOKEN, {})
+    refreshToken(refreshToken: string): Observable<Account> {
+        return this.http.post<Account>(this.apiUrl + this.REFRESH_TOKEN, { refreshToken }, { withCredentials: true })
     }
 
     register(registerModel: RegisterRequest): Observable<ServerResponse> {

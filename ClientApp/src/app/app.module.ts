@@ -17,7 +17,6 @@ import { APP_ROUTES } from './app-routes';
   ],
   imports: [
     CoreModule,
-    HttpClientModule,
     DefaultSetModule,
     BrowserModule,
     AppRoutingModule,
