@@ -1,6 +1,5 @@
 ﻿using Domain.Common.Enums;
 using ITechBy.Domain.Common;
-using Services.Abstractions.Data.Entities.Account;
 
 namespace Services.Abstractions.Data.Account
 {

@@ -10,5 +10,6 @@
         CheckEmailForPswResetInstructions = 5,
         ResetPasswordSuccess = 9,
         ResetPasswordFailed = 10,
+        TokenRevoked = 11,
     }
 }

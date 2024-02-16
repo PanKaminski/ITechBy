@@ -1,5 +1,6 @@
 ﻿using Services.Abstractions.Data.Entities.Account;
 using Services.Abstractions.Data.Entities.Learning;
+using System.Reflection;
 using System.Text.Json;
 
 namespace Infrastructure.Implementations.DataMaster.Utils
@@ -8,7 +9,9 @@ namespace Infrastructure.Implementations.DataMaster.Utils
     {
         public static CountryEntity[] GetCountries()
         {
-            var path = Path.Combine(Environment.CurrentDirectory, @"Files\", "countries.json");
+            var solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            var assemblyName = Assembly.GetAssembly(typeof(IntialDatabaseSetter)).GetName().Name;
+            var path = Path.Combine(@$"{solutionDirectory}\{assemblyName}\DataMaster\Utils\Files\", "countries.json");
             var jsonText = File.ReadAllText(path);
             var countries = JsonSerializer.Deserialize<CountryEntity[]>(jsonText);
 
@@ -23,7 +26,9 @@ namespace Infrastructure.Implementations.DataMaster.Utils
 
         public static LanguageEntity[] GetLanguages()
         {
-            var path = Path.Combine(Environment.CurrentDirectory, @"Files\", "languages.json");
+            var solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            var assemblyName = Assembly.GetAssembly(typeof(IntialDatabaseSetter)).GetName().Name;
+            var path = Path.Combine(@$"{solutionDirectory}\{assemblyName}\DataMaster\Utils\Files\", "languages.json");
             var jsonText = File.ReadAllText(path);
             var langDictionary = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonText);
 

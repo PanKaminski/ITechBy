@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { StorageKey } from "@shared/enums/storage-key";
 import { ServerResponse } from "@shared/models/server-response";
 import { StorageManager } from "@shared/services/storage-manager.service";
-import { finalize, map, Observable, Subject } from "rxjs";
+import { finalize, Observable, Subject, tap } from "rxjs";
 import { AccountApiService } from "../api/account.api.service";
 import { Account } from "../models/account";
 import { AuthenticateRequest } from "../models/authenticate-request";
@@ -33,30 +33,34 @@ import { ResetPasswordRequest as ResetPasswordRequest } from "../models/reset-pa
         this.isLoading = true;
 
         return this.api.login({email, password} as AuthenticateRequest)
-            .pipe(map(account => {
+            .pipe(tap(account => {
                 this.storageManager.saveJwt(account.jwtToken);
                 this.storageManager.saveItem(StorageKey.Account, account);
+                this.storageManager.saveItem(StorageKey.RefreshToken, account.refreshToken);
                 this.startRefreshTokenTimer();
-                return account;
             }),
             finalize(() => this.isLoading = false),
         );
     }
 
     logout(): void {
-        this.api.logout().subscribe();
+        const rt = this.storageManager.getItem(StorageKey.RefreshToken) as string;
+        this.api.logout(rt).subscribe();
         this.stopRefreshTokenTimer();
         this.storageManager.removeItem(StorageKey.Account);
         this.storageManager.removeItem(StorageKey.JwtToken);
+        this.storageManager.removeItem(StorageKey.RefreshToken);
         this.router.navigate(['/login']);
     }
 
     refreshToken(): Observable<Account> {
-        return this.api.refreshToken()
-            .pipe(map((account) => {
+        const rt = this.storageManager.getItem(StorageKey.RefreshToken) as string;
+        return this.api.refreshToken(rt)
+            .pipe(
+                tap((account) => {
                 this.storageManager.saveItem(StorageKey.Account, account);
+                this.storageManager.saveItem(StorageKey.RefreshToken, account.refreshToken);
                 this.startRefreshTokenTimer();
-                return account;
             }));
     }
 
@@ -120,6 +124,7 @@ import { ResetPasswordRequest as ResetPasswordRequest } from "../models/reset-pa
         .subscribe({
             error: () => {
                 this.storageManager.removeItem(StorageKey.Account);
+                this.storageManager.removeItem(StorageKey.RefreshToken);
             }
         }), timeout);
     }

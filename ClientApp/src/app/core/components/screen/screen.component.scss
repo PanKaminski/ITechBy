@@ -17,28 +17,9 @@
         height: calc(100% - #{$header-height});
 
         &_content {
+            padding: 15px;
             min-width: 872px;
             background-color: $project-white;
         }  
-
-        &_nav {
-            height: fit-content;
-            margin-top: 5%;
-            padding-block: 50px;
-            border-radius: 0 51px 51px 0;
-            background-color: $project-primary;
-            border: none;
-            width: $menu-width;
-        }
-    }
-
-    ::ng-deep .mat-drawer-inner-container::-webkit-scrollbar {
-        display: none;
-    }
-
-    ::ng-deep .mat-drawer-inner-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
     }
 }

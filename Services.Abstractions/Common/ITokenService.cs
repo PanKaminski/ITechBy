@@ -7,6 +7,7 @@ namespace Services.Abstractions.Common
     {
         string GenerateJwt(IEnumerable<Claim> identityInfos);
         RefreshToken ResetRefreshToken(int accountId);
+        void RemoveRefreshToken(int accountId);
         bool TryValidateAccessToken(string token, out int accountId);
     }
 }

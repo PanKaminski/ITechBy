@@ -2,17 +2,9 @@
   <div class="screen_header">
     <app-header></app-header>
   </div>
-  <mat-sidenav-container class="screen_container" [hasBackdrop]="false">
-    <mat-sidenav class="screen_container_nav" 
-                disableClose="true" 
-                opened="true"
-                [mode]="'over'">
-    <app-menu></app-menu>
-    </mat-sidenav>
-    <mat-sidenav-content class="screen_container_content">
-      <div class="screen_container_content_workplace">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <div class="screen_container">
+    <div class="screen_container_content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

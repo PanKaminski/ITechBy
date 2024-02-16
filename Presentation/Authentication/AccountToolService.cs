@@ -29,7 +29,7 @@ namespace Presentation.Authentication
             await emailService.SendAsync(CreateEmailVerificationMessage(newUser, registerModel.origin));
             await unitOfWork.CommitAsync();
 
-            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.RegistrationSuccess);
+            return new ServerOperationResult(ResultCode.Success, ServerMessageCode.RegistrationSuccess, "You have registered successfully. Check email to approve your account");
         }
 
         public AuthenticateResponseModel Login(string email, string password)
@@ -59,6 +59,19 @@ namespace Presentation.Authentication
 
             unitOfWork.Commit();
             return new ServerOperationResult(ResultCode.Success, ServerMessageCode.EmailVerificationSuccess);
+        }
+
+        public async Task<ServerOperationResult> RevokeTokenAsync(string refreshToken)
+        {
+            try
+            {
+                await accountsService.RevokeTokenAsync(refreshToken);
+                return new ServerOperationResult(ResultCode.Success, ServerMessageCode.TokenRevoked, "Refresh token has been revoked");
+            }
+            catch (ITechCoreException ex)
+            {
+                return new ServerOperationResult(ResultCode.Failed, message: ex.Message);
+            }
         }
 
         public void ValidateResetToken(string token) => accountsService.ValidateResetToken(token);

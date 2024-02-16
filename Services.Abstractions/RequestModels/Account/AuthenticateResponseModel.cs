@@ -1,5 +1,4 @@
 ﻿using Domain.Common.Enums;
-using System.Text.Json.Serialization;
 
 namespace Services.Abstractions.RequestModels.Account
 {
@@ -19,7 +18,6 @@ namespace Services.Abstractions.RequestModels.Account
 
         public string JwtToken { get; set; }
 
-        [JsonIgnore]
         public string RefreshToken { get; set;}
     }
 }

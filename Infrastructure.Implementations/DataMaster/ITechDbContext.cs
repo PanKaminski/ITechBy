@@ -30,12 +30,13 @@ namespace Infrastructure.Implementations.DataMaster
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             ConfigureTableNames(modelBuilder);
             ConfigureDataTypes(modelBuilder);
             ConfigureOneToManyRelations(modelBuilder);
             ConfigureOneToOneRelations(modelBuilder);
             ConfigureManyToManyRelations(modelBuilder);
-            SeedData(modelBuilder);
+            //SeedData(modelBuilder);
         }
 
         private static void ConfigureDataTypes(ModelBuilder modelBuilder)
@@ -43,6 +44,7 @@ namespace Infrastructure.Implementations.DataMaster
             modelBuilder.Entity<UserEntity>(
                 eb =>
                 {
+                    eb.Property(u => u.Avatar).HasColumnType("varchar(256)");
                     eb.Property(u => u.FirstName).HasColumnType("varchar(36)");
                     eb.Property(u => u.LastName).HasColumnType("varchar(36)");
                     eb.Property(u => u.Email).HasColumnType("varchar(36)");
@@ -90,8 +92,8 @@ namespace Infrastructure.Implementations.DataMaster
                 .WithMany(r => r.Users)
                 .UsingEntity<UserRoleEntity>(
                     "user_roles",
-                    l => l.HasOne<RoleEntity>().WithMany().HasForeignKey(e => e.RolesId),
-                    r => r.HasOne<UserEntity>().WithMany().HasForeignKey(e => e.UsersId)
+                    l => l.HasOne<RoleEntity>().WithMany().HasForeignKey(e => e.RoleId),
+                    r => r.HasOne<UserEntity>().WithMany().HasForeignKey(e => e.UserId)
                 );
             modelBuilder.Entity<UserEntity>()
                 .HasMany(u => u.Achievements)

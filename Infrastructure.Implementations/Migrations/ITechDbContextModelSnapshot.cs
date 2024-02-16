@@ -96,8 +96,9 @@ namespace Infrastructure.Implementations.Migrations
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
@@ -110,20 +111,20 @@ namespace Infrastructure.Implementations.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2023, 10, 22, 10, 13, 6, 316, DateTimeKind.Utc).AddTicks(2324),
-                            Type = 1
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8575),
+                            Type = "Developer"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2023, 10, 22, 10, 13, 6, 316, DateTimeKind.Utc).AddTicks(2329),
-                            Type = 2
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8579),
+                            Type = "Admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTime(2023, 10, 22, 10, 13, 6, 316, DateTimeKind.Utc).AddTicks(2331),
-                            Type = 3
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8581),
+                            Type = "User"
                         });
                 });
 
@@ -165,7 +166,16 @@ namespace Infrastructure.Implementations.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte>("Age")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("varchar(256)");
+
                     b.Property<int?>("ChangedByAccount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedTime")
@@ -212,7 +222,1739 @@ namespace Infrastructure.Implementations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CountryId");
+
                     b.ToTable("users", "auth");
+                });
+
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Account.CountryEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("varchar(10)")
+                        .HasAnnotation("Relational:JsonPropertyName", "code");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "name");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("countries", "db");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "AF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(684),
+                            Name = "Afghanistan"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "AX",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(688),
+                            Name = "Åland Islands"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "AL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(689),
+                            Name = "Albania"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "DZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(690),
+                            Name = "Algeria"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "AS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(691),
+                            Name = "American Samoa"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "AD",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(692),
+                            Name = "AndorrA"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "AO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(693),
+                            Name = "Angola"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "AI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(694),
+                            Name = "Anguilla"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "AQ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(695),
+                            Name = "Antarctica"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "AG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(696),
+                            Name = "Antigua and Barbuda"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Code = "AR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(696),
+                            Name = "Argentina"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Code = "AM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(697),
+                            Name = "Armenia"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Code = "AW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(698),
+                            Name = "Aruba"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Code = "AU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(699),
+                            Name = "Australia"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Code = "AT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(699),
+                            Name = "Austria"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Code = "AZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(700),
+                            Name = "Azerbaijan"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Code = "BS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(701),
+                            Name = "Bahamas"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Code = "BH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(701),
+                            Name = "Bahrain"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Code = "BD",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(702),
+                            Name = "Bangladesh"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Code = "BB",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(703),
+                            Name = "Barbados"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Code = "BY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(704),
+                            Name = "Belarus"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Code = "BE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(705),
+                            Name = "Belgium"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Code = "BZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(705),
+                            Name = "Belize"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Code = "BJ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(707),
+                            Name = "Benin"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Code = "BM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(708),
+                            Name = "Bermuda"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Code = "BT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(708),
+                            Name = "Bhutan"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Code = "BO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(709),
+                            Name = "Bolivia"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Code = "BA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(709),
+                            Name = "Bosnia and Herzegovina"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Code = "BW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(710),
+                            Name = "Botswana"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Code = "BV",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(711),
+                            Name = "Bouvet Island"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Code = "BR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(712),
+                            Name = "Brazil"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Code = "IO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(712),
+                            Name = "British Indian Ocean Territory"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Code = "BN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(713),
+                            Name = "Brunei Darussalam"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Code = "BG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(714),
+                            Name = "Bulgaria"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Code = "BF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(715),
+                            Name = "Burkina Faso"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Code = "BI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(715),
+                            Name = "Burundi"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Code = "KH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(716),
+                            Name = "Cambodia"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Code = "CM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(717),
+                            Name = "Cameroon"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Code = "CA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(718),
+                            Name = "Canada"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Code = "CV",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(718),
+                            Name = "Cape Verde"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Code = "KY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(719),
+                            Name = "Cayman Islands"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Code = "CF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(720),
+                            Name = "Central African Republic"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Code = "TD",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(721),
+                            Name = "Chad"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Code = "CL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(721),
+                            Name = "Chile"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Code = "CN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(722),
+                            Name = "China"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Code = "CX",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(723),
+                            Name = "Christmas Island"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Code = "CC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(723),
+                            Name = "Cocos (Keeling) Islands"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Code = "CO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(724),
+                            Name = "Colombia"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Code = "KM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(725),
+                            Name = "Comoros"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Code = "CG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(726),
+                            Name = "Congo"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Code = "CD",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(727),
+                            Name = "Congo, The Democratic Republic of the"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Code = "CK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(727),
+                            Name = "Cook Islands"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Code = "CR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(728),
+                            Name = "Costa Rica"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Code = "CI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(728),
+                            Name = "Cote D\"Ivoire"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Code = "HR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(729),
+                            Name = "Croatia"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Code = "CU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(730),
+                            Name = "Cuba"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Code = "CY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(730),
+                            Name = "Cyprus"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Code = "CZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(731),
+                            Name = "Czech Republic"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Code = "DK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(732),
+                            Name = "Denmark"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Code = "DJ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(732),
+                            Name = "Djibouti"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Code = "DM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(733),
+                            Name = "Dominica"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Code = "DO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(734),
+                            Name = "Dominican Republic"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Code = "EC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(734),
+                            Name = "Ecuador"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Code = "EG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(735),
+                            Name = "Egypt"
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Code = "SV",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(735),
+                            Name = "El Salvador"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Code = "GQ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(736),
+                            Name = "Equatorial Guinea"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Code = "ER",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(737),
+                            Name = "Eritrea"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Code = "EE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(738),
+                            Name = "Estonia"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Code = "ET",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(740),
+                            Name = "Ethiopia"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Code = "FK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(740),
+                            Name = "Falkland Islands (Malvinas)"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Code = "FO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(741),
+                            Name = "Faroe Islands"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Code = "FJ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(742),
+                            Name = "Fiji"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Code = "FI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(742),
+                            Name = "Finland"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Code = "FR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(743),
+                            Name = "France"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Code = "GF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(744),
+                            Name = "French Guiana"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Code = "PF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(745),
+                            Name = "French Polynesia"
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Code = "TF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(745),
+                            Name = "French Southern Territories"
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Code = "GA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(746),
+                            Name = "Gabon"
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Code = "GM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(747),
+                            Name = "Gambia"
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Code = "GE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(747),
+                            Name = "Georgia"
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Code = "DE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(749),
+                            Name = "Germany"
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Code = "GH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(750),
+                            Name = "Ghana"
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Code = "GI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(751),
+                            Name = "Gibraltar"
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Code = "GR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(751),
+                            Name = "Greece"
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Code = "GL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(752),
+                            Name = "Greenland"
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Code = "GD",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(753),
+                            Name = "Grenada"
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Code = "GP",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(753),
+                            Name = "Guadeloupe"
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Code = "GU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(754),
+                            Name = "Guam"
+                        },
+                        new
+                        {
+                            Id = 89,
+                            Code = "GT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(754),
+                            Name = "Guatemala"
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Code = "GG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(755),
+                            Name = "Guernsey"
+                        },
+                        new
+                        {
+                            Id = 91,
+                            Code = "GN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(756),
+                            Name = "Guinea"
+                        },
+                        new
+                        {
+                            Id = 92,
+                            Code = "GW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(756),
+                            Name = "Guinea-Bissau"
+                        },
+                        new
+                        {
+                            Id = 93,
+                            Code = "GY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(757),
+                            Name = "Guyana"
+                        },
+                        new
+                        {
+                            Id = 94,
+                            Code = "HT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(758),
+                            Name = "Haiti"
+                        },
+                        new
+                        {
+                            Id = 95,
+                            Code = "HM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(758),
+                            Name = "Heard Island and Mcdonald Islands"
+                        },
+                        new
+                        {
+                            Id = 96,
+                            Code = "VA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(759),
+                            Name = "Holy See (Vatican City State)"
+                        },
+                        new
+                        {
+                            Id = 97,
+                            Code = "HN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(759),
+                            Name = "Honduras"
+                        },
+                        new
+                        {
+                            Id = 98,
+                            Code = "HK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(760),
+                            Name = "Hong Kong"
+                        },
+                        new
+                        {
+                            Id = 99,
+                            Code = "HU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(761),
+                            Name = "Hungary"
+                        },
+                        new
+                        {
+                            Id = 100,
+                            Code = "IS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(761),
+                            Name = "Iceland"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            Code = "IN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(762),
+                            Name = "India"
+                        },
+                        new
+                        {
+                            Id = 102,
+                            Code = "ID",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(763),
+                            Name = "Indonesia"
+                        },
+                        new
+                        {
+                            Id = 103,
+                            Code = "IR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(763),
+                            Name = "Iran, Islamic Republic Of"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            Code = "IQ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(764),
+                            Name = "Iraq"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Code = "IE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(765),
+                            Name = "Ireland"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            Code = "IM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(765),
+                            Name = "Isle of Man"
+                        },
+                        new
+                        {
+                            Id = 107,
+                            Code = "IL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(766),
+                            Name = "Israel"
+                        },
+                        new
+                        {
+                            Id = 108,
+                            Code = "IT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(767),
+                            Name = "Italy"
+                        },
+                        new
+                        {
+                            Id = 109,
+                            Code = "JM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(767),
+                            Name = "Jamaica"
+                        },
+                        new
+                        {
+                            Id = 110,
+                            Code = "JP",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(768),
+                            Name = "Japan"
+                        },
+                        new
+                        {
+                            Id = 111,
+                            Code = "JE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(769),
+                            Name = "Jersey"
+                        },
+                        new
+                        {
+                            Id = 112,
+                            Code = "JO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(769),
+                            Name = "Jordan"
+                        },
+                        new
+                        {
+                            Id = 113,
+                            Code = "KZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(770),
+                            Name = "Kazakhstan"
+                        },
+                        new
+                        {
+                            Id = 114,
+                            Code = "KE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(770),
+                            Name = "Kenya"
+                        },
+                        new
+                        {
+                            Id = 115,
+                            Code = "KI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(771),
+                            Name = "Kiribati"
+                        },
+                        new
+                        {
+                            Id = 116,
+                            Code = "KP",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(772),
+                            Name = "Korea, Democratic People\"S Republic of"
+                        },
+                        new
+                        {
+                            Id = 117,
+                            Code = "KR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(772),
+                            Name = "Korea, Republic of"
+                        },
+                        new
+                        {
+                            Id = 118,
+                            Code = "KW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(773),
+                            Name = "Kuwait"
+                        },
+                        new
+                        {
+                            Id = 119,
+                            Code = "KG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(774),
+                            Name = "Kyrgyzstan"
+                        },
+                        new
+                        {
+                            Id = 120,
+                            Code = "LA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(774),
+                            Name = "Lao People\"S Democratic Republic"
+                        },
+                        new
+                        {
+                            Id = 121,
+                            Code = "LV",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(775),
+                            Name = "Latvia"
+                        },
+                        new
+                        {
+                            Id = 122,
+                            Code = "LB",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(776),
+                            Name = "Lebanon"
+                        },
+                        new
+                        {
+                            Id = 123,
+                            Code = "LS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(776),
+                            Name = "Lesotho"
+                        },
+                        new
+                        {
+                            Id = 124,
+                            Code = "LR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(777),
+                            Name = "Liberia"
+                        },
+                        new
+                        {
+                            Id = 125,
+                            Code = "LY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(777),
+                            Name = "Libyan Arab Jamahiriya"
+                        },
+                        new
+                        {
+                            Id = 126,
+                            Code = "LI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(778),
+                            Name = "Liechtenstein"
+                        },
+                        new
+                        {
+                            Id = 127,
+                            Code = "LT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(779),
+                            Name = "Lithuania"
+                        },
+                        new
+                        {
+                            Id = 128,
+                            Code = "LU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(779),
+                            Name = "Luxembourg"
+                        },
+                        new
+                        {
+                            Id = 129,
+                            Code = "MO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(780),
+                            Name = "Macao"
+                        },
+                        new
+                        {
+                            Id = 130,
+                            Code = "MK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(781),
+                            Name = "Macedonia, The Former Yugoslav Republic of"
+                        },
+                        new
+                        {
+                            Id = 131,
+                            Code = "MG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(781),
+                            Name = "Madagascar"
+                        },
+                        new
+                        {
+                            Id = 132,
+                            Code = "MW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(782),
+                            Name = "Malawi"
+                        },
+                        new
+                        {
+                            Id = 133,
+                            Code = "MY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(783),
+                            Name = "Malaysia"
+                        },
+                        new
+                        {
+                            Id = 134,
+                            Code = "MV",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(783),
+                            Name = "Maldives"
+                        },
+                        new
+                        {
+                            Id = 135,
+                            Code = "ML",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(784),
+                            Name = "Mali"
+                        },
+                        new
+                        {
+                            Id = 136,
+                            Code = "MT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(785),
+                            Name = "Malta"
+                        },
+                        new
+                        {
+                            Id = 137,
+                            Code = "MH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(785),
+                            Name = "Marshall Islands"
+                        },
+                        new
+                        {
+                            Id = 138,
+                            Code = "MQ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(786),
+                            Name = "Martinique"
+                        },
+                        new
+                        {
+                            Id = 139,
+                            Code = "MR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(787),
+                            Name = "Mauritania"
+                        },
+                        new
+                        {
+                            Id = 140,
+                            Code = "MU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(787),
+                            Name = "Mauritius"
+                        },
+                        new
+                        {
+                            Id = 141,
+                            Code = "YT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(788),
+                            Name = "Mayotte"
+                        },
+                        new
+                        {
+                            Id = 142,
+                            Code = "MX",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(788),
+                            Name = "Mexico"
+                        },
+                        new
+                        {
+                            Id = 143,
+                            Code = "FM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(789),
+                            Name = "Micronesia, Federated States of"
+                        },
+                        new
+                        {
+                            Id = 144,
+                            Code = "MD",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(790),
+                            Name = "Moldova, Republic of"
+                        },
+                        new
+                        {
+                            Id = 145,
+                            Code = "MC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(791),
+                            Name = "Monaco"
+                        },
+                        new
+                        {
+                            Id = 146,
+                            Code = "MN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(792),
+                            Name = "Mongolia"
+                        },
+                        new
+                        {
+                            Id = 147,
+                            Code = "MS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(793),
+                            Name = "Montserrat"
+                        },
+                        new
+                        {
+                            Id = 148,
+                            Code = "MA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(794),
+                            Name = "Morocco"
+                        },
+                        new
+                        {
+                            Id = 149,
+                            Code = "MZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(794),
+                            Name = "Mozambique"
+                        },
+                        new
+                        {
+                            Id = 150,
+                            Code = "MM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(795),
+                            Name = "Myanmar"
+                        },
+                        new
+                        {
+                            Id = 151,
+                            Code = "NA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(796),
+                            Name = "Namibia"
+                        },
+                        new
+                        {
+                            Id = 152,
+                            Code = "NR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(796),
+                            Name = "Nauru"
+                        },
+                        new
+                        {
+                            Id = 153,
+                            Code = "NP",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(797),
+                            Name = "Nepal"
+                        },
+                        new
+                        {
+                            Id = 154,
+                            Code = "NL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(798),
+                            Name = "Netherlands"
+                        },
+                        new
+                        {
+                            Id = 155,
+                            Code = "AN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(798),
+                            Name = "Netherlands Antilles"
+                        },
+                        new
+                        {
+                            Id = 156,
+                            Code = "NC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(800),
+                            Name = "New Caledonia"
+                        },
+                        new
+                        {
+                            Id = 157,
+                            Code = "NZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(800),
+                            Name = "New Zealand"
+                        },
+                        new
+                        {
+                            Id = 158,
+                            Code = "NI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(801),
+                            Name = "Nicaragua"
+                        },
+                        new
+                        {
+                            Id = 159,
+                            Code = "NE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(802),
+                            Name = "Niger"
+                        },
+                        new
+                        {
+                            Id = 160,
+                            Code = "NG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(802),
+                            Name = "Nigeria"
+                        },
+                        new
+                        {
+                            Id = 161,
+                            Code = "NU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(803),
+                            Name = "Niue"
+                        },
+                        new
+                        {
+                            Id = 162,
+                            Code = "NF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(803),
+                            Name = "Norfolk Island"
+                        },
+                        new
+                        {
+                            Id = 163,
+                            Code = "MP",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(804),
+                            Name = "Northern Mariana Islands"
+                        },
+                        new
+                        {
+                            Id = 164,
+                            Code = "NO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(805),
+                            Name = "Norway"
+                        },
+                        new
+                        {
+                            Id = 165,
+                            Code = "OM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(805),
+                            Name = "Oman"
+                        },
+                        new
+                        {
+                            Id = 166,
+                            Code = "PK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(806),
+                            Name = "Pakistan"
+                        },
+                        new
+                        {
+                            Id = 167,
+                            Code = "PW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(807),
+                            Name = "Palau"
+                        },
+                        new
+                        {
+                            Id = 168,
+                            Code = "PS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(807),
+                            Name = "Palestinian Territory, Occupied"
+                        },
+                        new
+                        {
+                            Id = 169,
+                            Code = "PA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(808),
+                            Name = "Panama"
+                        },
+                        new
+                        {
+                            Id = 170,
+                            Code = "PG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(809),
+                            Name = "Papua New Guinea"
+                        },
+                        new
+                        {
+                            Id = 171,
+                            Code = "PY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(809),
+                            Name = "Paraguay"
+                        },
+                        new
+                        {
+                            Id = 172,
+                            Code = "PE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(810),
+                            Name = "Peru"
+                        },
+                        new
+                        {
+                            Id = 173,
+                            Code = "PH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(811),
+                            Name = "Philippines"
+                        },
+                        new
+                        {
+                            Id = 174,
+                            Code = "PN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(811),
+                            Name = "Pitcairn"
+                        },
+                        new
+                        {
+                            Id = 175,
+                            Code = "PL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(812),
+                            Name = "Poland"
+                        },
+                        new
+                        {
+                            Id = 176,
+                            Code = "PT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(812),
+                            Name = "Portugal"
+                        },
+                        new
+                        {
+                            Id = 177,
+                            Code = "PR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(813),
+                            Name = "Puerto Rico"
+                        },
+                        new
+                        {
+                            Id = 178,
+                            Code = "QA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(814),
+                            Name = "Qatar"
+                        },
+                        new
+                        {
+                            Id = 179,
+                            Code = "RE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(814),
+                            Name = "Reunion"
+                        },
+                        new
+                        {
+                            Id = 180,
+                            Code = "RO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(815),
+                            Name = "Romania"
+                        },
+                        new
+                        {
+                            Id = 181,
+                            Code = "RU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(816),
+                            Name = "Russian Federation"
+                        },
+                        new
+                        {
+                            Id = 182,
+                            Code = "RW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(816),
+                            Name = "RWANDA"
+                        },
+                        new
+                        {
+                            Id = 183,
+                            Code = "SH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(817),
+                            Name = "Saint Helena"
+                        },
+                        new
+                        {
+                            Id = 184,
+                            Code = "KN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(818),
+                            Name = "Saint Kitts and Nevis"
+                        },
+                        new
+                        {
+                            Id = 185,
+                            Code = "LC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(818),
+                            Name = "Saint Lucia"
+                        },
+                        new
+                        {
+                            Id = 186,
+                            Code = "PM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(819),
+                            Name = "Saint Pierre and Miquelon"
+                        },
+                        new
+                        {
+                            Id = 187,
+                            Code = "VC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(820),
+                            Name = "Saint Vincent and the Grenadines"
+                        },
+                        new
+                        {
+                            Id = 188,
+                            Code = "WS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(820),
+                            Name = "Samoa"
+                        },
+                        new
+                        {
+                            Id = 189,
+                            Code = "SM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(821),
+                            Name = "San Marino"
+                        },
+                        new
+                        {
+                            Id = 190,
+                            Code = "ST",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(822),
+                            Name = "Sao Tome and Principe"
+                        },
+                        new
+                        {
+                            Id = 191,
+                            Code = "SA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(822),
+                            Name = "Saudi Arabia"
+                        },
+                        new
+                        {
+                            Id = 192,
+                            Code = "SN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(823),
+                            Name = "Senegal"
+                        },
+                        new
+                        {
+                            Id = 193,
+                            Code = "CS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(824),
+                            Name = "Serbia and Montenegro"
+                        },
+                        new
+                        {
+                            Id = 194,
+                            Code = "SC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(824),
+                            Name = "Seychelles"
+                        },
+                        new
+                        {
+                            Id = 195,
+                            Code = "SL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(825),
+                            Name = "Sierra Leone"
+                        },
+                        new
+                        {
+                            Id = 196,
+                            Code = "SG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(826),
+                            Name = "Singapore"
+                        },
+                        new
+                        {
+                            Id = 197,
+                            Code = "SK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(826),
+                            Name = "Slovakia"
+                        },
+                        new
+                        {
+                            Id = 198,
+                            Code = "SI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(827),
+                            Name = "Slovenia"
+                        },
+                        new
+                        {
+                            Id = 199,
+                            Code = "SB",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(828),
+                            Name = "Solomon Islands"
+                        },
+                        new
+                        {
+                            Id = 200,
+                            Code = "SO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(828),
+                            Name = "Somalia"
+                        },
+                        new
+                        {
+                            Id = 201,
+                            Code = "ZA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(829),
+                            Name = "South Africa"
+                        },
+                        new
+                        {
+                            Id = 202,
+                            Code = "GS",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(830),
+                            Name = "South Georgia and the South Sandwich Islands"
+                        },
+                        new
+                        {
+                            Id = 203,
+                            Code = "ES",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(830),
+                            Name = "Spain"
+                        },
+                        new
+                        {
+                            Id = 204,
+                            Code = "LK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(831),
+                            Name = "Sri Lanka"
+                        },
+                        new
+                        {
+                            Id = 205,
+                            Code = "SD",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(832),
+                            Name = "Sudan"
+                        },
+                        new
+                        {
+                            Id = 206,
+                            Code = "SR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(833),
+                            Name = "Suri"
+                        },
+                        new
+                        {
+                            Id = 207,
+                            Code = "SJ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(833),
+                            Name = "Svalbard and Jan Mayen"
+                        },
+                        new
+                        {
+                            Id = 208,
+                            Code = "SZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(834),
+                            Name = "Swaziland"
+                        },
+                        new
+                        {
+                            Id = 209,
+                            Code = "SE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(835),
+                            Name = "Sweden"
+                        },
+                        new
+                        {
+                            Id = 210,
+                            Code = "CH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(835),
+                            Name = "Switzerland"
+                        },
+                        new
+                        {
+                            Id = 211,
+                            Code = "SY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(836),
+                            Name = "Syrian Arab Republic"
+                        },
+                        new
+                        {
+                            Id = 212,
+                            Code = "TW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(837),
+                            Name = "Taiwan, Province of China"
+                        },
+                        new
+                        {
+                            Id = 213,
+                            Code = "TJ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(837),
+                            Name = "Tajikistan"
+                        },
+                        new
+                        {
+                            Id = 214,
+                            Code = "TZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(838),
+                            Name = "Tanzania, United Republic of"
+                        },
+                        new
+                        {
+                            Id = 215,
+                            Code = "TH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(839),
+                            Name = "Thailand"
+                        },
+                        new
+                        {
+                            Id = 216,
+                            Code = "TL",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(840),
+                            Name = "Timor-Leste"
+                        },
+                        new
+                        {
+                            Id = 217,
+                            Code = "TG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(840),
+                            Name = "Togo"
+                        },
+                        new
+                        {
+                            Id = 218,
+                            Code = "TK",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(841),
+                            Name = "Tokelau"
+                        },
+                        new
+                        {
+                            Id = 219,
+                            Code = "TO",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(842),
+                            Name = "Tonga"
+                        },
+                        new
+                        {
+                            Id = 220,
+                            Code = "TT",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(842),
+                            Name = "Trinidad and Tobago"
+                        },
+                        new
+                        {
+                            Id = 221,
+                            Code = "TN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(843),
+                            Name = "Tunisia"
+                        },
+                        new
+                        {
+                            Id = 222,
+                            Code = "TR",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(844),
+                            Name = "Turkey"
+                        },
+                        new
+                        {
+                            Id = 223,
+                            Code = "TM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(844),
+                            Name = "Turkmenistan"
+                        },
+                        new
+                        {
+                            Id = 224,
+                            Code = "TC",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(845),
+                            Name = "Turks and Caicos Islands"
+                        },
+                        new
+                        {
+                            Id = 225,
+                            Code = "TV",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(846),
+                            Name = "Tuvalu"
+                        },
+                        new
+                        {
+                            Id = 226,
+                            Code = "UG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(846),
+                            Name = "Uganda"
+                        },
+                        new
+                        {
+                            Id = 227,
+                            Code = "UA",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(847),
+                            Name = "Ukraine"
+                        },
+                        new
+                        {
+                            Id = 228,
+                            Code = "AE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(848),
+                            Name = "United Arab Emirates"
+                        },
+                        new
+                        {
+                            Id = 229,
+                            Code = "GB",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(848),
+                            Name = "United Kingdom"
+                        },
+                        new
+                        {
+                            Id = 230,
+                            Code = "US",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(849),
+                            Name = "United States"
+                        },
+                        new
+                        {
+                            Id = 231,
+                            Code = "UM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(850),
+                            Name = "United States Minor Outlying Islands"
+                        },
+                        new
+                        {
+                            Id = 232,
+                            Code = "UY",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(851),
+                            Name = "Uruguay"
+                        },
+                        new
+                        {
+                            Id = 233,
+                            Code = "UZ",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(851),
+                            Name = "Uzbekistan"
+                        },
+                        new
+                        {
+                            Id = 234,
+                            Code = "VU",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(852),
+                            Name = "Vanuatu"
+                        },
+                        new
+                        {
+                            Id = 235,
+                            Code = "VE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(853),
+                            Name = "Venezuela"
+                        },
+                        new
+                        {
+                            Id = 236,
+                            Code = "VN",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(853),
+                            Name = "Viet Nam"
+                        },
+                        new
+                        {
+                            Id = 237,
+                            Code = "VG",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(854),
+                            Name = "Virgin Islands, British"
+                        },
+                        new
+                        {
+                            Id = 238,
+                            Code = "VI",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(855),
+                            Name = "Virgin Islands, U.S."
+                        },
+                        new
+                        {
+                            Id = 239,
+                            Code = "WF",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(855),
+                            Name = "Wallis and Futuna"
+                        },
+                        new
+                        {
+                            Id = 240,
+                            Code = "EH",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(856),
+                            Name = "Western Sahara"
+                        },
+                        new
+                        {
+                            Id = 241,
+                            Code = "YE",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(857),
+                            Name = "Yemen"
+                        },
+                        new
+                        {
+                            Id = 242,
+                            Code = "ZM",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(857),
+                            Name = "Zambia"
+                        },
+                        new
+                        {
+                            Id = 243,
+                            Code = "ZW",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 357, DateTimeKind.Utc).AddTicks(858),
+                            Name = "Zimbabwe"
+                        });
                 });
 
             modelBuilder.Entity("Services.Abstractions.Data.Entities.Account.RefreshTokenEntity", b =>
@@ -392,6 +2134,4794 @@ namespace Infrastructure.Implementations.Migrations
                     b.ToTable("conversation_roles", "msg");
                 });
 
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Learning.LanguageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NativeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("languages", "lrn");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "aau",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4710),
+                            Name = "Abau",
+                            NativeName = "Abau"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "abq",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4796),
+                            Name = "Abaza",
+                            NativeName = "Абаза Бызшва"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "ab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4819),
+                            Name = "Abkhaz",
+                            NativeName = "Aҧсуа бызшәа"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "ady",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4838),
+                            Name = "Adyghe",
+                            NativeName = "Адыгaбзэ"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "kbd",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4856),
+                            Name = "Kabardian",
+                            NativeName = "Адыгэбзэ"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "af",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4880),
+                            Name = "Afrikaans",
+                            NativeName = "Afrikaans"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "oj",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4894),
+                            Name = "Ojibwe",
+                            NativeName = "ᐊᓂᔑᓈᐯ"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "ain",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4912),
+                            Name = "Ainu",
+                            NativeName = "アイヌイタク"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "ar",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4929),
+                            Name = "Arabic",
+                            NativeName = "العربية"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "ar-sa",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4947),
+                            Name = "Arabic, Saudi Arabian",
+                            NativeName = "العربية - اللهجة السعودية"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Code = "ar-dz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4967),
+                            Name = "Arabic, Algerian",
+                            NativeName = "العربية - اللهجة الجزائرية"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Code = "ar-acy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(4985),
+                            Name = "Arabic, Cypriot Maronite",
+                            NativeName = "Sanna"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Code = "ar-afb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5001),
+                            Name = "Arabic, Gulf",
+                            NativeName = "العربية - اللهجة الخليجية"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Code = "ar-eg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5017),
+                            Name = "Arabic, Egyptian",
+                            NativeName = "العربية - اللهجة المصرية"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Code = "ar-ma",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5033),
+                            Name = "Arabic, Moroccan",
+                            NativeName = "العربية - اللهجة المغربية"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Code = "ar-apc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5050),
+                            Name = "Arabic, Levantine",
+                            NativeName = "العربية - اللهجة الشامية"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Code = "ar-lb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5067),
+                            Name = "Arabic, Lebanese",
+                            NativeName = "العربية - اللهجة اللبنانية"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Code = "ar-ly",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5085),
+                            Name = "Arabic, Libyan",
+                            NativeName = "العربية - اللهجة الشامية"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Code = "ar-iq",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5101),
+                            Name = "Arabic, Iraqi",
+                            NativeName = "العربية - اللهجة العراقية"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Code = "ar-sd",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5119),
+                            Name = "Arabic, Sudanese",
+                            NativeName = "العربية - اللهجة السودانية"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Code = "ar-tn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5135),
+                            Name = "Arabic, Tunesian",
+                            NativeName = "العربية - اللهجة التونسية"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Code = "ar-arb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5150),
+                            Name = "Arabic, Standard",
+                            NativeName = "العربية - الفصحى"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Code = "akk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5166),
+                            Name = "Akkadian",
+                            NativeName = "lišānum akkadītum"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Code = "agx",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5185),
+                            Name = "Aghul",
+                            NativeName = "агъул чӀал"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Code = "ofs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5201),
+                            Name = "Old Frisian",
+                            NativeName = "Aldfrysk"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Code = "atv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5217),
+                            Name = "Altay, Northern",
+                            NativeName = "Алтай"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Code = "alt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5233),
+                            Name = "Altay, Southern",
+                            NativeName = "Алтай"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Code = "alq",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5248),
+                            Name = "Algonquin",
+                            NativeName = "Anicinâbemowin"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Code = "am",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5265),
+                            Name = "Amharic",
+                            NativeName = "አማርኛ"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Code = "an",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5281),
+                            Name = "Aragonese",
+                            NativeName = "Aragones"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Code = "frp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5295),
+                            Name = "Franco-Provençal",
+                            NativeName = "arpetan"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Code = "xno",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5324),
+                            Name = "Anglo-Norman",
+                            NativeName = "Anglo-normand"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Code = "apw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5339),
+                            Name = "Apache (Western)",
+                            NativeName = "Nṉēē biyáti’"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Code = "arc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5360),
+                            Name = "Aramaic",
+                            NativeName = "אַרָמִית"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Code = "arw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5376),
+                            Name = "Arawak",
+                            NativeName = "Arawak"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Code = "aqc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5390),
+                            Name = "Archi",
+                            NativeName = "Archi"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Code = "rup",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5407),
+                            Name = "Aromanian",
+                            NativeName = "Armãneashce"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Code = "aer",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5423),
+                            Name = "Arrernte",
+                            NativeName = "Arrernte angkentye"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Code = "as",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5438),
+                            Name = "Assamese",
+                            NativeName = "অসিময়া"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Code = "ast",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5455),
+                            Name = "Asturian",
+                            NativeName = "Asturianu"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Code = "akv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5469),
+                            Name = "Akhvakh",
+                            NativeName = "Ашвaлъи мицIи"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Code = "av",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5486),
+                            Name = "Avar",
+                            NativeName = "Авар мацІ"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Code = "ae",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5501),
+                            Name = "Avestan",
+                            NativeName = "Avestan"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Code = "ay",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5516),
+                            Name = "Aymara",
+                            NativeName = "Aymará"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Code = "az",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5532),
+                            Name = "Azerbaijani",
+                            NativeName = "Azərbaycanca"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Code = "kva",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5549),
+                            Name = "Bagvalal",
+                            NativeName = "Bagvalal"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Code = "ace",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5563),
+                            Name = "Acehnese",
+                            NativeName = "Basa Acèh"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Code = "ms",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5580),
+                            Name = "Malay",
+                            NativeName = "Bahasa Melayu"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Code = "ba",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5594),
+                            Name = "Bashkir",
+                            NativeName = "Башҡортса"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Code = "ban",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5610),
+                            Name = "Balinese",
+                            NativeName = "Basa Bali"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Code = "bbl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5624),
+                            Name = "Bats",
+                            NativeName = "batsba motjiti"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Code = "be",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5640),
+                            Name = "Belarusian",
+                            NativeName = "Беларускі"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Code = "be-tara",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5655),
+                            Name = "Belarusian [Taraškievica]",
+                            NativeName = "тарашкевіца"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Code = "bpy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5673),
+                            Name = "Bishnupriya Manipuri",
+                            NativeName = "ইমার ঠার/বিষ্ণুপ্রিয়া মণিপুরী"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Code = "bue",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5696),
+                            Name = "Beothuk",
+                            NativeName = "Beothukan"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Code = "bis",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5711),
+                            Name = "Bislama",
+                            NativeName = "Bislama"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Code = "bg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5728),
+                            Name = "Bulgarian",
+                            NativeName = "Български"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Code = "bla",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5742),
+                            Name = "Blackfoot",
+                            NativeName = "Siksiká"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Code = "bm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5758),
+                            Name = "Bamanankan",
+                            NativeName = "Bambara"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Code = "bn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5773),
+                            Name = "Bengali",
+                            NativeName = "বাংলা"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Code = "bo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5789),
+                            Name = "Tibetan",
+                            NativeName = "བོད་སྐད་"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Code = "bod",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5805),
+                            Name = "Classical Tibetan",
+                            NativeName = "བོད་སྐད་"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Code = "kap",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5820),
+                            Name = "Bezhta",
+                            NativeName = "бежкьалас миц"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Code = "blc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5837),
+                            Name = "Nuxálk",
+                            NativeName = "Bella Coola"
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Code = "br",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5854),
+                            Name = "Breton",
+                            NativeName = "Brezhoneg"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Code = "brx",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5882),
+                            Name = "Bodo",
+                            NativeName = "बड़ो"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Code = "bs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5898),
+                            Name = "Bosnian",
+                            NativeName = "Bosanski"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Code = "bdk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5912),
+                            Name = "Budukh",
+                            NativeName = "Будад мез"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Code = "bph",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5928),
+                            Name = "Botlikh",
+                            NativeName = "Буйхaлъи мицIцIи"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Code = "bua",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5944),
+                            Name = "Buryat",
+                            NativeName = "буряад"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Code = "bug",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5960),
+                            Name = "Buginese",
+                            NativeName = "Basa Ugi"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Code = "bsk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5974),
+                            Name = "Burushaski",
+                            NativeName = "بروشسکی"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Code = "ca",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(5990),
+                            Name = "Catalan",
+                            NativeName = "Català"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Code = "cay",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6005),
+                            Name = "Cayuga",
+                            NativeName = "Gayogohó:nǫ’"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Code = "ce",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6022),
+                            Name = "Chechen",
+                            NativeName = "Нохчийн мотт"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Code = "ceb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6038),
+                            Name = "Cebuano",
+                            NativeName = "Cebuano"
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Code = "cho",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6054),
+                            Name = "Choctaw",
+                            NativeName = "Chahta Anumpa"
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Code = "cji",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6070),
+                            Name = "Chamalal",
+                            NativeName = "чамалалдуб мичIчI"
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Code = "ch",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6087),
+                            Name = "Chamorro",
+                            NativeName = "Chamoru"
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Code = "chr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6101),
+                            Name = "Cherokee",
+                            NativeName = "ᏣᎳᎩ"
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Code = "cs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6117),
+                            Name = "Czech",
+                            NativeName = "Čeština"
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Code = "chg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6133),
+                            Name = "Chagatai",
+                            NativeName = "جغتای"
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Code = "chn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6149),
+                            Name = "Chinook Jargon",
+                            NativeName = "Chinook wawa"
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Code = "sn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6164),
+                            Name = "Shona",
+                            NativeName = "chiShona"
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Code = "co",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6179),
+                            Name = "Corsican",
+                            NativeName = "Corsu"
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Code = "cop",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6193),
+                            Name = "Coptic",
+                            NativeName = "ⲙⲛⲧⲣⲙⲛⲕⲏⲙⲉ"
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Code = "cv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6209),
+                            Name = "Chuvash",
+                            NativeName = "чӑваш чӗлхи"
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Code = "cy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6225),
+                            Name = "Welsh",
+                            NativeName = "Cymraeg"
+                        },
+                        new
+                        {
+                            Id = 89,
+                            Code = "da",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6239),
+                            Name = "Danish",
+                            NativeName = "Dansk"
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Code = "dak",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6253),
+                            Name = "Dakota",
+                            NativeName = "Dakȟótiyapi"
+                        },
+                        new
+                        {
+                            Id = 91,
+                            Code = "dlc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6270),
+                            Name = "Dalecarlian",
+                            NativeName = "Dalska"
+                        },
+                        new
+                        {
+                            Id = 92,
+                            Code = "dar",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6286),
+                            Name = "Dargwa",
+                            NativeName = "дарган мез"
+                        },
+                        new
+                        {
+                            Id = 93,
+                            Code = "dng",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6302),
+                            Name = "Dungan",
+                            NativeName = "Хуэйзў йүян"
+                        },
+                        new
+                        {
+                            Id = 94,
+                            Code = "zap",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6318),
+                            Name = "Zapotec",
+                            NativeName = "Diidzaj"
+                        },
+                        new
+                        {
+                            Id = 95,
+                            Code = "dsb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6333),
+                            Name = "Sorbian (lower)",
+                            NativeName = "Dolnoserbšćina"
+                        },
+                        new
+                        {
+                            Id = 96,
+                            Code = "koy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6350),
+                            Name = "Koyukon",
+                            NativeName = "Denaakkʼe"
+                        },
+                        new
+                        {
+                            Id = 97,
+                            Code = "lut",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6365),
+                            Name = "Lushootseed",
+                            NativeName = "dxʷləšucid"
+                        },
+                        new
+                        {
+                            Id = 98,
+                            Code = "lad",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6382),
+                            Name = "Ladino",
+                            NativeName = "Djudeo-espanyol"
+                        },
+                        new
+                        {
+                            Id = 99,
+                            Code = "de",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6397),
+                            Name = "German",
+                            NativeName = "Deutsch"
+                        },
+                        new
+                        {
+                            Id = 100,
+                            Code = "de-at",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6411),
+                            Name = "Austrian German",
+                            NativeName = "Österreichisch"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            Code = "de-ch",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6428),
+                            Name = "Swiss Standard German",
+                            NativeName = "Schweizer Hochdeutsch"
+                        },
+                        new
+                        {
+                            Id = 102,
+                            Code = "de-gsw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6444),
+                            Name = "Swiss German",
+                            NativeName = "Schwyzerdütsch"
+                        },
+                        new
+                        {
+                            Id = 103,
+                            Code = "de-goh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6461),
+                            Name = "Old High German",
+                            NativeName = "Althochdeutsch"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            Code = "de-gmh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6476),
+                            Name = "Middle High German",
+                            NativeName = "Mittelhochdeutsch"
+                        },
+                        new
+                        {
+                            Id = 105,
+                            Code = "de-osx",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6492),
+                            Name = "Old Saxon",
+                            NativeName = "Altsächsisch"
+                        },
+                        new
+                        {
+                            Id = 106,
+                            Code = "nv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6520),
+                            Name = "Navajo",
+                            NativeName = "Diné bizaad"
+                        },
+                        new
+                        {
+                            Id = 107,
+                            Code = "dv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6536),
+                            Name = "Dhivehi",
+                            NativeName = "ދިވެހިބަސ"
+                        },
+                        new
+                        {
+                            Id = 108,
+                            Code = "dz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6551),
+                            Name = "Dzongkha",
+                            NativeName = "༄༅ཇོ༹ང་ཁ"
+                        },
+                        new
+                        {
+                            Id = 109,
+                            Code = "et",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6567),
+                            Name = "Estonian",
+                            NativeName = "Eesti"
+                        },
+                        new
+                        {
+                            Id = 110,
+                            Code = "egy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6581),
+                            Name = "Egyptian, ancient",
+                            NativeName = "Egyptian, ancient"
+                        },
+                        new
+                        {
+                            Id = 111,
+                            Code = "elx",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6596),
+                            Name = "Elamite",
+                            NativeName = "Elamite"
+                        },
+                        new
+                        {
+                            Id = 112,
+                            Code = "el",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6611),
+                            Name = "Greek",
+                            NativeName = "Ελληνικά"
+                        },
+                        new
+                        {
+                            Id = 113,
+                            Code = "el-cy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6625),
+                            Name = "Greek, Cypriot",
+                            NativeName = "Κυπριακά"
+                        },
+                        new
+                        {
+                            Id = 114,
+                            Code = "el-ka",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6641),
+                            Name = "Greek, Katharevousa",
+                            NativeName = "Καθαρεύουσα"
+                        },
+                        new
+                        {
+                            Id = 115,
+                            Code = "en",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6657),
+                            Name = "English",
+                            NativeName = "English"
+                        },
+                        new
+                        {
+                            Id = 116,
+                            Code = "en-us",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6673),
+                            Name = "American English",
+                            NativeName = "American English"
+                        },
+                        new
+                        {
+                            Id = 117,
+                            Code = "en-gb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6688),
+                            Name = "British English",
+                            NativeName = "British English"
+                        },
+                        new
+                        {
+                            Id = 118,
+                            Code = "en-au",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6704),
+                            Name = "Australian English",
+                            NativeName = "Australian English"
+                        },
+                        new
+                        {
+                            Id = 119,
+                            Code = "en-ca",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6721),
+                            Name = "Canadian English",
+                            NativeName = "Canadian English"
+                        },
+                        new
+                        {
+                            Id = 120,
+                            Code = "en-nz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6736),
+                            Name = "New Zealand English",
+                            NativeName = "New Zealand English"
+                        },
+                        new
+                        {
+                            Id = 121,
+                            Code = "en-ie",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6751),
+                            Name = "Irish English",
+                            NativeName = "Irish English"
+                        },
+                        new
+                        {
+                            Id = 122,
+                            Code = "en-sg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6767),
+                            Name = "Singapore English",
+                            NativeName = "Singapore English"
+                        },
+                        new
+                        {
+                            Id = 123,
+                            Code = "en-old",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6782),
+                            Name = "Old English",
+                            NativeName = "Ænglisc"
+                        },
+                        new
+                        {
+                            Id = 124,
+                            Code = "en-mid",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6797),
+                            Name = "Middle English",
+                            NativeName = "Middle English"
+                        },
+                        new
+                        {
+                            Id = 125,
+                            Code = "es",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6812),
+                            Name = "Spanish",
+                            NativeName = "Español"
+                        },
+                        new
+                        {
+                            Id = 126,
+                            Code = "es-es",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6828),
+                            Name = "Spanish, Spain",
+                            NativeName = "Español de España"
+                        },
+                        new
+                        {
+                            Id = 127,
+                            Code = "es-mx",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6845),
+                            Name = "Mexican Spanish",
+                            NativeName = "Español de México"
+                        },
+                        new
+                        {
+                            Id = 128,
+                            Code = "es-ar",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6861),
+                            Name = "Argentinian Spanish",
+                            NativeName = "Español de Argentina"
+                        },
+                        new
+                        {
+                            Id = 129,
+                            Code = "es-cl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6878),
+                            Name = "Chilean Spanish",
+                            NativeName = "Español de Chile"
+                        },
+                        new
+                        {
+                            Id = 130,
+                            Code = "es-pe",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6896),
+                            Name = "Peruvian Spanish",
+                            NativeName = "Español de Perú"
+                        },
+                        new
+                        {
+                            Id = 131,
+                            Code = "es-ve",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6914),
+                            Name = "Venezuelan Spanish",
+                            NativeName = "Español de Venezuela"
+                        },
+                        new
+                        {
+                            Id = 132,
+                            Code = "es-co",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6930),
+                            Name = "Colombian Spanish",
+                            NativeName = "Español de Colombia"
+                        },
+                        new
+                        {
+                            Id = 133,
+                            Code = "es-bo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6945),
+                            Name = "Bolivian Spanish",
+                            NativeName = "Español de Bolivia"
+                        },
+                        new
+                        {
+                            Id = 134,
+                            Code = "es-py",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6961),
+                            Name = "Paraguayan Spanish",
+                            NativeName = "Español de Paraguay"
+                        },
+                        new
+                        {
+                            Id = 135,
+                            Code = "es-uy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(6989),
+                            Name = "Uruguayan Spanish",
+                            NativeName = "Español de Uruguay"
+                        },
+                        new
+                        {
+                            Id = 136,
+                            Code = "es-cu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7005),
+                            Name = "Cuban Spanish",
+                            NativeName = "Español de Cuba"
+                        },
+                        new
+                        {
+                            Id = 137,
+                            Code = "es-do",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7020),
+                            Name = "Dominican Spanish",
+                            NativeName = "Español de la República Dominicana"
+                        },
+                        new
+                        {
+                            Id = 138,
+                            Code = "es-pa",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7039),
+                            Name = "Panamanian Spanish",
+                            NativeName = "Español de Panamá"
+                        },
+                        new
+                        {
+                            Id = 139,
+                            Code = "es-cr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7055),
+                            Name = "Costa Rican Spanish",
+                            NativeName = "Español de Costa Rica"
+                        },
+                        new
+                        {
+                            Id = 140,
+                            Code = "es-hn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7072),
+                            Name = "Honduran Spanish",
+                            NativeName = "Español de Honduras"
+                        },
+                        new
+                        {
+                            Id = 141,
+                            Code = "es-ni",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7088),
+                            Name = "Nicaraguan Spanish",
+                            NativeName = "Español de Nicaragua"
+                        },
+                        new
+                        {
+                            Id = 142,
+                            Code = "es-old",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7103),
+                            Name = "Old Spanish",
+                            NativeName = "Castellano antiguo"
+                        },
+                        new
+                        {
+                            Id = 143,
+                            Code = "es-sv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7119),
+                            Name = "Salvadoran Spanish",
+                            NativeName = "Español de El Salvador"
+                        },
+                        new
+                        {
+                            Id = 144,
+                            Code = "es-gt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7135),
+                            Name = "Guatemalan Spanish",
+                            NativeName = "Español de Guatemala"
+                        },
+                        new
+                        {
+                            Id = 145,
+                            Code = "es-pr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7150),
+                            Name = "Puerto Rican Spanish",
+                            NativeName = "Español de Puerto Rico"
+                        },
+                        new
+                        {
+                            Id = 146,
+                            Code = "es-an",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7166),
+                            Name = "Andalusian Spanish",
+                            NativeName = "Español de Andalucía"
+                        },
+                        new
+                        {
+                            Id = 147,
+                            Code = "sux",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7182),
+                            Name = "Sumerian",
+                            NativeName = "eme-ĝir"
+                        },
+                        new
+                        {
+                            Id = 148,
+                            Code = "egl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7196),
+                            Name = "Emiliano",
+                            NativeName = "Emigliàn"
+                        },
+                        new
+                        {
+                            Id = 149,
+                            Code = "enq",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7212),
+                            Name = "Enga",
+                            NativeName = "Enga"
+                        },
+                        new
+                        {
+                            Id = 150,
+                            Code = "eo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7227),
+                            Name = "Esperanto",
+                            NativeName = "Esperanto"
+                        },
+                        new
+                        {
+                            Id = 151,
+                            Code = "ext",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7243),
+                            Name = "Extremaduran",
+                            NativeName = "Estremeñu"
+                        },
+                        new
+                        {
+                            Id = 152,
+                            Code = "eu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7258),
+                            Name = "Basque",
+                            NativeName = "Euskara"
+                        },
+                        new
+                        {
+                            Id = 153,
+                            Code = "myv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7272),
+                            Name = "Erzya",
+                            NativeName = "Эрзянь"
+                        },
+                        new
+                        {
+                            Id = 154,
+                            Code = "evn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7287),
+                            Name = "Evenki",
+                            NativeName = "Эвэнки"
+                        },
+                        new
+                        {
+                            Id = 155,
+                            Code = "ee",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7302),
+                            Name = "Ewe",
+                            NativeName = "Èʋegbe"
+                        },
+                        new
+                        {
+                            Id = 156,
+                            Code = "ett",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7318),
+                            Name = "Etruscan",
+                            NativeName = "mechl Rasnal"
+                        },
+                        new
+                        {
+                            Id = 157,
+                            Code = "wls",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7333),
+                            Name = "Wallisian",
+                            NativeName = "Fakaʻuvea"
+                        },
+                        new
+                        {
+                            Id = 158,
+                            Code = "fa",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7349),
+                            Name = "Persian",
+                            NativeName = "فارسی"
+                        },
+                        new
+                        {
+                            Id = 159,
+                            Code = "fa-af",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7364),
+                            Name = "Dari",
+                            NativeName = "درى"
+                        },
+                        new
+                        {
+                            Id = 160,
+                            Code = "fa-old",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7380),
+                            Name = "Old Persian",
+                            NativeName = "*Pārsīka"
+                        },
+                        new
+                        {
+                            Id = 161,
+                            Code = "fa-mid",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7397),
+                            Name = "Middle Persian",
+                            NativeName = "Pārsīk"
+                        },
+                        new
+                        {
+                            Id = 162,
+                            Code = "fa-tj",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7413),
+                            Name = "Tajik",
+                            NativeName = "тоҷикӣ"
+                        },
+                        new
+                        {
+                            Id = 163,
+                            Code = "fj",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7428),
+                            Name = "Fijian",
+                            NativeName = "Na vosa Vakaviti"
+                        },
+                        new
+                        {
+                            Id = 164,
+                            Code = "fo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7443),
+                            Name = "Faroese",
+                            NativeName = "Føroyskt"
+                        },
+                        new
+                        {
+                            Id = 165,
+                            Code = "fr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7457),
+                            Name = "French",
+                            NativeName = "Français"
+                        },
+                        new
+                        {
+                            Id = 166,
+                            Code = "fr-ac",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7473),
+                            Name = "Acadian French",
+                            NativeName = "Acadien"
+                        },
+                        new
+                        {
+                            Id = 167,
+                            Code = "fr-be",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7489),
+                            Name = "Belgian French",
+                            NativeName = "Français Belge"
+                        },
+                        new
+                        {
+                            Id = 168,
+                            Code = "fr-ca",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7506),
+                            Name = "Canadian French",
+                            NativeName = "Français du Canada"
+                        },
+                        new
+                        {
+                            Id = 169,
+                            Code = "fr-ch",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7522),
+                            Name = "Swiss French",
+                            NativeName = "Français de la Suisse"
+                        },
+                        new
+                        {
+                            Id = 170,
+                            Code = "fr-frc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7537),
+                            Name = "Cajun French",
+                            NativeName = "Français Cadien"
+                        },
+                        new
+                        {
+                            Id = 171,
+                            Code = "fr-old",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7553),
+                            Name = "Old French",
+                            NativeName = "Ancien français"
+                        },
+                        new
+                        {
+                            Id = 172,
+                            Code = "fr-qc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7570),
+                            Name = "Quebec French",
+                            NativeName = "Québécois"
+                        },
+                        new
+                        {
+                            Id = 173,
+                            Code = "frr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7601),
+                            Name = "North Frisian",
+                            NativeName = "Nordfriisk"
+                        },
+                        new
+                        {
+                            Id = 174,
+                            Code = "fy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7616),
+                            Name = "West Frisian",
+                            NativeName = "Frysk"
+                        },
+                        new
+                        {
+                            Id = 175,
+                            Code = "fur",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7632),
+                            Name = "Friulian",
+                            NativeName = "Furlan"
+                        },
+                        new
+                        {
+                            Id = 176,
+                            Code = "ga",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7646),
+                            Name = "Irish Gaelic",
+                            NativeName = "Gaeilge"
+                        },
+                        new
+                        {
+                            Id = 177,
+                            Code = "gv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7661),
+                            Name = "Manx",
+                            NativeName = "Gaelg"
+                        },
+                        new
+                        {
+                            Id = 178,
+                            Code = "gag",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7675),
+                            Name = "Gagauz",
+                            NativeName = "Gagauz dili"
+                        },
+                        new
+                        {
+                            Id = 179,
+                            Code = "gd",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7693),
+                            Name = "Scottish Gaelic",
+                            NativeName = "Gàidhlig"
+                        },
+                        new
+                        {
+                            Id = 180,
+                            Code = "gan-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7711),
+                            Name = "Gan Chinese [Simplified script]",
+                            NativeName = "赣语"
+                        },
+                        new
+                        {
+                            Id = 181,
+                            Code = "gan-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7729),
+                            Name = "Gan Chinese [Traditional script]",
+                            NativeName = "赣語"
+                        },
+                        new
+                        {
+                            Id = 182,
+                            Code = "gl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7745),
+                            Name = "Galician",
+                            NativeName = "Galego"
+                        },
+                        new
+                        {
+                            Id = 183,
+                            Code = "gez",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7760),
+                            Name = "Ge’ez",
+                            NativeName = "ግዕዝ"
+                        },
+                        new
+                        {
+                            Id = 184,
+                            Code = "glk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7777),
+                            Name = "Gilaki",
+                            NativeName = "گیلکی"
+                        },
+                        new
+                        {
+                            Id = 185,
+                            Code = "gdo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7793),
+                            Name = "Godoberi",
+                            NativeName = "ГъибдилIи мицци"
+                        },
+                        new
+                        {
+                            Id = 186,
+                            Code = "sga",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7810),
+                            Name = "Old Irish",
+                            NativeName = "Goídelc"
+                        },
+                        new
+                        {
+                            Id = 187,
+                            Code = "huz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7826),
+                            Name = "Hunzib ",
+                            NativeName = "гьонкьос мыц"
+                        },
+                        new
+                        {
+                            Id = 188,
+                            Code = "grn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7843),
+                            Name = "Guarani",
+                            NativeName = "Guaraní"
+                        },
+                        new
+                        {
+                            Id = 189,
+                            Code = "got",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7858),
+                            Name = "Gothic",
+                            NativeName = "Gutiska"
+                        },
+                        new
+                        {
+                            Id = 190,
+                            Code = "gu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7873),
+                            Name = "Gujarati",
+                            NativeName = "ગુજરાતી"
+                        },
+                        new
+                        {
+                            Id = 191,
+                            Code = "zhc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7890),
+                            Name = "Classical Chinese",
+                            NativeName = "文言文"
+                        },
+                        new
+                        {
+                            Id = 192,
+                            Code = "ha-latn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7905),
+                            Name = "Hausa [Latin script]",
+                            NativeName = "Hausa"
+                        },
+                        new
+                        {
+                            Id = 193,
+                            Code = "ha-arab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7921),
+                            Name = "Hausa [Arabic script]",
+                            NativeName = "هَوُس"
+                        },
+                        new
+                        {
+                            Id = 194,
+                            Code = "zh-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7936),
+                            Name = "Mandarin Chinese [Simplified script]",
+                            NativeName = "汉语"
+                        },
+                        new
+                        {
+                            Id = 195,
+                            Code = "zh-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7953),
+                            Name = "Mandarin Chinese [Traditional Script]",
+                            NativeName = "漢語"
+                        },
+                        new
+                        {
+                            Id = 196,
+                            Code = "yue-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7971),
+                            Name = "Cantonese [Simplified script]",
+                            NativeName = "粤语"
+                        },
+                        new
+                        {
+                            Id = 197,
+                            Code = "yue-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(7986),
+                            Name = "Cantonese [Traditional script]",
+                            NativeName = "粵語"
+                        },
+                        new
+                        {
+                            Id = 198,
+                            Code = "hak-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8002),
+                            Name = "Hakka [Simplified script]",
+                            NativeName = "客家话"
+                        },
+                        new
+                        {
+                            Id = 199,
+                            Code = "hak-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8018),
+                            Name = "Hakka [Traditional script]",
+                            NativeName = "客家語"
+                        },
+                        new
+                        {
+                            Id = 200,
+                            Code = "hsn-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8035),
+                            Name = "Xiang Chinese [Simplified script]",
+                            NativeName = "湘语"
+                        },
+                        new
+                        {
+                            Id = 201,
+                            Code = "hsn-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8051),
+                            Name = "Xiang Chinese [Traditional script]",
+                            NativeName = "湘語"
+                        },
+                        new
+                        {
+                            Id = 202,
+                            Code = "czh-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8066),
+                            Name = "Hui [Simplified script]",
+                            NativeName = "徽语"
+                        },
+                        new
+                        {
+                            Id = 203,
+                            Code = "czh-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8081),
+                            Name = "Hui [Traditional script]",
+                            NativeName = "徽語"
+                        },
+                        new
+                        {
+                            Id = 204,
+                            Code = "nan-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8096),
+                            Name = "Minnan Chinese [Simplified script]",
+                            NativeName = "闽南语"
+                        },
+                        new
+                        {
+                            Id = 205,
+                            Code = "nan-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8111),
+                            Name = "Minnan Chinese [Traditional script]",
+                            NativeName = "閩南語"
+                        },
+                        new
+                        {
+                            Id = 206,
+                            Code = "cdo-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8126),
+                            Name = "Mindong Chinese [Simplified script]",
+                            NativeName = "闽东语"
+                        },
+                        new
+                        {
+                            Id = 207,
+                            Code = "cdo-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8141),
+                            Name = "Mindong Chinese [Traditional script]",
+                            NativeName = "閩東語"
+                        },
+                        new
+                        {
+                            Id = 208,
+                            Code = "ko",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8158),
+                            Name = "Korean",
+                            NativeName = "한국어"
+                        },
+                        new
+                        {
+                            Id = 209,
+                            Code = "ko-mid",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8174),
+                            Name = "Middle Korean",
+                            NativeName = "중세한국어"
+                        },
+                        new
+                        {
+                            Id = 210,
+                            Code = "xal",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8191),
+                            Name = "Kalmyk",
+                            NativeName = "Хальмг келн"
+                        },
+                        new
+                        {
+                            Id = 211,
+                            Code = "haw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8206),
+                            Name = "Hawaiian",
+                            NativeName = "`Ōlelo Hawai`i"
+                        },
+                        new
+                        {
+                            Id = 212,
+                            Code = "hy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8235),
+                            Name = "Armenian",
+                            NativeName = "Հայերեն"
+                        },
+                        new
+                        {
+                            Id = 213,
+                            Code = "hy-e",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8252),
+                            Name = "Armenian, Eastern",
+                            NativeName = "արևելահայերեն"
+                        },
+                        new
+                        {
+                            Id = 214,
+                            Code = "hy-w",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8269),
+                            Name = "Armenian, Western",
+                            NativeName = "Արեւմտահայերէն"
+                        },
+                        new
+                        {
+                            Id = 215,
+                            Code = "hy-h",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8285),
+                            Name = "Armenian, Homshetsi",
+                            NativeName = "Հոմշեցի"
+                        },
+                        new
+                        {
+                            Id = 216,
+                            Code = "hy-mid",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8301),
+                            Name = "Middle Armenian",
+                            NativeName = "միջին հայերեն"
+                        },
+                        new
+                        {
+                            Id = 217,
+                            Code = "hy-clas",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8318),
+                            Name = "Classical Armenian",
+                            NativeName = "գրաբար"
+                        },
+                        new
+                        {
+                            Id = 218,
+                            Code = "grc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8333),
+                            Name = "Greek, ancient",
+                            NativeName = "Ἑλληνική"
+                        },
+                        new
+                        {
+                            Id = 219,
+                            Code = "hif",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8350),
+                            Name = "Fiji Hindi",
+                            NativeName = "Fiji Baat"
+                        },
+                        new
+                        {
+                            Id = 220,
+                            Code = "hi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8366),
+                            Name = "Hindi",
+                            NativeName = "हिन्दी"
+                        },
+                        new
+                        {
+                            Id = 221,
+                            Code = "gin",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8383),
+                            Name = "Hinukh",
+                            NativeName = "гьинузас мец"
+                        },
+                        new
+                        {
+                            Id = 222,
+                            Code = "arp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8398),
+                            Name = "Arapaho",
+                            NativeName = "Hinóno'eitíít"
+                        },
+                        new
+                        {
+                            Id = 223,
+                            Code = "ho",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8415),
+                            Name = "Hiri Motu",
+                            NativeName = "Hiri Motu"
+                        },
+                        new
+                        {
+                            Id = 224,
+                            Code = "hit",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8429),
+                            Name = "Hittite",
+                            NativeName = "nešili"
+                        },
+                        new
+                        {
+                            Id = 225,
+                            Code = "hmn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8445),
+                            Name = "Hmong",
+                            NativeName = "Hmoob"
+                        },
+                        new
+                        {
+                            Id = 226,
+                            Code = "hop",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8459),
+                            Name = "Hopi",
+                            NativeName = "Hopilavayi"
+                        },
+                        new
+                        {
+                            Id = 227,
+                            Code = "hsb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8474),
+                            Name = "Sorbian (upper)",
+                            NativeName = "Hornjoserbšćina"
+                        },
+                        new
+                        {
+                            Id = 228,
+                            Code = "inh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8491),
+                            Name = "Ingush",
+                            NativeName = "гӀалгӀайн мотт"
+                        },
+                        new
+                        {
+                            Id = 229,
+                            Code = "jv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8507),
+                            Name = "Javanese",
+                            NativeName = "Basa Jawa"
+                        },
+                        new
+                        {
+                            Id = 230,
+                            Code = "jv-bms",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8522),
+                            Name = "Banyumasan",
+                            NativeName = "Basa Banyumasan"
+                        },
+                        new
+                        {
+                            Id = 231,
+                            Code = "hr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8537),
+                            Name = "Croatian",
+                            NativeName = "Hrvatski"
+                        },
+                        new
+                        {
+                            Id = 232,
+                            Code = "hur",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8551),
+                            Name = "Halkomelem",
+                            NativeName = "Hul'q'umín'um'"
+                        },
+                        new
+                        {
+                            Id = 233,
+                            Code = "rw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8568),
+                            Name = "Kinyarwanda",
+                            NativeName = "Ikinyarwanda"
+                        },
+                        new
+                        {
+                            Id = 234,
+                            Code = "iu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8583),
+                            Name = "Inuktitut",
+                            NativeName = "ᐃᓄᒃᑎᑐᑦ"
+                        },
+                        new
+                        {
+                            Id = 235,
+                            Code = "ipk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8598),
+                            Name = "Iñupiaq",
+                            NativeName = "Iñupiatun"
+                        },
+                        new
+                        {
+                            Id = 236,
+                            Code = "id",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8615),
+                            Name = "Indonesian",
+                            NativeName = "Bahasa Indonesia"
+                        },
+                        new
+                        {
+                            Id = 237,
+                            Code = "ig",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8630),
+                            Name = "Igbo",
+                            NativeName = "Igbo"
+                        },
+                        new
+                        {
+                            Id = 238,
+                            Code = "is",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8645),
+                            Name = "Icelandic",
+                            NativeName = "Íslenska"
+                        },
+                        new
+                        {
+                            Id = 239,
+                            Code = "it",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8660),
+                            Name = "Italian",
+                            NativeName = "Italiano"
+                        },
+                        new
+                        {
+                            Id = 240,
+                            Code = "itl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8674),
+                            Name = "Itelmen",
+                            NativeName = "итэнмэн"
+                        },
+                        new
+                        {
+                            Id = 241,
+                            Code = "he",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8689),
+                            Name = "Hebrew",
+                            NativeName = "עברית"
+                        },
+                        new
+                        {
+                            Id = 242,
+                            Code = "he-hbo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8704),
+                            Name = "Hebrew, Biblical",
+                            NativeName = "עברית מקראית"
+                        },
+                        new
+                        {
+                            Id = 243,
+                            Code = "jmk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8720),
+                            Name = "Jamtlandic",
+                            NativeName = "Jamtsk"
+                        },
+                        new
+                        {
+                            Id = 244,
+                            Code = "kry",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8735),
+                            Name = "Kryts",
+                            NativeName = "Jek"
+                        },
+                        new
+                        {
+                            Id = 245,
+                            Code = "cu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8749),
+                            Name = "Old Church Slavonic",
+                            NativeName = "Ѩзыкъ словѣньскъ"
+                        },
+                        new
+                        {
+                            Id = 246,
+                            Code = "cjy-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8766),
+                            Name = "Jin Chinese [Simplified script]",
+                            NativeName = "晋语"
+                        },
+                        new
+                        {
+                            Id = 247,
+                            Code = "cjy-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8783),
+                            Name = "Jin Chinese [Traditional script]",
+                            NativeName = "晉語"
+                        },
+                        new
+                        {
+                            Id = 248,
+                            Code = "ka",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8798),
+                            Name = "Georgian",
+                            NativeName = "ქართული"
+                        },
+                        new
+                        {
+                            Id = 249,
+                            Code = "ka-old",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8814),
+                            Name = "Old Georgian",
+                            NativeName = "ენაჲ ქართული"
+                        },
+                        new
+                        {
+                            Id = 250,
+                            Code = "kjj",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8830),
+                            Name = "Khinalug",
+                            NativeName = "каьтш мицI"
+                        },
+                        new
+                        {
+                            Id = 251,
+                            Code = "kab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8846),
+                            Name = "Kabyle",
+                            NativeName = "Taqbaylit"
+                        },
+                        new
+                        {
+                            Id = 252,
+                            Code = "mh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8873),
+                            Name = "Marshallese",
+                            NativeName = "Kajin M̧ajeļ"
+                        },
+                        new
+                        {
+                            Id = 253,
+                            Code = "kl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8891),
+                            Name = "Greenlandic",
+                            NativeName = "Kalaallisut"
+                        },
+                        new
+                        {
+                            Id = 254,
+                            Code = "mwp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8906),
+                            Name = "Kala Lagaw Ya",
+                            NativeName = "Kala Lagaw Ya"
+                        },
+                        new
+                        {
+                            Id = 255,
+                            Code = "moh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8921),
+                            Name = "Mohawk",
+                            NativeName = "Kanien’kéha"
+                        },
+                        new
+                        {
+                            Id = 256,
+                            Code = "kn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8938),
+                            Name = "Kannada",
+                            NativeName = "ಕನ್ನಡ"
+                        },
+                        new
+                        {
+                            Id = 257,
+                            Code = "cak",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8954),
+                            Name = "Kaqchikel Mayan",
+                            NativeName = "Kaqchikel Ch'ab'äl"
+                        },
+                        new
+                        {
+                            Id = 258,
+                            Code = "kdr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8975),
+                            Name = "Karaim",
+                            NativeName = "Karaj tili"
+                        },
+                        new
+                        {
+                            Id = 259,
+                            Code = "kpt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(8989),
+                            Name = "Karata",
+                            NativeName = "Karata"
+                        },
+                        new
+                        {
+                            Id = 260,
+                            Code = "kar",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9005),
+                            Name = "Karen",
+                            NativeName = "Karen"
+                        },
+                        new
+                        {
+                            Id = 261,
+                            Code = "krl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9019),
+                            Name = "Karelian",
+                            NativeName = "Karjala"
+                        },
+                        new
+                        {
+                            Id = 262,
+                            Code = "csb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9034),
+                            Name = "Kashubian",
+                            NativeName = "Kaszëbsczi"
+                        },
+                        new
+                        {
+                            Id = 263,
+                            Code = "gbb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9049),
+                            Name = "Kaytetye",
+                            NativeName = "Kaytetye"
+                        },
+                        new
+                        {
+                            Id = 264,
+                            Code = "ks-deva",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9064),
+                            Name = "Kashmiri [Devanagari script]",
+                            NativeName = "कश्मीरी"
+                        },
+                        new
+                        {
+                            Id = 265,
+                            Code = "ks-arab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9080),
+                            Name = "Kashmiri [Arabic script]",
+                            NativeName = "كشميري"
+                        },
+                        new
+                        {
+                            Id = 266,
+                            Code = "kk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9096),
+                            Name = "Kazakh",
+                            NativeName = "қазақша"
+                        },
+                        new
+                        {
+                            Id = 267,
+                            Code = "km",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9111),
+                            Name = "Khmer",
+                            NativeName = "ខ្មែរ"
+                        },
+                        new
+                        {
+                            Id = 268,
+                            Code = "kw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9127),
+                            Name = "Cornish",
+                            NativeName = "Kernewek"
+                        },
+                        new
+                        {
+                            Id = 269,
+                            Code = "khi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9142),
+                            Name = "Khoisan",
+                            NativeName = "Khoisan"
+                        },
+                        new
+                        {
+                            Id = 270,
+                            Code = "kca",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9156),
+                            Name = "Khanty",
+                            NativeName = "хӑнты ясӑӈ"
+                        },
+                        new
+                        {
+                            Id = 271,
+                            Code = "khv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9172),
+                            Name = "Khwarshi",
+                            NativeName = "Khwarshi"
+                        },
+                        new
+                        {
+                            Id = 272,
+                            Code = "krc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9186),
+                            Name = "Karachay-Balkar",
+                            NativeName = "Къарачай-Малкъар тил"
+                        },
+                        new
+                        {
+                            Id = 273,
+                            Code = "ky",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9219),
+                            Name = "Kyrgyz",
+                            NativeName = "Кыргызча"
+                        },
+                        new
+                        {
+                            Id = 274,
+                            Code = "gil",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9233),
+                            Name = "Gilbertese",
+                            NativeName = "Kiribati"
+                        },
+                        new
+                        {
+                            Id = 275,
+                            Code = "rn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9248),
+                            Name = "Ikirundi",
+                            NativeName = "Kirundi"
+                        },
+                        new
+                        {
+                            Id = 276,
+                            Code = "sw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9262),
+                            Name = "Swahili",
+                            NativeName = "Kiswahili"
+                        },
+                        new
+                        {
+                            Id = 277,
+                            Code = "kv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9278),
+                            Name = "Komi",
+                            NativeName = "Коми кыв"
+                        },
+                        new
+                        {
+                            Id = 278,
+                            Code = "kv-koi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9293),
+                            Name = "Komi-Permyak",
+                            NativeName = "Komi-Permyak"
+                        },
+                        new
+                        {
+                            Id = 279,
+                            Code = "kv-kpv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9308),
+                            Name = "Komi-Zyrian",
+                            NativeName = "Komi-Zyrian"
+                        },
+                        new
+                        {
+                            Id = 280,
+                            Code = "kmk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9323),
+                            Name = "Konkani",
+                            NativeName = "ಕಒಂಕಣಇ"
+                        },
+                        new
+                        {
+                            Id = 281,
+                            Code = "ht",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9339),
+                            Name = "Haitian Creole",
+                            NativeName = "Krèyol"
+                        },
+                        new
+                        {
+                            Id = 282,
+                            Code = "kea",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9355),
+                            Name = "Cape Verdean Creole",
+                            NativeName = "Kriólu Kabuberdiánu"
+                        },
+                        new
+                        {
+                            Id = 283,
+                            Code = "ani",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9373),
+                            Name = "Andi",
+                            NativeName = "къIaваннаб мицци"
+                        },
+                        new
+                        {
+                            Id = 284,
+                            Code = "ksk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9390),
+                            Name = "Kumyk",
+                            NativeName = "Къумукъ тил"
+                        },
+                        new
+                        {
+                            Id = 285,
+                            Code = "ku-latn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9408),
+                            Name = "Kurdish [Latin script]",
+                            NativeName = "Kurmancî"
+                        },
+                        new
+                        {
+                            Id = 286,
+                            Code = "ku-arab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9425),
+                            Name = "Kurdish [Arabic script]",
+                            NativeName = "كوردي"
+                        },
+                        new
+                        {
+                            Id = 287,
+                            Code = "kgg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Kusunda",
+                            NativeName = "Kusunda"
+                        },
+                        new
+                        {
+                            Id = 288,
+                            Code = "kwk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9454),
+                            Name = "Kwak'wala",
+                            NativeName = "Kwak'wala"
+                        },
+                        new
+                        {
+                            Id = 289,
+                            Code = "lkt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9469),
+                            Name = "Lakota",
+                            NativeName = "Lakȟótiyapi"
+                        },
+                        new
+                        {
+                            Id = 290,
+                            Code = "las",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9485),
+                            Name = "Lama",
+                            NativeName = "Lamba"
+                        },
+                        new
+                        {
+                            Id = 291,
+                            Code = "ltg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9499),
+                            Name = "Latgalian",
+                            NativeName = "Latgaļu"
+                        },
+                        new
+                        {
+                            Id = 292,
+                            Code = "lo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9515),
+                            Name = "Lao",
+                            NativeName = "ພງສງລງວ"
+                        },
+                        new
+                        {
+                            Id = 293,
+                            Code = "lzz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9530),
+                            Name = "Laz",
+                            NativeName = "ლაზური"
+                        },
+                        new
+                        {
+                            Id = 294,
+                            Code = "la",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9545),
+                            Name = "Latin",
+                            NativeName = "lingua latīna"
+                        },
+                        new
+                        {
+                            Id = 295,
+                            Code = "la-va",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9562),
+                            Name = "Ecclesiastical Latin",
+                            NativeName = "Lingua Latina Ecclesiastica"
+                        },
+                        new
+                        {
+                            Id = 296,
+                            Code = "sm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9580),
+                            Name = "Samoan",
+                            NativeName = "le gagana Samoa"
+                        },
+                        new
+                        {
+                            Id = 297,
+                            Code = "lez",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9595),
+                            Name = "Lezgian",
+                            NativeName = "Лезги чIал"
+                        },
+                        new
+                        {
+                            Id = 298,
+                            Code = "liv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9611),
+                            Name = "Livonian",
+                            NativeName = "Līvõ kēļ"
+                        },
+                        new
+                        {
+                            Id = 299,
+                            Code = "lld",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9629),
+                            Name = "Ladin",
+                            NativeName = "ladin"
+                        },
+                        new
+                        {
+                            Id = 300,
+                            Code = "lv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9643),
+                            Name = "Latvian",
+                            NativeName = "Latviešu"
+                        },
+                        new
+                        {
+                            Id = 301,
+                            Code = "unm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9659),
+                            Name = "Delaware",
+                            NativeName = "Lenape"
+                        },
+                        new
+                        {
+                            Id = 302,
+                            Code = "lb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9673),
+                            Name = "Luxembourgish",
+                            NativeName = "Lëtzebuergesch"
+                        },
+                        new
+                        {
+                            Id = 303,
+                            Code = "lbe",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9690),
+                            Name = "Lak",
+                            NativeName = "лакку маз"
+                        },
+                        new
+                        {
+                            Id = 304,
+                            Code = "lt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9706),
+                            Name = "Lithuanian",
+                            NativeName = "Lietuvių"
+                        },
+                        new
+                        {
+                            Id = 305,
+                            Code = "lij",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9721),
+                            Name = "Ligurian",
+                            NativeName = "lìgure"
+                        },
+                        new
+                        {
+                            Id = 306,
+                            Code = "lim",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9737),
+                            Name = "Limburgish",
+                            NativeName = "Limburgs"
+                        },
+                        new
+                        {
+                            Id = 307,
+                            Code = "ln",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9752),
+                            Name = "Lingala",
+                            NativeName = "Lingála"
+                        },
+                        new
+                        {
+                            Id = 308,
+                            Code = "loz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9767),
+                            Name = "Lozi",
+                            NativeName = "Lozi"
+                        },
+                        new
+                        {
+                            Id = 309,
+                            Code = "ckt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9782),
+                            Name = "Chukchi",
+                            NativeName = "Ԓыгъоравэтԓьэн йиԓыйиԓ"
+                        },
+                        new
+                        {
+                            Id = 310,
+                            Code = "lud",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9799),
+                            Name = "Ludic",
+                            NativeName = "lyydin kiel'"
+                        },
+                        new
+                        {
+                            Id = 311,
+                            Code = "lmo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9815),
+                            Name = "Lombard",
+                            NativeName = "lumbaart"
+                        },
+                        new
+                        {
+                            Id = 312,
+                            Code = "sva",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9830),
+                            Name = "Svan",
+                            NativeName = "ლუშნუ ნინ"
+                        },
+                        new
+                        {
+                            Id = 313,
+                            Code = "mas",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9847),
+                            Name = "Maasai",
+                            NativeName = "ɔl Maa"
+                        },
+                        new
+                        {
+                            Id = 314,
+                            Code = "yua",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9874),
+                            Name = "Yucatec Maya",
+                            NativeName = "Maaya t'aan"
+                        },
+                        new
+                        {
+                            Id = 315,
+                            Code = "mdh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9890),
+                            Name = "Maguindanao",
+                            NativeName = "Maguindanao"
+                        },
+                        new
+                        {
+                            Id = 316,
+                            Code = "hu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9905),
+                            Name = "Hungarian",
+                            NativeName = "Magyar"
+                        },
+                        new
+                        {
+                            Id = 317,
+                            Code = "mkz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9920),
+                            Name = "Makasae",
+                            NativeName = "Makassai"
+                        },
+                        new
+                        {
+                            Id = 318,
+                            Code = "mk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9934),
+                            Name = "Macedonian",
+                            NativeName = "Македонски"
+                        },
+                        new
+                        {
+                            Id = 319,
+                            Code = "mg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9950),
+                            Name = "Malagasy",
+                            NativeName = "Malagasy"
+                        },
+                        new
+                        {
+                            Id = 320,
+                            Code = "ml",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9964),
+                            Name = "Malayalam",
+                            NativeName = "മലയാളം"
+                        },
+                        new
+                        {
+                            Id = 321,
+                            Code = "mt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9981),
+                            Name = "Maltese",
+                            NativeName = "Malti"
+                        },
+                        new
+                        {
+                            Id = 322,
+                            Code = "mnc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 359, DateTimeKind.Utc).AddTicks(9995),
+                            Name = "Manchu",
+                            NativeName = "Manju gisun"
+                        },
+                        new
+                        {
+                            Id = 323,
+                            Code = "mns",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(10),
+                            Name = "Mansi",
+                            NativeName = "Маньси"
+                        },
+                        new
+                        {
+                            Id = 324,
+                            Code = "xmf",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(26),
+                            Name = "Mingrelian",
+                            NativeName = "მარგალური ნინა"
+                        },
+                        new
+                        {
+                            Id = 325,
+                            Code = "mr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(44),
+                            Name = "Marathi",
+                            NativeName = "मराठी"
+                        },
+                        new
+                        {
+                            Id = 326,
+                            Code = "mic",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(60),
+                            Name = "Micmac",
+                            NativeName = "Míkmaq"
+                        },
+                        new
+                        {
+                            Id = 327,
+                            Code = "mwl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(75),
+                            Name = "Mirandese",
+                            NativeName = "Mirandés"
+                        },
+                        new
+                        {
+                            Id = 328,
+                            Code = "mo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(90),
+                            Name = "Moldovan",
+                            NativeName = "Moldovenească"
+                        },
+                        new
+                        {
+                            Id = 329,
+                            Code = "mdf",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(108),
+                            Name = "Moksha",
+                            NativeName = "Мокшень"
+                        },
+                        new
+                        {
+                            Id = 330,
+                            Code = "mnw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(123),
+                            Name = "Mon",
+                            NativeName = "Mon"
+                        },
+                        new
+                        {
+                            Id = 331,
+                            Code = "mn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(137),
+                            Name = "Mongolian",
+                            NativeName = "Монгол хэл"
+                        },
+                        new
+                        {
+                            Id = 332,
+                            Code = "cmg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(153),
+                            Name = "Classical Mongolian",
+                            NativeName = "Mongɣol kele"
+                        },
+                        new
+                        {
+                            Id = 333,
+                            Code = "arn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(170),
+                            Name = "Mapuche",
+                            NativeName = "Mapudungun"
+                        },
+                        new
+                        {
+                            Id = 334,
+                            Code = "mfe",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(185),
+                            Name = "Mauritian",
+                            NativeName = "Morisyen"
+                        },
+                        new
+                        {
+                            Id = 335,
+                            Code = "mof",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(200),
+                            Name = "Mohegan",
+                            NativeName = "Moyahikaniw"
+                        },
+                        new
+                        {
+                            Id = 336,
+                            Code = "mia",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(214),
+                            Name = "Miami-Illinois",
+                            NativeName = "Myaamia"
+                        },
+                        new
+                        {
+                            Id = 337,
+                            Code = "rut",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(230),
+                            Name = "Rutul",
+                            NativeName = "мыхIабишды чIел"
+                        },
+                        new
+                        {
+                            Id = 338,
+                            Code = "mhr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(248),
+                            Name = "Mari (Meadow)",
+                            NativeName = "Олык марий йылме"
+                        },
+                        new
+                        {
+                            Id = 339,
+                            Code = "mus",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(265),
+                            Name = "Creek",
+                            NativeName = "Mvskoke"
+                        },
+                        new
+                        {
+                            Id = 340,
+                            Code = "mrj",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(282),
+                            Name = "Mari (Hill)",
+                            NativeName = "Кырык мары йӹлмӹ"
+                        },
+                        new
+                        {
+                            Id = 341,
+                            Code = "my",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(299),
+                            Name = "Burmese",
+                            NativeName = "မ္ရန္မာ"
+                        },
+                        new
+                        {
+                            Id = 342,
+                            Code = "nah",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(314),
+                            Name = "Nahuatl",
+                            NativeName = "Náhuatl"
+                        },
+                        new
+                        {
+                            Id = 343,
+                            Code = "na",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(330),
+                            Name = "Nauruan",
+                            NativeName = "dorerin Naoero"
+                        },
+                        new
+                        {
+                            Id = 344,
+                            Code = "nap",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(345),
+                            Name = "Neapolitan",
+                            NativeName = "Napulitano"
+                        },
+                        new
+                        {
+                            Id = 345,
+                            Code = "new",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(361),
+                            Name = "Nepal Bhasa",
+                            NativeName = "नेपाल भाषा"
+                        },
+                        new
+                        {
+                            Id = 346,
+                            Code = "ppl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(378),
+                            Name = "Pipil",
+                            NativeName = "Nawat"
+                        },
+                        new
+                        {
+                            Id = 347,
+                            Code = "yrk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(393),
+                            Name = "Nenets",
+                            NativeName = "Ненэця\" вада"
+                        },
+                        new
+                        {
+                            Id = 348,
+                            Code = "aii",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(431),
+                            Name = "Neo-Aramaic",
+                            NativeName = "Neo-Aramaic"
+                        },
+                        new
+                        {
+                            Id = 349,
+                            Code = "nll",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(446),
+                            Name = "Nihali",
+                            NativeName = "Nahali"
+                        },
+                        new
+                        {
+                            Id = 350,
+                            Code = "niv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(462),
+                            Name = "Nivkh",
+                            NativeName = "Нивхгу диф"
+                        },
+                        new
+                        {
+                            Id = 351,
+                            Code = "nio",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(478),
+                            Name = "Nganasan",
+                            NativeName = "Ня’’ сиәде"
+                        },
+                        new
+                        {
+                            Id = 352,
+                            Code = "niu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(495),
+                            Name = "Niuean",
+                            NativeName = "ko e vagahau Niuē"
+                        },
+                        new
+                        {
+                            Id = 353,
+                            Code = "nog",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(512),
+                            Name = "Nogai",
+                            NativeName = "Ногай тили"
+                        },
+                        new
+                        {
+                            Id = 354,
+                            Code = "cr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(528),
+                            Name = "Cree",
+                            NativeName = "ᓂᐦᔭᐘᒃ"
+                        },
+                        new
+                        {
+                            Id = 355,
+                            Code = "ja",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(555),
+                            Name = "Japanese",
+                            NativeName = "日本語"
+                        },
+                        new
+                        {
+                            Id = 356,
+                            Code = "ja-clas",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(570),
+                            Name = "Classical Japanese",
+                            NativeName = "和文"
+                        },
+                        new
+                        {
+                            Id = 357,
+                            Code = "nd",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(586),
+                            Name = "Ndebele, Northern",
+                            NativeName = "isiNdebele"
+                        },
+                        new
+                        {
+                            Id = 358,
+                            Code = "nl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(601),
+                            Name = "Dutch",
+                            NativeName = "Nederlands"
+                        },
+                        new
+                        {
+                            Id = 359,
+                            Code = "nl-nbr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(615),
+                            Name = "Dutch, Brabantian",
+                            NativeName = "Braobans"
+                        },
+                        new
+                        {
+                            Id = 360,
+                            Code = "nl-be",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(630),
+                            Name = "Flemish",
+                            NativeName = "Vlaams"
+                        },
+                        new
+                        {
+                            Id = 361,
+                            Code = "nl-mid",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(644),
+                            Name = "Middelnederlands",
+                            NativeName = "Middelnederlands"
+                        },
+                        new
+                        {
+                            Id = 362,
+                            Code = "ne",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(662),
+                            Name = "Nepali",
+                            NativeName = "नेपाली"
+                        },
+                        new
+                        {
+                            Id = 363,
+                            Code = "pih",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(678),
+                            Name = "Norfuk/Pitkern",
+                            NativeName = "Norfuk/Pitkern"
+                        },
+                        new
+                        {
+                            Id = 364,
+                            Code = "no",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(694),
+                            Name = "Norwegian",
+                            NativeName = "Norsk"
+                        },
+                        new
+                        {
+                            Id = 365,
+                            Code = "no-nn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(708),
+                            Name = "Norwegian, Nynorsk",
+                            NativeName = "Nynorsk"
+                        },
+                        new
+                        {
+                            Id = 366,
+                            Code = "no-nb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(723),
+                            Name = "Norwegian, Bokmål",
+                            NativeName = "Bokmål"
+                        },
+                        new
+                        {
+                            Id = 367,
+                            Code = "no-val",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(741),
+                            Name = "Norwegian, Vallemål",
+                            NativeName = "Vallemål"
+                        },
+                        new
+                        {
+                            Id = 368,
+                            Code = "non",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(758),
+                            Name = "Old Norse",
+                            NativeName = "Norrœnt"
+                        },
+                        new
+                        {
+                            Id = 369,
+                            Code = "ntj",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(774),
+                            Name = "Ngaanyatjarra",
+                            NativeName = "Ngaanyatjarra"
+                        },
+                        new
+                        {
+                            Id = 370,
+                            Code = "nr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(789),
+                            Name = "Ndebele, Southern",
+                            NativeName = "Nrebele"
+                        },
+                        new
+                        {
+                            Id = 371,
+                            Code = "oka",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(804),
+                            Name = "Colville-Okanagan Salish",
+                            NativeName = "Nsəlxcin"
+                        },
+                        new
+                        {
+                            Id = 372,
+                            Code = "ny",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(820),
+                            Name = "Chewa",
+                            NativeName = "Nyanja"
+                        },
+                        new
+                        {
+                            Id = 373,
+                            Code = "kpy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(835),
+                            Name = "Koryak",
+                            NativeName = "нымылан"
+                        },
+                        new
+                        {
+                            Id = 374,
+                            Code = "oc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(849),
+                            Name = "Occitan",
+                            NativeName = "Occitan"
+                        },
+                        new
+                        {
+                            Id = 375,
+                            Code = "ryu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(864),
+                            Name = "Okinawan",
+                            NativeName = "ウチナーグチ"
+                        },
+                        new
+                        {
+                            Id = 376,
+                            Code = "olo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(881),
+                            Name = "Livvi-Karelian",
+                            NativeName = "Olonets"
+                        },
+                        new
+                        {
+                            Id = 377,
+                            Code = "one",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(895),
+                            Name = "Oneida",
+                            NativeName = "Onʌyotaʔa:ka"
+                        },
+                        new
+                        {
+                            Id = 378,
+                            Code = "ood",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(913),
+                            Name = "O’odham",
+                            NativeName = "Oʼodham ñiok"
+                        },
+                        new
+                        {
+                            Id = 379,
+                            Code = "or",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(933),
+                            Name = "Oriya",
+                            NativeName = "ଓଡ଼ିଆ"
+                        },
+                        new
+                        {
+                            Id = 380,
+                            Code = "om",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(948),
+                            Name = "Oromoo",
+                            NativeName = "Oromoo"
+                        },
+                        new
+                        {
+                            Id = 381,
+                            Code = "hz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(964),
+                            Name = "Herero",
+                            NativeName = "Otjiherero"
+                        },
+                        new
+                        {
+                            Id = 382,
+                            Code = "os",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(979),
+                            Name = "Ossetic, Iron",
+                            NativeName = "Ирон"
+                        },
+                        new
+                        {
+                            Id = 383,
+                            Code = "os-digor",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(995),
+                            Name = "Ossetic, Digor",
+                            NativeName = "дигорон"
+                        },
+                        new
+                        {
+                            Id = 384,
+                            Code = "pi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1011),
+                            Name = "Pali",
+                            NativeName = "पाळि"
+                        },
+                        new
+                        {
+                            Id = 385,
+                            Code = "pa-guru",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1026),
+                            Name = "Punjabi [Gurmukhi script]",
+                            NativeName = "ਪੰਜਾਬੀ"
+                        },
+                        new
+                        {
+                            Id = 386,
+                            Code = "pa-deva",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1042),
+                            Name = "Punjabi [Devanagari script]",
+                            NativeName = "पंजाबी"
+                        },
+                        new
+                        {
+                            Id = 387,
+                            Code = "pa-arab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1059),
+                            Name = "Punjabi [Arabic script]",
+                            NativeName = "پنجابي"
+                        },
+                        new
+                        {
+                            Id = 388,
+                            Code = "pau",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1076),
+                            Name = "Palauan",
+                            NativeName = "Palauan"
+                        },
+                        new
+                        {
+                            Id = 389,
+                            Code = "pap",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1091),
+                            Name = "Papiamento",
+                            NativeName = "Papiamentu"
+                        },
+                        new
+                        {
+                            Id = 390,
+                            Code = "prk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1108),
+                            Name = "Wa",
+                            NativeName = "Parauk"
+                        },
+                        new
+                        {
+                            Id = 391,
+                            Code = "pam",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1122),
+                            Name = "Kapampangan",
+                            NativeName = "Pampangan"
+                        },
+                        new
+                        {
+                            Id = 392,
+                            Code = "paa",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1137),
+                            Name = "Papuan",
+                            NativeName = "Papuan"
+                        },
+                        new
+                        {
+                            Id = 393,
+                            Code = "nds",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1151),
+                            Name = "Low Saxon",
+                            NativeName = "Plattdüütsch"
+                        },
+                        new
+                        {
+                            Id = 394,
+                            Code = "pdt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1167),
+                            Name = "Plautdietsch",
+                            NativeName = "Plautdietsch"
+                        },
+                        new
+                        {
+                            Id = 395,
+                            Code = "pl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1194),
+                            Name = "Polish",
+                            NativeName = "Polski"
+                        },
+                        new
+                        {
+                            Id = 396,
+                            Code = "pt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1208),
+                            Name = "Portuguese",
+                            NativeName = "Português"
+                        },
+                        new
+                        {
+                            Id = 397,
+                            Code = "pt-pt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1224),
+                            Name = "European Portuguese",
+                            NativeName = "Português de Portugal"
+                        },
+                        new
+                        {
+                            Id = 398,
+                            Code = "pt-br",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1241),
+                            Name = "Brazilian Portuguese",
+                            NativeName = "Português do Brasil"
+                        },
+                        new
+                        {
+                            Id = 399,
+                            Code = "prg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1257),
+                            Name = "Prussian",
+                            NativeName = "Prūsiskan"
+                        },
+                        new
+                        {
+                            Id = 400,
+                            Code = "ps",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1273),
+                            Name = "Pashto",
+                            NativeName = "پښتو"
+                        },
+                        new
+                        {
+                            Id = 401,
+                            Code = "phn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1289),
+                            Name = "Phoenician",
+                            NativeName = "Phoenician"
+                        },
+                        new
+                        {
+                            Id = 402,
+                            Code = "pms",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1304),
+                            Name = "Piedmontese",
+                            NativeName = "piemontèis"
+                        },
+                        new
+                        {
+                            Id = 403,
+                            Code = "piu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1319),
+                            Name = "Pintupi-Luritja",
+                            NativeName = "Pintupi-Luritja"
+                        },
+                        new
+                        {
+                            Id = 404,
+                            Code = "pjt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1335),
+                            Name = "Pitjantjatjara",
+                            NativeName = "Pitjantjatjara"
+                        },
+                        new
+                        {
+                            Id = 405,
+                            Code = "kaa",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1350),
+                            Name = "Karakalpak",
+                            NativeName = "Qaraqalpaq tili"
+                        },
+                        new
+                        {
+                            Id = 406,
+                            Code = "crh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1365),
+                            Name = "Crimean Tatar",
+                            NativeName = "Qırımtatar tili"
+                        },
+                        new
+                        {
+                            Id = 407,
+                            Code = "qu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1382),
+                            Name = "Quechua",
+                            NativeName = "Runa simi"
+                        },
+                        new
+                        {
+                            Id = 408,
+                            Code = "rap",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1399),
+                            Name = "Rapa Nui",
+                            NativeName = "Rapa Nui"
+                        },
+                        new
+                        {
+                            Id = 409,
+                            Code = "ro",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1413),
+                            Name = "Romanian",
+                            NativeName = "Română"
+                        },
+                        new
+                        {
+                            Id = 410,
+                            Code = "rgn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1429),
+                            Name = "Romagnol",
+                            NativeName = "Romagnòl"
+                        },
+                        new
+                        {
+                            Id = 411,
+                            Code = "rom-latn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1444),
+                            Name = "Romany [Latin script]",
+                            NativeName = "Romani"
+                        },
+                        new
+                        {
+                            Id = 412,
+                            Code = "rom-cyrl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1459),
+                            Name = "Romany [Cyrillic script]",
+                            NativeName = "Романи"
+                        },
+                        new
+                        {
+                            Id = 413,
+                            Code = "roo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1475),
+                            Name = "Rotokas",
+                            NativeName = "Rotokas"
+                        },
+                        new
+                        {
+                            Id = 414,
+                            Code = "rtm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1490),
+                            Name = "Rotuman",
+                            NativeName = "Fäeag Rotuma"
+                        },
+                        new
+                        {
+                            Id = 415,
+                            Code = "rm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1506),
+                            Name = "Romansh",
+                            NativeName = "Rumantsch"
+                        },
+                        new
+                        {
+                            Id = 416,
+                            Code = "rue",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1521),
+                            Name = "Rusyn",
+                            NativeName = "Rusyn"
+                        },
+                        new
+                        {
+                            Id = 417,
+                            Code = "rue-rs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1535),
+                            Name = "Pannonian Rusyn",
+                            NativeName = "Бачваньски руски язик"
+                        },
+                        new
+                        {
+                            Id = 418,
+                            Code = "ru",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1553),
+                            Name = "Russian",
+                            NativeName = "Русский"
+                        },
+                        new
+                        {
+                            Id = 419,
+                            Code = "sg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1567),
+                            Name = "Sango",
+                            NativeName = "Sängö"
+                        },
+                        new
+                        {
+                            Id = 420,
+                            Code = "ari",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1582),
+                            Name = "Arikara",
+                            NativeName = "Sániš"
+                        },
+                        new
+                        {
+                            Id = 421,
+                            Code = "sa",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1598),
+                            Name = "Sanskrit",
+                            NativeName = "संस्कृत"
+                        },
+                        new
+                        {
+                            Id = 422,
+                            Code = "sc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1613),
+                            Name = "Sardinian",
+                            NativeName = "Sardu"
+                        },
+                        new
+                        {
+                            Id = 423,
+                            Code = "sah",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1628),
+                            Name = "Yakut",
+                            NativeName = "Саха тыла"
+                        },
+                        new
+                        {
+                            Id = 424,
+                            Code = "sco",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1643),
+                            Name = "Scots",
+                            NativeName = "Scoats"
+                        },
+                        new
+                        {
+                            Id = 425,
+                            Code = "shs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1658),
+                            Name = "Shuswap",
+                            NativeName = "Secwepemctsín"
+                        },
+                        new
+                        {
+                            Id = 426,
+                            Code = "fla",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1675),
+                            Name = "Montana Salish",
+                            NativeName = "Séliš"
+                        },
+                        new
+                        {
+                            Id = 427,
+                            Code = "shn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1691),
+                            Name = "Shan",
+                            NativeName = "Shan"
+                        },
+                        new
+                        {
+                            Id = 428,
+                            Code = "scn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1705),
+                            Name = "Sicilian",
+                            NativeName = "Sicilianu"
+                        },
+                        new
+                        {
+                            Id = 429,
+                            Code = "scn-tara",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1723),
+                            Name = "Tarantino",
+                            NativeName = "Tarandíne"
+                        },
+                        new
+                        {
+                            Id = 430,
+                            Code = "sml",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1739),
+                            Name = "Sinama, Central",
+                            NativeName = "Sinama, Central"
+                        },
+                        new
+                        {
+                            Id = 431,
+                            Code = "sog",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1754),
+                            Name = "Sogdian",
+                            NativeName = "Sogdian"
+                        },
+                        new
+                        {
+                            Id = 432,
+                            Code = "ckb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1770),
+                            Name = "Soranî",
+                            NativeName = "سۆرانی"
+                        },
+                        new
+                        {
+                            Id = 433,
+                            Code = "shh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1790),
+                            Name = "Shoshoni",
+                            NativeName = "Sosoni’da̲i̲gwape"
+                        },
+                        new
+                        {
+                            Id = 434,
+                            Code = "sr-cyrl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1809),
+                            Name = "Serbian [Cyrillic script]",
+                            NativeName = "Српски"
+                        },
+                        new
+                        {
+                            Id = 435,
+                            Code = "sr-latn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1825),
+                            Name = "Serbian [Latin script]",
+                            NativeName = "Srpski"
+                        },
+                        new
+                        {
+                            Id = 436,
+                            Code = "sh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1855),
+                            Name = "Serbo-Croatian",
+                            NativeName = "srpskohrvatski"
+                        },
+                        new
+                        {
+                            Id = 437,
+                            Code = "srn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1870),
+                            Name = "Sranan Tongo",
+                            NativeName = "Sranantogo"
+                        },
+                        new
+                        {
+                            Id = 438,
+                            Code = "sq",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1886),
+                            Name = "Albanian",
+                            NativeName = "Shqipe"
+                        },
+                        new
+                        {
+                            Id = 439,
+                            Code = "ii",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1900),
+                            Name = "Yi",
+                            NativeName = "ꆇꉙ"
+                        },
+                        new
+                        {
+                            Id = 440,
+                            Code = "za",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1916),
+                            Name = "Zhuang",
+                            NativeName = "Saw cuəŋ"
+                        },
+                        new
+                        {
+                            Id = 441,
+                            Code = "smi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1932),
+                            Name = "Sami",
+                            NativeName = "Sámi"
+                        },
+                        new
+                        {
+                            Id = 442,
+                            Code = "smi-smn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1947),
+                            Name = "Inari Sami",
+                            NativeName = "anarâškielâ"
+                        },
+                        new
+                        {
+                            Id = 443,
+                            Code = "smi-smk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1964),
+                            Name = "Kildin Sami",
+                            NativeName = "самь кӣлл"
+                        },
+                        new
+                        {
+                            Id = 444,
+                            Code = "smi-smj",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1979),
+                            Name = "Lule Sami",
+                            NativeName = "julevsábme"
+                        },
+                        new
+                        {
+                            Id = 445,
+                            Code = "smi-sme",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(1995),
+                            Name = "Northern Sami",
+                            NativeName = "davvisámegiella"
+                        },
+                        new
+                        {
+                            Id = 446,
+                            Code = "smi-smp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2012),
+                            Name = "Pite Sami",
+                            NativeName = "biđonsámegiella"
+                        },
+                        new
+                        {
+                            Id = 447,
+                            Code = "smi-sms",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2029),
+                            Name = "Skolt Sami",
+                            NativeName = "sääˊmǩiõll"
+                        },
+                        new
+                        {
+                            Id = 448,
+                            Code = "smi-sma",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2046),
+                            Name = "Southern Sami",
+                            NativeName = "åarjelsaemien gïele"
+                        },
+                        new
+                        {
+                            Id = 449,
+                            Code = "smi-smt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2063),
+                            Name = "Ter Sami",
+                            NativeName = "saa´mekiill"
+                        },
+                        new
+                        {
+                            Id = 450,
+                            Code = "smi-smu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2079),
+                            Name = "Ume Sami",
+                            NativeName = "ubmisámegiella"
+                        },
+                        new
+                        {
+                            Id = 451,
+                            Code = "sd-deva",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2095),
+                            Name = "Sindhi [Devanagari script]",
+                            NativeName = "सनिध"
+                        },
+                        new
+                        {
+                            Id = 452,
+                            Code = "sd-arab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2111),
+                            Name = "Sindhi [Arabic script]",
+                            NativeName = "سنڗي"
+                        },
+                        new
+                        {
+                            Id = 453,
+                            Code = "crs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2127),
+                            Name = "Seychellois Creole",
+                            NativeName = "Seselwa"
+                        },
+                        new
+                        {
+                            Id = 454,
+                            Code = "si",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2142),
+                            Name = "Sinhalese",
+                            NativeName = "සිංහල"
+                        },
+                        new
+                        {
+                            Id = 455,
+                            Code = "den",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2157),
+                            Name = "Slavey",
+                            NativeName = "Slavey"
+                        },
+                        new
+                        {
+                            Id = 456,
+                            Code = "sk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2171),
+                            Name = "Slovak",
+                            NativeName = "Slovenčina"
+                        },
+                        new
+                        {
+                            Id = 457,
+                            Code = "sl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2188),
+                            Name = "Slovene",
+                            NativeName = "Slovenščina"
+                        },
+                        new
+                        {
+                            Id = 458,
+                            Code = "szl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2203),
+                            Name = "Silesian",
+                            NativeName = "Ślůnski"
+                        },
+                        new
+                        {
+                            Id = 459,
+                            Code = "crd",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2218),
+                            Name = "Coeur d'Alene Salish",
+                            NativeName = "Snchitsuʼumshtsn"
+                        },
+                        new
+                        {
+                            Id = 460,
+                            Code = "so",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2236),
+                            Name = "Somali",
+                            NativeName = "Soomaali"
+                        },
+                        new
+                        {
+                            Id = 461,
+                            Code = "st",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2250),
+                            Name = "Sotho",
+                            NativeName = "seSotho"
+                        },
+                        new
+                        {
+                            Id = 462,
+                            Code = "stq",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2264),
+                            Name = "Saterland Frisian",
+                            NativeName = "Seeltersk"
+                        },
+                        new
+                        {
+                            Id = 463,
+                            Code = "ss",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2280),
+                            Name = "Swati",
+                            NativeName = "siSwati"
+                        },
+                        new
+                        {
+                            Id = 464,
+                            Code = "su",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2294),
+                            Name = "Sundanese",
+                            NativeName = "Bahasa Sunda"
+                        },
+                        new
+                        {
+                            Id = 465,
+                            Code = "fi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2310),
+                            Name = "Finnish",
+                            NativeName = "Suomi"
+                        },
+                        new
+                        {
+                            Id = 466,
+                            Code = "sgn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2323),
+                            Name = "Sign language",
+                            NativeName = "Sign language"
+                        },
+                        new
+                        {
+                            Id = 467,
+                            Code = "sgn-au",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2339),
+                            Name = "Auslan",
+                            NativeName = "Auslan"
+                        },
+                        new
+                        {
+                            Id = 468,
+                            Code = "sgn-us",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2353),
+                            Name = "American Sign Language",
+                            NativeName = "American Sign Language"
+                        },
+                        new
+                        {
+                            Id = 469,
+                            Code = "sgn-gb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2370),
+                            Name = "British Sign Language",
+                            NativeName = "British Sign Language"
+                        },
+                        new
+                        {
+                            Id = 470,
+                            Code = "sgn-ee",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2386),
+                            Name = "Estonian Sign Language",
+                            NativeName = "Estonian Sign Language"
+                        },
+                        new
+                        {
+                            Id = 471,
+                            Code = "sgn-cy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2402),
+                            Name = "Cyprus Sign Language",
+                            NativeName = "Κυπριακή Νοηματική Γλώσσα"
+                        },
+                        new
+                        {
+                            Id = 472,
+                            Code = "sgn-gr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2421),
+                            Name = "Greek Sign Language",
+                            NativeName = "GSL"
+                        },
+                        new
+                        {
+                            Id = 473,
+                            Code = "sgn-ie",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2437),
+                            Name = "Irish Sign Language",
+                            NativeName = "Irish Sign Language"
+                        },
+                        new
+                        {
+                            Id = 474,
+                            Code = "sgn-cn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2452),
+                            Name = "Chinese Sign Language",
+                            NativeName = "中国手语"
+                        },
+                        new
+                        {
+                            Id = 475,
+                            Code = "sgn-de",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2479),
+                            Name = "German Sign Language",
+                            NativeName = "DGS"
+                        },
+                        new
+                        {
+                            Id = 476,
+                            Code = "sgn-fr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2496),
+                            Name = "French Sign Language",
+                            NativeName = "LSF"
+                        },
+                        new
+                        {
+                            Id = 477,
+                            Code = "sgn-ca-qc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2512),
+                            Name = "Sign language",
+                            NativeName = "LSQ"
+                        },
+                        new
+                        {
+                            Id = 478,
+                            Code = "sgn-es",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2526),
+                            Name = "Spanish Sign Language",
+                            NativeName = "LSE"
+                        },
+                        new
+                        {
+                            Id = 479,
+                            Code = "sgn-br",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2541),
+                            Name = "Brazilian Sign Language",
+                            NativeName = "LIBRAS"
+                        },
+                        new
+                        {
+                            Id = 480,
+                            Code = "sgn-it",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2555),
+                            Name = "Italian Sign Language",
+                            NativeName = "LIS"
+                        },
+                        new
+                        {
+                            Id = 481,
+                            Code = "sgn-nl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2570),
+                            Name = "Dutch Sign Language",
+                            NativeName = "NGT"
+                        },
+                        new
+                        {
+                            Id = 482,
+                            Code = "sgn-jp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2584),
+                            Name = "Japanese Sign Language",
+                            NativeName = "日本手話"
+                        },
+                        new
+                        {
+                            Id = 483,
+                            Code = "sgn-no",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2600),
+                            Name = "Norwegian Sign Language",
+                            NativeName = "NSL"
+                        },
+                        new
+                        {
+                            Id = 484,
+                            Code = "sgn-ru",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2614),
+                            Name = "Russian Sign Language",
+                            NativeName = "РЖЯ"
+                        },
+                        new
+                        {
+                            Id = 485,
+                            Code = "sgn-rs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2630),
+                            Name = "Serbian Sign Language",
+                            NativeName = "Српски знаковни језик"
+                        },
+                        new
+                        {
+                            Id = 486,
+                            Code = "sgn-il",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2649),
+                            Name = "Israeli Sign Language",
+                            NativeName = "שפת סימנים ישראלית"
+                        },
+                        new
+                        {
+                            Id = 487,
+                            Code = "sgn-se",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2666),
+                            Name = "Swedish Sign Language",
+                            NativeName = "TSP"
+                        },
+                        new
+                        {
+                            Id = 488,
+                            Code = "sv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2681),
+                            Name = "Swedish",
+                            NativeName = "Svenska"
+                        },
+                        new
+                        {
+                            Id = 489,
+                            Code = "sv-fi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2697),
+                            Name = "Finland Swedish",
+                            NativeName = "Finlandssvenska"
+                        },
+                        new
+                        {
+                            Id = 490,
+                            Code = "syc",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2713),
+                            Name = "Syriac",
+                            NativeName = "ܣܘܪܝܝܐ"
+                        },
+                        new
+                        {
+                            Id = 491,
+                            Code = "ta",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2733),
+                            Name = "Tamil",
+                            NativeName = "தமிழ்"
+                        },
+                        new
+                        {
+                            Id = 492,
+                            Code = "ta-lk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2748),
+                            Name = "Tamil, Sri Lankan",
+                            NativeName = "தமிழ் (இலங்கை)"
+                        },
+                        new
+                        {
+                            Id = 493,
+                            Code = "tl",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2766),
+                            Name = "Tagalog",
+                            NativeName = "Tagalog"
+                        },
+                        new
+                        {
+                            Id = 494,
+                            Code = "ttt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2780),
+                            Name = "Tat",
+                            NativeName = "Tati"
+                        },
+                        new
+                        {
+                            Id = 495,
+                            Code = "tet",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2794),
+                            Name = "Tetum",
+                            NativeName = "Tetun"
+                        },
+                        new
+                        {
+                            Id = 496,
+                            Code = "to",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2809),
+                            Name = "Tongan",
+                            NativeName = "lea faka-Tonga"
+                        },
+                        new
+                        {
+                            Id = 497,
+                            Code = "th",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2824),
+                            Name = "Thai",
+                            NativeName = "ภาษาไทย"
+                        },
+                        new
+                        {
+                            Id = 498,
+                            Code = "tfn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2839),
+                            Name = "Dena'ina",
+                            NativeName = "Dena’ina qenaga"
+                        },
+                        new
+                        {
+                            Id = 499,
+                            Code = "tpi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2860),
+                            Name = "Tok Pisin",
+                            NativeName = "Tok Pisin"
+                        },
+                        new
+                        {
+                            Id = 500,
+                            Code = "tab",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2876),
+                            Name = "Tabasaran",
+                            NativeName = "табасаран чIал"
+                        },
+                        new
+                        {
+                            Id = 501,
+                            Code = "taq",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2894),
+                            Name = "Tamasheq",
+                            NativeName = "Tamasheq"
+                        },
+                        new
+                        {
+                            Id = 502,
+                            Code = "ber",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2908),
+                            Name = "Berber",
+                            NativeName = "Berber"
+                        },
+                        new
+                        {
+                            Id = 503,
+                            Code = "tzm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2925),
+                            Name = "Central Atlas Tamazight",
+                            NativeName = "ⵜⴰⵎⴰⵣⵉⵖⵜ"
+                        },
+                        new
+                        {
+                            Id = 504,
+                            Code = "tly",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2944),
+                            Name = "Talysh",
+                            NativeName = "تالشی زَوُن"
+                        },
+                        new
+                        {
+                            Id = 505,
+                            Code = "tt",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2960),
+                            Name = "Tatar",
+                            NativeName = "Татарча"
+                        },
+                        new
+                        {
+                            Id = 506,
+                            Code = "tsg",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2975),
+                            Name = "Tausug",
+                            NativeName = "Bahasa Sūg"
+                        },
+                        new
+                        {
+                            Id = 507,
+                            Code = "tkr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(2991),
+                            Name = "Tsakhur",
+                            NativeName = "цӀаӀхна миз"
+                        },
+                        new
+                        {
+                            Id = 508,
+                            Code = "tiw",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3007),
+                            Name = "Tiwi",
+                            NativeName = "Tiwi"
+                        },
+                        new
+                        {
+                            Id = 509,
+                            Code = "dgr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3021),
+                            Name = "Dogrib",
+                            NativeName = "Tłı̨chǫ Yatıì"
+                        },
+                        new
+                        {
+                            Id = 510,
+                            Code = "chy",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3039),
+                            Name = "Cheyenne",
+                            NativeName = "Tsétsêhéstâhese"
+                        },
+                        new
+                        {
+                            Id = 511,
+                            Code = "tn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3056),
+                            Name = "Tswana",
+                            NativeName = "seTswana"
+                        },
+                        new
+                        {
+                            Id = 512,
+                            Code = "mi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3070),
+                            Name = "Maori",
+                            NativeName = "Reo Māori"
+                        },
+                        new
+                        {
+                            Id = 513,
+                            Code = "rar",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3086),
+                            Name = "Cook Islands Māori",
+                            NativeName = "Māori Kūki 'Āirani"
+                        },
+                        new
+                        {
+                            Id = 514,
+                            Code = "ty",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3127),
+                            Name = "Tahitian",
+                            NativeName = "Reo Mā'ohi"
+                        },
+                        new
+                        {
+                            Id = 515,
+                            Code = "te",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3144),
+                            Name = "Telugu",
+                            NativeName = "తెలుగు"
+                        },
+                        new
+                        {
+                            Id = 516,
+                            Code = "din",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3175),
+                            Name = "Dinka",
+                            NativeName = "Thuɔŋjäŋ"
+                        },
+                        new
+                        {
+                            Id = 517,
+                            Code = "vi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3192),
+                            Name = "Vietnamese",
+                            NativeName = "Tiếng Việt"
+                        },
+                        new
+                        {
+                            Id = 518,
+                            Code = "tin",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3211),
+                            Name = "Tindi",
+                            NativeName = "Tindi"
+                        },
+                        new
+                        {
+                            Id = 519,
+                            Code = "tlh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3225),
+                            Name = "Klingon",
+                            NativeName = "tlhIngan-Hol"
+                        },
+                        new
+                        {
+                            Id = 520,
+                            Code = "tli",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3240),
+                            Name = "Tlingit",
+                            NativeName = "Lingít"
+                        },
+                        new
+                        {
+                            Id = 521,
+                            Code = "ti",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3256),
+                            Name = "Tigrinya",
+                            NativeName = "ትግርኛ"
+                        },
+                        new
+                        {
+                            Id = 522,
+                            Code = "ddo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3271),
+                            Name = "Tsez",
+                            NativeName = "Цезйас мец"
+                        },
+                        new
+                        {
+                            Id = 523,
+                            Code = "ve",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3288),
+                            Name = "Venda",
+                            NativeName = "tshiVenda"
+                        },
+                        new
+                        {
+                            Id = 524,
+                            Code = "tr",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3302),
+                            Name = "Turkish",
+                            NativeName = "Türkçe"
+                        },
+                        new
+                        {
+                            Id = 525,
+                            Code = "ota",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3318),
+                            Name = "Ottoman Turkish",
+                            NativeName = "عثمانلیجہ"
+                        },
+                        new
+                        {
+                            Id = 526,
+                            Code = "tk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3334),
+                            Name = "Turkmen",
+                            NativeName = "Türkmençe"
+                        },
+                        new
+                        {
+                            Id = 527,
+                            Code = "tyv",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3351),
+                            Name = "Tuvan",
+                            NativeName = "Тыва дыл"
+                        },
+                        new
+                        {
+                            Id = 528,
+                            Code = "uby",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3366),
+                            Name = "Ubykh",
+                            NativeName = "tʷaχəbza"
+                        },
+                        new
+                        {
+                            Id = 529,
+                            Code = "twi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3382),
+                            Name = "Twi",
+                            NativeName = "Twi"
+                        },
+                        new
+                        {
+                            Id = 530,
+                            Code = "cim",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3396),
+                            Name = "Cimbrian",
+                            NativeName = "Tzimbris"
+                        },
+                        new
+                        {
+                            Id = 531,
+                            Code = "udm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3410),
+                            Name = "Udmurt",
+                            NativeName = "Удмурт кыл"
+                        },
+                        new
+                        {
+                            Id = 532,
+                            Code = "uga",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3426),
+                            Name = "Ugaritic",
+                            NativeName = "Ugaritic"
+                        },
+                        new
+                        {
+                            Id = 533,
+                            Code = "ale",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3442),
+                            Name = "Aleut",
+                            NativeName = "Unangam Tunuu"
+                        },
+                        new
+                        {
+                            Id = 534,
+                            Code = "udi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3456),
+                            Name = "Udi",
+                            NativeName = "удин муз"
+                        },
+                        new
+                        {
+                            Id = 535,
+                            Code = "udi-old",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3471),
+                            Name = "Old Udi",
+                            NativeName = "Old Udi"
+                        },
+                        new
+                        {
+                            Id = 536,
+                            Code = "uk",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3486),
+                            Name = "Ukrainian",
+                            NativeName = "Українська"
+                        },
+                        new
+                        {
+                            Id = 537,
+                            Code = "ur",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3501),
+                            Name = "Urdu",
+                            NativeName = "اُردو"
+                        },
+                        new
+                        {
+                            Id = 538,
+                            Code = "ug",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3515),
+                            Name = "Uyghur",
+                            NativeName = "ﺋۇيغۇر"
+                        },
+                        new
+                        {
+                            Id = 539,
+                            Code = "uz",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3532),
+                            Name = "Uzbek",
+                            NativeName = "O'zbekcha"
+                        },
+                        new
+                        {
+                            Id = 540,
+                            Code = "vai",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3547),
+                            Name = "Vai",
+                            NativeName = "Vai"
+                        },
+                        new
+                        {
+                            Id = 541,
+                            Code = "vot",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3561),
+                            Name = "Votic",
+                            NativeName = "vađđa ceeli"
+                        },
+                        new
+                        {
+                            Id = 542,
+                            Code = "vec",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3577),
+                            Name = "Venetian",
+                            NativeName = "vèneto"
+                        },
+                        new
+                        {
+                            Id = 543,
+                            Code = "vro",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3593),
+                            Name = "Voro",
+                            NativeName = "Võro kiil"
+                        },
+                        new
+                        {
+                            Id = 544,
+                            Code = "vep",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3608),
+                            Name = "Veps",
+                            NativeName = "Vepsän kel'"
+                        },
+                        new
+                        {
+                            Id = 545,
+                            Code = "wa",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3623),
+                            Name = "Walloon",
+                            NativeName = "Walon"
+                        },
+                        new
+                        {
+                            Id = 546,
+                            Code = "wbp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3637),
+                            Name = "Warlpiri",
+                            NativeName = "Warlpiri"
+                        },
+                        new
+                        {
+                            Id = 547,
+                            Code = "wrm",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3652),
+                            Name = "Warumungu",
+                            NativeName = "Warumungu"
+                        },
+                        new
+                        {
+                            Id = 548,
+                            Code = "wac",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3666),
+                            Name = "Wasco-Wishram",
+                            NativeName = "Wasco-Wishram"
+                        },
+                        new
+                        {
+                            Id = 549,
+                            Code = "was",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3681),
+                            Name = "Washo",
+                            NativeName = "Washo"
+                        },
+                        new
+                        {
+                            Id = 550,
+                            Code = "pnb",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3695),
+                            Name = "Western Panjabi",
+                            NativeName = "پنجابی"
+                        },
+                        new
+                        {
+                            Id = 551,
+                            Code = "war",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3711),
+                            Name = "Waray-Waray",
+                            NativeName = "Winaray"
+                        },
+                        new
+                        {
+                            Id = 552,
+                            Code = "wo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3726),
+                            Name = "Wolof",
+                            NativeName = "Wolof"
+                        },
+                        new
+                        {
+                            Id = 553,
+                            Code = "wuu-hans",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3741),
+                            Name = "Wu Chinese [Simplified script]",
+                            NativeName = "吴语"
+                        },
+                        new
+                        {
+                            Id = 554,
+                            Code = "wuu-hant",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3757),
+                            Name = "Wu Chinese [Traditional script]",
+                            NativeName = "吳語"
+                        },
+                        new
+                        {
+                            Id = 555,
+                            Code = "myp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3773),
+                            Name = "Pirahã",
+                            NativeName = "xapaitíiso"
+                        },
+                        new
+                        {
+                            Id = 556,
+                            Code = "ts",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3790),
+                            Name = "Tsonga",
+                            NativeName = "xiTsonga"
+                        },
+                        new
+                        {
+                            Id = 557,
+                            Code = "hai",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3804),
+                            Name = "Haida",
+                            NativeName = "X̲aat Kíl"
+                        },
+                        new
+                        {
+                            Id = 558,
+                            Code = "xh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3831),
+                            Name = "Xhosa",
+                            NativeName = "isiXhosa"
+                        },
+                        new
+                        {
+                            Id = 559,
+                            Code = "xum",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3846),
+                            Name = "Umbrian",
+                            NativeName = "Iuku Umbriu"
+                        },
+                        new
+                        {
+                            Id = 560,
+                            Code = "ket",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3861),
+                            Name = "Ket",
+                            NativeName = "Yenisei Ostyak"
+                        },
+                        new
+                        {
+                            Id = 561,
+                            Code = "yi",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3875),
+                            Name = "Yiddish",
+                            NativeName = "ייִדיש"
+                        },
+                        new
+                        {
+                            Id = 562,
+                            Code = "yol",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3890),
+                            Name = "Yola",
+                            NativeName = "Yola"
+                        },
+                        new
+                        {
+                            Id = 563,
+                            Code = "yo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3904),
+                            Name = "Yoruba",
+                            NativeName = "Yorùbá"
+                        },
+                        new
+                        {
+                            Id = 564,
+                            Code = "esu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3920),
+                            Name = "Yup’ik",
+                            NativeName = "Yup’ik"
+                        },
+                        new
+                        {
+                            Id = 565,
+                            Code = "zza",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3938),
+                            Name = "Zazaki",
+                            NativeName = "Zazaki"
+                        },
+                        new
+                        {
+                            Id = 566,
+                            Code = "zea",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3954),
+                            Name = "Zeelandic",
+                            NativeName = "Zeêuws"
+                        },
+                        new
+                        {
+                            Id = 567,
+                            Code = "sgs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3970),
+                            Name = "Samogitian",
+                            NativeName = "Žemaitėška"
+                        },
+                        new
+                        {
+                            Id = 568,
+                            Code = "zu",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(3986),
+                            Name = "Zulu",
+                            NativeName = "isiZulu"
+                        },
+                        new
+                        {
+                            Id = 569,
+                            Code = "zun",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4002),
+                            Name = "Zuni",
+                            NativeName = "Zuni"
+                        },
+                        new
+                        {
+                            Id = 570,
+                            Code = "art",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4016),
+                            Name = "Constructed Language",
+                            NativeName = "Constructed Language"
+                        },
+                        new
+                        {
+                            Id = 571,
+                            Code = "art-ido",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4031),
+                            Name = "Ido",
+                            NativeName = "Ido"
+                        },
+                        new
+                        {
+                            Id = 572,
+                            Code = "art-ina",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4045),
+                            Name = "Interlingua",
+                            NativeName = "Interlingua"
+                        },
+                        new
+                        {
+                            Id = 573,
+                            Code = "art-jbo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4061),
+                            Name = "Lojban",
+                            NativeName = "Lojban"
+                        },
+                        new
+                        {
+                            Id = 574,
+                            Code = "art-lfn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4075),
+                            Name = "Lingua Franca Nova",
+                            NativeName = "Lingua Franca Nova"
+                        },
+                        new
+                        {
+                            Id = 575,
+                            Code = "art-nov",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4091),
+                            Name = "Novial",
+                            NativeName = "Novial"
+                        },
+                        new
+                        {
+                            Id = 576,
+                            Code = "art-sjn",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4105),
+                            Name = "Sindarin",
+                            NativeName = "Sindarin"
+                        },
+                        new
+                        {
+                            Id = 577,
+                            Code = "art-tlh",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4120),
+                            Name = "Klingon",
+                            NativeName = "tlhIngan-Hol"
+                        },
+                        new
+                        {
+                            Id = 578,
+                            Code = "art-tkp",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4134),
+                            Name = "Toki Pona",
+                            NativeName = "Toki Pona"
+                        },
+                        new
+                        {
+                            Id = 579,
+                            Code = "art-qya",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4151),
+                            Name = "Quenya",
+                            NativeName = "Quenya"
+                        },
+                        new
+                        {
+                            Id = 580,
+                            Code = "art-srs",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4165),
+                            Name = "Solresol",
+                            NativeName = "Solresol"
+                        },
+                        new
+                        {
+                            Id = 581,
+                            Code = "art-vo",
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 360, DateTimeKind.Utc).AddTicks(4180),
+                            Name = "Volapuk",
+                            NativeName = "Volapük"
+                        });
+                });
+
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Learning.LanguageLevelEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("language_levels", "lrn");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8867),
+                            Level = "None"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8870),
+                            Level = "Beginner"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8872),
+                            Level = "Elementary"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8873),
+                            Level = "Intermediate"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8875),
+                            Level = "UpperIntermediate"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8877),
+                            Level = "Advanced"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8879),
+                            Level = "Proficiency"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedTime = new DateTime(2024, 2, 7, 20, 7, 47, 355, DateTimeKind.Utc).AddTicks(8881),
+                            Level = "Native"
+                        });
+                });
+
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Learning.UserLanguageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsInLearning")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("LevelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_languages", "lrn");
+                });
+
             modelBuilder.Entity("user_achievements", b =>
                 {
                     b.Property<int>("AchievementsId")
@@ -419,25 +6949,15 @@ namespace Infrastructure.Implementations.Migrations
 
             modelBuilder.Entity("user_roles", b =>
                 {
-                    b.Property<int>("RolesId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("RoleId");
+                    b.HasKey("RoleId", "UserId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UsersId");
 
                     b.ToTable("user_roles", "auth");
                 });
@@ -470,6 +6990,17 @@ namespace Infrastructure.Implementations.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Services.Abstractions.Data.Account.UserEntity", b =>
+                {
+                    b.HasOne("Services.Abstractions.Data.Entities.Account.CountryEntity", "Country")
+                        .WithMany("Users")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Services.Abstractions.Data.Entities.Account.RefreshTokenEntity", b =>
@@ -538,6 +7069,33 @@ namespace Infrastructure.Implementations.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Learning.UserLanguageEntity", b =>
+                {
+                    b.HasOne("Services.Abstractions.Data.Entities.Learning.LanguageEntity", "Language")
+                        .WithMany("UserLanguages")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Services.Abstractions.Data.Entities.Learning.LanguageLevelEntity", "Level")
+                        .WithMany("UserLanguages")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Services.Abstractions.Data.Account.UserEntity", "User")
+                        .WithMany("Languages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("Level");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("user_achievements", b =>
                 {
                     b.HasOne("Services.Abstractions.Data.Account.AchievementEntity", "Achievement")
@@ -567,29 +7125,17 @@ namespace Infrastructure.Implementations.Migrations
 
             modelBuilder.Entity("user_roles", b =>
                 {
-                    b.HasOne("Services.Abstractions.Data.Account.RoleEntity", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
                     b.HasOne("Services.Abstractions.Data.Account.RoleEntity", null)
                         .WithMany()
-                        .HasForeignKey("RolesId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Services.Abstractions.Data.Account.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.HasOne("Services.Abstractions.Data.Account.UserEntity", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Services.Abstractions.Data.Account.UserEntity", b =>
@@ -600,11 +7146,18 @@ namespace Infrastructure.Implementations.Migrations
 
                     b.Navigation("Following");
 
+                    b.Navigation("Languages");
+
                     b.Navigation("Messages");
 
                     b.Navigation("RefreshToken");
 
                     b.Navigation("SocialLinks");
+                });
+
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Account.CountryEntity", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Services.Abstractions.Data.Entities.Communication.ConversationEntity", b =>
@@ -622,6 +7175,16 @@ namespace Infrastructure.Implementations.Migrations
             modelBuilder.Entity("Services.Abstractions.Data.Entities.Communication.UserConversationRoleEntity", b =>
                 {
                     b.Navigation("UserConversations");
+                });
+
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Learning.LanguageEntity", b =>
+                {
+                    b.Navigation("UserLanguages");
+                });
+
+            modelBuilder.Entity("Services.Abstractions.Data.Entities.Learning.LanguageLevelEntity", b =>
+                {
+                    b.Navigation("UserLanguages");
                 });
 #pragma warning restore 612, 618
         }

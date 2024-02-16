@@ -1,0 +1,49 @@
+<mat-card class="contact-card">
+    <mat-card-header>
+      <div class="contact-card_header">
+        <img mat-card-xl-image class="contact-card_image" [src]="userPic" >
+        <div class="contact-card_details">
+            <mat-card-title>{{partner.name}}</mat-card-title>
+            <div class="contact-card-icons" *ngIf="true">
+                <div class="icon-container">
+                    <mat-icon class="icon-container_icon">location_city</mat-icon>
+                    <div class="icon-container_info">
+                        <span class="text-label">Location:</span>
+                        <span class="text-content">{{ partner.country }}</span>
+                    </div>
+                </div>
+                <div class="icon-container">
+                    <mat-icon class="icon-container_icon">translate</mat-icon>
+                    <div class="icon-container_info">
+                        <span class="text-label">Native Languages:</span>
+                        <div class="icon-container_languages">
+                            <span *ngFor="let lLang of partner.nativeLanguages" [ngClass]="getLanguageClass(lLang)"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-container">
+                    <mat-icon class="icon-container_icon">school</mat-icon>
+                    <div class="icon-container_info">
+                        <span class="text-label">Learns:</span>
+                        <div class="icon-container_languages">
+                            <span *ngFor="let tLang of partner.learningLanguages" [ngClass]="getLanguageClass(tLang)"></span>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+    </mat-card-content>
+    <mat-card-actions class="contact-card-info">
+        <button mat-raised-button
+            class="contact-card_button"
+            color="primary"
+            type="button">
+            <mat-icon class="contact-card_button icon">chat</mat-icon>
+            <span class="contact-card_button text">Message</span>
+        </button>
+
+    </mat-card-actions>
+</mat-card>

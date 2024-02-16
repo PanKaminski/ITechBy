@@ -9,6 +9,7 @@ namespace Services.Abstractions.Account
         AuthenticateResponseModel Login(string email, string password);
         Task<AuthenticateResponseModel> RefreshTokenAsync(string refreshTokenSource);
         Task<User> RegisterAsync(RegisterRequestModel requestModel);
+        Task RevokeTokenAsync(string refreshToken);
         void ResetPassword(string token, string password);
         void ValidateResetToken(string token);
         bool VerifyEmail(string token);

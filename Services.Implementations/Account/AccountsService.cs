@@ -6,6 +6,8 @@ using Services.Abstractions.Account;
 using Services.Abstractions.Common;
 using Services.Abstractions.Data;
 using Services.Abstractions.Data.Account;
+using Services.Abstractions.Data.Entities.Account;
+using Services.Abstractions.Data.Entities.Learning;
 using Services.Abstractions.Data.Repositories.LoadOptions;
 using Services.Abstractions.Extensions;
 using Services.Abstractions.RequestModels.Account;
@@ -62,9 +64,13 @@ namespace Services.Implementations.Account
                 throw new ITechCoreException(ExceptionCode.SuchUserAlreadyExists, "User with such code already exists");
             }
 
+            var userLanguages = CreateUserLanguages(requestModel.languageCodes, requestModel.targetLanguageCodes);
+            var country = GetCountryDto(requestModel.countryCode);
             var user = await CreateUserAsync(requestModel.firstName, requestModel.lastName, requestModel.email,
                  requestModel.password, requestModel.gender);
             var userEntity = user.ToEntity();
+            userEntity.Country = country;
+            userEntity.Languages = userLanguages;
             userEntity.Roles = unitOfWork.RolesRepository.Get( r => user.Roles.Contains(r.Type), true).ToList();
 
             unitOfWork.UsersRepository.Create(userEntity);
@@ -137,7 +143,7 @@ namespace Services.Implementations.Account
         public async Task<AuthenticateResponseModel> RefreshTokenAsync(string refreshTokenSource)
         {
             var loadOptions = new List<AccountLoadOptions> { AccountLoadOptions.WithRoles, AccountLoadOptions.WithRefreshTokens };
-            var userDto = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.RefreshToken?.Source == refreshTokenSource, false, loadOptions);
+            var userDto = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.RefreshToken.Source == refreshTokenSource, false, loadOptions);
 
             if (userDto is null)
             {
@@ -155,6 +161,26 @@ namespace Services.Implementations.Account
             var jwtToken = GenerateGwt(userDto);
 
             return CreateAccountResponse(userDto, jwtToken);
+        }
+
+        public async Task RevokeTokenAsync(string refreshToken)
+        {
+            var loadOptions = new List<AccountLoadOptions> { AccountLoadOptions.WithRefreshTokens };
+            var userDto = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.RefreshToken.Source == refreshToken, false, loadOptions);
+
+            if (userDto is null)
+            {
+                throw new ITechCoreException(ExceptionCode.UserWithSuchRefreshTokenDoesntExist, "User with such refresh token doesn't exist");
+            }
+
+            if (userDto.RefreshToken?.Source is null)
+            {
+                throw new ITechCoreException(ExceptionCode.InvalidRefreshToken, "Invalid refresh token");
+            }
+
+            userDto.RefreshToken = null;
+            tokenService.RemoveRefreshToken(userDto.Id);
+            await unitOfWork.CommitAsync();
         }
 
         private async Task<User> CreateUserAsync(string firstName, string lastName, string email, string password, GenderType gender)
@@ -175,6 +201,23 @@ namespace Services.Implementations.Account
             };
 
             return user;
+        }
+
+        private CountryEntity GetCountryDto(string code) => 
+            unitOfWork.CountriesRepository.FirstOrDefault(c => c.Code == code, true);
+
+        private List<UserLanguageEntity> CreateUserLanguages(ICollection<string> codes, ICollection<string> targetCodes)
+        {
+            var languageCodesList = codes.Concat(targetCodes).ToList();
+            var userLanguages = unitOfWork.LanguagesRepository.GetByCodes(languageCodesList);
+            var languageLvl = unitOfWork.LanguageLevelsRepository.GetAll(false).First(lvl => lvl.Level == LanguageLevel.None);
+            return userLanguages.Select(l => new UserLanguageEntity
+            {
+                LanguageId = l.Id,
+                Language = l,
+                IsInLearning = targetCodes.Contains(l.Code),
+                LevelId = languageLvl.Id,
+            }).ToList();
         }
 
         private (string hash, string salt) HashPassword(string password)

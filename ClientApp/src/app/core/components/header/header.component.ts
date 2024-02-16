@@ -12,10 +12,6 @@ export class HeaderComponent {
 
   }
 
-  get logo(): string {
-    return '/assets/images/logo.svg';
-  }
-
   get avatar(): string {
     return this.accountService.account?.picture;
   }

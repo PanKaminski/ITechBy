@@ -42,7 +42,7 @@ export class LoginComponent extends BaseAuthenticationComponent implements OnIni
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/trees';
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/search';
           this.notificationService.notifySuccess('Login success');
           this.router.navigateByUrl(returnUrl);
         },
